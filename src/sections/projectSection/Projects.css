@@ -1,0 +1,89 @@
+.projects-section {
+  padding: 4rem 2rem;
+  background: #0f172a;
+  text-align: center;
+}
+
+.projects-title {
+  font-size: 2.6rem;
+  margin: 3rem 0 2rem;
+  color: #e2e8f0;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  position: relative;
+}
+
+.projects-title::after {
+  content: "";
+  width: 60px;
+  height: 4px;
+  background: #3b82f6;
+  display: block;
+  margin: 0.5rem auto 0;
+  border-radius: 2px;
+  animation: slideIn 0.6s ease forwards;
+}
+
+@keyframes slideIn {
+  from {
+    width: 0;
+    opacity: 0;
+  }
+  to {
+    width: 60px;
+    opacity: 1;
+  }
+}
+
+.projects-carousel-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 3rem;
+}
+
+.projects-carousel {
+  display: flex;
+  overflow-x: auto;
+  gap: 1.5rem;
+  padding: 1rem 2rem;
+  scroll-behavior: smooth;
+  scrollbar-width: none; /* Firefox */
+}
+
+.projects-carousel::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
+}
+
+.carousel-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(59, 130, 246, 0.15); /* כחול שקוף */
+  border: 2px solid #3b82f6;
+  font-size: 1.8rem;
+  color: #3b82f6;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 2;
+}
+
+.carousel-arrow:hover {
+  background: #3b82f6;
+  color: white;
+}
+
+.carousel-arrow.left {
+  left: -1rem;
+}
+
+.carousel-arrow.right {
+  right: -1rem;
+}

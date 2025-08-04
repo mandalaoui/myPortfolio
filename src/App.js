@@ -1,25 +1,19 @@
-import logo from './logo.svg';
-import './App.css';
+import Hero3D from './sections/heroSection/Hero3D';
+import Projects from './sections/projectSection/Projects';
+import './styles/App.css'; // Assuming you have a global CSS file for styles
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Hero3D />
+      <Projects />
+      <div id="about" style={{ height: '100vh', backgroundColor: '#f5f5f5' }}>
+        <h2 style={{ textAlign: 'center', paddingTop: '5rem' }}>About Section</h2>
+        <p style={{ textAlign: 'center' }}>This is the next section...</p>
+      </div>
+    </>
   );
 }
+
 
 export default App;
