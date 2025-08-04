@@ -1,45 +1,108 @@
+// ✅ ProjectCard.jsx (מעודכן עם Tilt ואפקטים)
 import "./ProjectCard.css";
 import Tag from "../../components/Tag";
 import { FaExternalLinkAlt, FaGithub, FaPlayCircle } from "react-icons/fa";
+import { useState, useRef } from "react";
+import { Tilt } from "react-tilt";
 
 export default function ProjectCard({ project, onWatchDemo }) {
+  const tiltOptions = {
+    max: 15,
+    speed: 400,
+    glare: true,
+    "max-glare": 0.2,
+    scale: 1.02,
+  };
+
+  const [hovered, setHovered] = useState(false);
+  const videoRef = useRef(null);
+
+   const handleMouseEnter = () => {
+    setHovered(true);
+    if (videoRef.current) {
+      videoRef.current.currentTime = 0;
+      videoRef.current.play();
+    }
+  };
+
+  const handleMouseLeave = () => {
+    setHovered(false);
+    if (videoRef.current) {
+      videoRef.current.pause();
+      videoRef.current.currentTime = 0;
+    }
+  };
+
   return (
-    <div className="project-card">
-      <div className="project-icon">
-        <i className={project.icon}></i>
+    <Tilt className="tilt-wrapper" options={tiltOptions}>
+      <div
+        className="project-card"
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+      >
+        <div className="project-icon">
+          <i className={project.icon}></i>
+        </div>
+        <h3>{project.title}</h3>
+        <p>{project.description}</p>
+
+        <div className="tags">
+          {project.tags.map((t) => (
+            <Tag key={t} text={t} />
+          ))}
+        </div>
+
+        <div className="project-preview">
+          {project.video && hovered ? (
+            <video
+              ref={videoRef}
+              src={project.video}
+              muted
+              loop
+              playsInline
+              onMouseOver={(e) => e.target.play()}
+              onMouseOut={(e) => e.target.pause()}
+              className="project-media"
+            />
+          ) : (
+            <img
+              src={project.image}
+              alt={project.title}
+              className="project-media"
+            />
+          )}
+        </div>
+
+        <div className="project-links">
+          {project.link && (
+            <a
+              href={project.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="project-link"
+            >
+              {project.linkLabel?.toLowerCase().includes("github") ? (
+                <>
+                  <FaGithub /> GitHub
+                </>
+              ) : (
+                <>
+                  <FaExternalLinkAlt /> {project.linkLabel || "Website"}
+                </>
+              )}
+            </a>
+          )}
+
+          {project.video && (
+            <button
+              className="project-link"
+              onClick={() => onWatchDemo(project.video)}
+            >
+              <FaPlayCircle /> Watch Demo
+            </button>
+          )}
+        </div>
       </div>
-      <h3>{project.title}</h3>
-      <p>{project.description}</p>
-
-      <div className="tags">
-        {project.tags.map((t) => (
-          <Tag key={t} text={t} />
-        ))}
-      </div>
-
-      <img src={project.image} alt={project.title} className="project-image" />
-
-      <div className="project-links">
-        {project.link && (
-          <a href={project.link} target="_blank" rel="noopener noreferrer" className="project-link">
-            {project.linkLabel?.toLowerCase().includes("github") ? (
-              <>
-                <FaGithub /> GitHub
-              </>
-            ) : (
-              <>
-                <FaExternalLinkAlt /> {project.linkLabel || "Website"}
-              </>
-            )}
-          </a>
-        )}
-
-        {project.video && (
-          <button className="project-link" onClick={() => onWatchDemo(project.video)}>
-            <FaPlayCircle /> Watch Demo
-          </button>
-        )}
-      </div>
-    </div>
+    </Tilt>
   );
 }

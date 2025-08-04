@@ -1,9 +1,3 @@
-import NetfilmImg from "../images/Netfilm.png";
-import BrickBreakerImg from "../images/Brick-Breaker.png";
-import TrueValueImg from "../images/TrueValueIL.png";
-import MortgAIImg from "../images/MortgAI.png";
-
-
 const projects = {
   university: [
     {
@@ -13,7 +7,7 @@ const projects = {
       longDescription: "Includes REST API, React client, and Android app. Users can stream movies, manage content, and interact in real-time using Socket.io.",
       tags: ["React", "Node.js", "MongoDB", "JWT", "REST API", "Android", "Socket"],
       icon: "fas fa-film",
-      image: NetfilmImg,
+      image: "/images/Netfilm.png",
       video: "/videos/Netfilm.mp4",
       link: "https://github.com/mandalaoui/Netfilm",
       linkLabel: "GitHub"
@@ -25,7 +19,7 @@ const projects = {
       longDescription: "Developed in Java with Ant, this project demonstrates OOP design principles and GUI logic through game development.",
       tags: ["Java", "OOP", "biuoop", "Ant"],
       icon: "fas fa-gamepad",
-      image: BrickBreakerImg,
+      image: "/images/Brick-Breaker.png",
       video: "/videos/Brick-Breaker.mp4",
       link: "https://github.com/mandalaoui/Brick-Breaker",
       linkLabel: "GitHub"
@@ -37,7 +31,7 @@ const projects = {
       longDescription: "Developed in Java with Ant, this project demonstrates OOP design principles and GUI logic through game development.",
       tags: ["Java", "OOP", "biuoop", "Ant"],
       icon: "fas fa-gamepad",
-      image: BrickBreakerImg,
+      image: "/images/Brick-Breaker.png",
       video: "/videos/Brick-Breaker.mp4",
       link: "https://github.com/mandalaoui/Brick-Breaker",
       linkLabel: "GitHub"
@@ -52,7 +46,7 @@ const projects = {
       longDescription: "Estimate apartment value using advanced logic based on dynamic parameters such as floor, rooms, parking, and renovations.",
       tags: ["Wix Velo", "JavaScript", "Wix CMS"],
       icon: "fas fa-building",
-      image: TrueValueImg,
+      image: "/images/TrueValueIL.png",
       link: "https://www.truevalueil.com",
       linkLabel: "To the website"
     },
@@ -63,7 +57,7 @@ const projects = {
       longDescription: "Combines React, Node.js, OpenAI, GitHub Actions and Render to deliver smart mortgage optimization with real-time recommendations.",
       tags: ["React", "Node.js", "OpenAI API", "Express", "GitHub Actions", "Render", "Netlify"],
       icon: "fas fa-chart-line",
-      image: MortgAIImg,
+      image: "/images/MortgAI.png",
       link: "https://mortgage-ai.netlify.app",
       linkLabel: "To the website"
     }

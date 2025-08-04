@@ -1,6 +1,7 @@
+// ✅ Projects.jsx
 import { useRef, useState, useEffect } from "react";
 import ProjectCard from "./ProjectCard";
-import Modal from "../../components/Modal"; // אל תשכח לייבא את המודל
+import Modal from "../../components/Modal";
 import projects from "../../data/projects";
 import "./Projects.css";
 
@@ -17,10 +18,8 @@ export default function Projects() {
   const checkScroll = (ref, key) => {
     if (!ref.current) return;
     const { scrollLeft, scrollWidth, clientWidth } = ref.current;
-
     const remainingRight = scrollWidth - (scrollLeft + clientWidth);
     const minScrollThreshold = 30;
-
     setShowArrows(prev => ({
       ...prev,
       [key]: {
@@ -52,23 +51,15 @@ export default function Projects() {
       <h2 className="projects-title">{title}</h2>
       <div className="projects-carousel-wrapper">
         {showArrows[key].left && (
-          <button className="carousel-arrow left" onClick={() => scroll(ref, -1, key)}>
-            ←
-          </button>
+          <button className="carousel-arrow left" onClick={() => scroll(ref, -1, key)}>←</button>
         )}
-        <div
-          className="projects-carousel"
-          ref={ref}
-          onScroll={() => checkScroll(ref, key)}
-        >
+        <div className="projects-carousel" ref={ref} onScroll={() => checkScroll(ref, key)}>
           {list.map((p) => (
             <ProjectCard key={p.id} project={p} onWatchDemo={() => setSelectedVideo(p.video)} />
           ))}
         </div>
         {showArrows[key].right && (
-          <button className="carousel-arrow right" onClick={() => scroll(ref, 1, key)}>
-            →
-          </button>
+          <button className="carousel-arrow right" onClick={() => scroll(ref, 1, key)}>→</button>
         )}
       </div>
     </>
@@ -78,15 +69,9 @@ export default function Projects() {
     <section className="projects-section">
       {renderSection("University Projects", projects.university, universityRef, "university")}
       {renderSection("Independent Projects", projects.independent, independentRef, "independent")}
-
       {selectedVideo && (
         <Modal open={!!selectedVideo} onClose={() => setSelectedVideo(null)}>
-          <video
-            src={selectedVideo}
-            controls
-            autoPlay
-            style={{ width: "100%", borderRadius: "10px" }}
-          />
+          <video src={selectedVideo} controls autoPlay style={{ width: "100%", borderRadius: "10px" }} />
         </Modal>
       )}
     </section>

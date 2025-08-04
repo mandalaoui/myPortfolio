@@ -1,70 +1,140 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# 💼 Omer Mandalaoui – Portfolio Website
 
-## Available Scripts
+A sleek and interactive **3D Developer Portfolio** built with modern frontend technologies.  
+Showcases featured **university** and **independent projects**, some with demo videos, external links, and rich visual interactions.
 
-In the project directory, you can run:
+---
 
-### `npm start`
+## ✨ Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- 🌐 Responsive fullstack developer portfolio
+- 🎬 Live video demo on hover
+- 🧊 3D animated hero section (Three.js + React Three Fiber)
+- 💡 Tech tag filtering and interactive layout
+- 🖱️ Horizontal scroll with smart arrows
+- 🪞 Tilt & glare effect on project cards
+- 🎥 Modal-based video player
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+---
 
-### `npm test`
+## 🧠 Tech Stack
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+| Area              | Technology                                    |
+|-------------------|-----------------------------------------------|
+| UI Framework      | **React** + ReactDOM                          |
+| 3D & Canvas       | **Three.js** + **@react-three/fiber** + drei |
+| Animations        | **react-tilt**, CSS Transitions               |
+| Icons             | **react-icons** (FontAwesome)                |
+| Styling           | **CSS Modules** + Custom Responsive Design    |
+| Deployment        | Local / GitHub Pages / Netlify                |
 
-### `npm run build`
+---
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## 📁 Project Structure
+portfolio-v2/
+│
+├── public/ # Static assets (images/videos)
+│ ├── images/
+│ └── videos/
+│
+├── src/
+│ ├── components/ # Reusable components (Modal, Tag)
+│ ├── data/ # Project metadata (projects.js)
+│ ├── sections/
+│ │ ├── heroSection/ # Hero3D.jsx + CSS
+│ │ └── projectSection/ # Projects, ProjectCard, styles
+│ ├── styles/ # Global CSS files
+│ └── App.jsx # Main component
+│
+└── README.md
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+---
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## 🚀 Installation & Running
 
-### `npm run eject`
+```bash
+# Clone the project
+git clone https://github.com/mandalaoui/portfolio-v2.git
+cd portfolio-v2
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+# Install dependencies
+npm install
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+# Start development server
+npm start
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### ⚙️ Required Dependencies
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Installed using:
 
-## Learn More
+```bash
+npm install --legacy-peer-deps
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Includes:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- **Core 3D rendering**: `three`, `@react-three/fiber`, `@react-three/drei`
+- **Tilt and icon support**: `react-tilt`, `react-icons`
 
-### Code Splitting
+### 🔐 .env Configuration
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+To avoid unnecessary source map generation during build, add the following file:
 
-### Analyzing the Bundle Size
+`.env`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Content:
 
-### Making a Progressive Web App
+```env
+GENERATE_SOURCEMAP=false
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+This keeps the production build lighter and cleaner.
 
-### Advanced Configuration
+### 🖼 Media Assets
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+Place your assets here:
 
-### Deployment
+```
+public/
+├── images/    →  .png/.jpg previews
+└── videos/    →  .mp4 demo videos
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+Reference them in `src/data/projects.js`:
 
-### `npm run build` fails to minify
+```js
+image: "/images/Netfilm.png",
+video: "/videos/Netfilm.mp4",
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+---
+
+## ✅ Completed Milestones
+
+- Responsive Hero 3D section
+- Modular card system with tags
+- Project list with scroll + arrows
+- Watch Demo modal
+- Project video-on-hover
+- Code clean-up + restructuring
+- Deployment to GitHub Pages
+
+---
+
+## ⏭️ Next Steps
+
+- Add light/dark mode toggle
+- Improve SEO & metadata
+- Add contact form section
+- Enhance mobile layout further
+- Option to filter by tech stack
+- Internationalization support (i18n)
+
+---
+
+## 🧑‍💻 Created by
+
+**Omer Mandalaoui**  
+[Portfolio](https://mandalaoui.github.io) • [GitHub](https://github.com/mandalaoui)
