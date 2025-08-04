@@ -1,3 +1,4 @@
+// components/Modal.jsx
 import "./Modal.css";
 
 export default function Modal({ open, onClose, children }) {

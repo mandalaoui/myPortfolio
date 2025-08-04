@@ -1,11 +1,11 @@
 import { useRef, useState, useEffect } from "react";
 import ProjectCard from "./ProjectCard";
-import ProjectModal from "./ProjectModal";
+import Modal from "../../components/Modal"; // אל תשכח לייבא את המודל
 import projects from "../../data/projects";
 import "./Projects.css";
 
 export default function Projects() {
-  const [selected, setSelected] = useState(null);
+  const [selectedVideo, setSelectedVideo] = useState(null);
   const universityRef = useRef(null);
   const independentRef = useRef(null);
 
@@ -19,7 +19,7 @@ export default function Projects() {
     const { scrollLeft, scrollWidth, clientWidth } = ref.current;
 
     const remainingRight = scrollWidth - (scrollLeft + clientWidth);
-    const minScrollThreshold = 30; // רק אם יש יותר מ־50px גלילה, נציג חץ
+    const minScrollThreshold = 30;
 
     setShowArrows(prev => ({
       ...prev,
@@ -29,8 +29,6 @@ export default function Projects() {
       }
     }));
   };
-
-
 
   useEffect(() => {
     const handleResize = () => {
@@ -64,7 +62,7 @@ export default function Projects() {
           onScroll={() => checkScroll(ref, key)}
         >
           {list.map((p) => (
-            <ProjectCard key={p.id} project={p} onOpen={setSelected} />
+            <ProjectCard key={p.id} project={p} onWatchDemo={() => setSelectedVideo(p.video)} />
           ))}
         </div>
         {showArrows[key].right && (
@@ -80,7 +78,17 @@ export default function Projects() {
     <section className="projects-section">
       {renderSection("University Projects", projects.university, universityRef, "university")}
       {renderSection("Independent Projects", projects.independent, independentRef, "independent")}
-      <ProjectModal project={selected} open={!!selected} onClose={() => setSelected(null)} />
+
+      {selectedVideo && (
+        <Modal open={!!selectedVideo} onClose={() => setSelectedVideo(null)}>
+          <video
+            src={selectedVideo}
+            controls
+            autoPlay
+            style={{ width: "100%", borderRadius: "10px" }}
+          />
+        </Modal>
+      )}
     </section>
   );
 }
