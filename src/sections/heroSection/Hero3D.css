@@ -1,60 +1,120 @@
-/* Hero3D.css */
-
-.hero-wrapper {
+.hero {
   position: relative;
+  width: 100vw;
   height: 100vh;
+  /* background: radial-gradient(ellipse at center, #0f172a 0%, #1e293b 100%); */
+  background: transparent !important;
+  overflow: hidden;
 }
 
 .hero-background {
   position: absolute;
-  height: 100%;
-  width: 100%;
-  background: linear-gradient(180deg, #0f2027, #203a43, #2c5364);
-  z-index: 0;
-}
-
-.hero-overlay {
-  position: absolute;
   top: 0;
   left: 0;
-  height: 100%;
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  color: white;
-  z-index: 2;
+  height: 100%;
+  z-index: 0;
   pointer-events: none;
 }
 
-.hero-overlay h1 {
-  font-size: 3rem;
-  margin: 0;
+.hero-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  height: 100vh;
+  padding: 4rem 2rem;
 }
 
-.hero-overlay p {
-  font-size: 1.5rem;
-  margin-top: 1rem;
+.hero-top h1 {
+  font-size: 4rem; /* היה 3rem */
+  font-weight: 800;
+  color: white;
+  text-shadow: 0 0 20px rgba(0, 255, 255, 0.3); /* זוהר עדין */
+}
+
+.hero-top p {
+  font-size: 2rem; /* היה 1.5rem */
+  font-weight: 500;
+  color: #60a5fa;
+  text-shadow: 0 0 10px rgba(0, 255, 255, 0.2);
+}
+
+.hero-bottom {
+  margin-bottom: 2rem;
 }
 
 .scroll-button {
-  position: absolute;
-  bottom: 40px;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: transparent;
+  padding: 12px 24px;
+  font-size: 1.1rem;
+  border-radius: 999px;
+  background: transparent;
   border: 2px solid white;
   color: white;
-  font-size: 1.2rem;
-  padding: 12px 24px;
-  border-radius: 999px;
   cursor: pointer;
-  z-index: 3;
   transition: all 0.3s ease;
 }
 
 .scroll-button:hover {
   background-color: white;
-  color: #0f2027;
+  color: #0f172a;
+}
+
+.typing-container {
+  display: flex;
+  justify-content: center;
+}
+.typing-text,
+.typing-text-2 {
+  position: relative;
+  font-family: monospace;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 0;
+  display: inline-block;
+}
+
+/* הקו המהבהב */
+.typing-text::after,
+.typing-text-2::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 2px;
+  height: 100%;
+  background-color: #00f7ff;
+  animation: blink 0.75s step-end infinite;
+}
+
+.typing-text {
+  animation: typing 2s steps(20, end) forwards;
+  animation-delay: 0s;
+}
+
+.typing-text-2 {
+  animation: typing2 2s steps(20, end) forwards;
+  animation-delay: 2s;
+}
+
+.typing-text.typed::after,
+.typing-text-2.typed::after {
+  animation: none;
+  display: none;
+}
+
+/* keyframes */
+@keyframes typing {
+  from { width: 0; }
+  to { width: 100%; }
+}
+@keyframes typing2 {
+  from { width: 0; }
+  to { width: 100%; }
+}
+@keyframes blink {
+  50% { opacity: 0; }
 }

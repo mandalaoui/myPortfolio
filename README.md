@@ -9,12 +9,18 @@ Showcases featured **university** and **independent projects**, some with demo v
 ## ✨ Features
 
 - 🌐 Responsive fullstack developer portfolio
-- 🎬 Live video demo on hover
-- 🧊 3D animated hero section (Three.js + React Three Fiber)
+- 🧊 Fully animated 3D background (Three.js + @react-three/fiber)
+- 🚀 Smooth scroll-based camera transitions and hero intro
+- 📁 Categorized project cards with video hover & modal display
+- 🎬 Live video demo on hover, with modal support
 - 💡 Tech tag filtering and interactive layout
+- 📄 Resume section with animated reveal and download button
+- 📬 Contact section with animated form and 3D-enhanced layout
 - 🖱️ Horizontal scroll with smart arrows
 - 🪞 Tilt & glare effect on project cards
-- 🎥 Modal-based video player
+- ✨ Custom reveal-line animation with delay per element
+- 🔄 IntersectionObserver-based entry animation
+
 
 ---
 
@@ -34,22 +40,68 @@ Showcases featured **university** and **independent projects**, some with demo v
 ## 📁 Project Structure
 portfolio-v2/
 │
-├── public/ # Static assets (images/videos)
-│ ├── images/
-│ └── videos/
+├── public/
+│   ├── images/       →  .png/.jpg previews
+│   ├── models/       →  .glb/.gltf 3D models
+│   └── videos/       →  .mp4 demo videos
 │
 ├── src/
-│ ├── components/ # Reusable components (Modal, Tag)
-│ ├── data/ # Project metadata (projects.js)
-│ ├── sections/
-│ │ ├── heroSection/ # Hero3D.jsx + CSS
-│ │ └── projectSection/ # Projects, ProjectCard, styles
-│ ├── styles/ # Global CSS files
-│ └── App.jsx # Main component
+│   ├── components/   →  Reusable (e.g. Modal, PhoenixModel, Backgrounds)
+│   ├── data/         →  Project metadata (projects.js)
+│   ├── hooks/        →  Custom hooks (e.g. useFadeAndLineObserver)
+│   ├── sections/     
+│   │   ├── heroSection/
+│   │   ├── aboutSection/
+│   │   ├── projectSection/
+│   │   ├── resumeSection/
+│   │   ├── skillsSection/
+│   │   └── contactSection/
+│   ├── styles/       →  Global styles and animations
+│   └── App.jsx       →  Main entry component
 │
 └── README.md
 
 ---
+
+✅ Updates & Enhancements (August 7, 2025)
+🔹 Global Design & Interaction
+- Added reveal-line animation to all sections with custom delays using CSS variables (--delay)
+- Created intersection observer hook (useFadeAndLineObserver) to trigger animations only on scroll into view
+- Introduced smooth, staged animations for titles, buttons, and content blocks
+- Improved layout responsiveness and section alignment
+
+🔹 Hero Section
+- Upgraded 3D hero with phoenix model that tracks mouse movement
+- Camera starts from deep space and zooms into focus on page load
+- Floating blocks animation using FloatingCodeBlocks component
+
+🔹 Project Section
+- Wrapped each ProjectCard with animated <div className="reveal-line"> for entry effect
+- Maintained consistent card sizing and spacing with inline display: contents workaround
+- Preserved full animation flow without affecting layout
+
+🔹 Resume Section
+Added Resume.jsx section with:
+- reveal-line title and download button
+- Centered layout with spacing and animation delay
+- Downloadable PDF from /files/Resume_OmerMandalaoui.pdf
+
+🔹 Contact Section
+- Integrated Contact.jsx with:
+- Fully styled contact form and detail block
+- Centered design and subtle spacing
+- 3D background integration with form elements
+- Font styling and icon links for LinkedIn and GitHub
+
+🔹 Styles & UI Polish
+- Improved .btn-animate with middle alignment and spacing
+- Fixed animation delays for better visual hierarchy
+- Refined resume/contact spacing and margins
+- Used dynamic colors and responsiveness for consistent UX
+
+
+---
+
 
 ## 🚀 Installation & Running
 
@@ -74,6 +126,11 @@ npm install --legacy-peer-deps
 ```
 
 Includes:
+npm install aos --legacy-peer-deps
+npm install react-type-animation --legacy-peer-deps
+npm install aos --legacy-peer-deps
+npm install react-parallax-tilt --legacy-peer-deps
+
 
 - **Core 3D rendering**: `three`, `@react-three/fiber`, `@react-three/drei`
 - **Tilt and icon support**: `react-tilt`, `react-icons`

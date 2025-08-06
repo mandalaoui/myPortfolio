@@ -1,65 +1,74 @@
+import React, { useState, useEffect } from 'react';
 import './Hero3D.css';
 import { Canvas } from '@react-three/fiber';
-import { OrbitControls } from '@react-three/drei';
+import PhoenixModel from '../../components/PhoenixModel';
+import CameraIntro from '../../components/CameraIntro';
 
-import { useRef } from 'react';
-import { useFrame } from '@react-three/fiber';
+const Hero3D = ({ onIntroFinish }) => {
+  const [visible, setVisible] = useState(false);
 
-function Box() {
-  const meshRef = useRef();
+  // מופעל רק פעם אחת לאחר סיום תנועת המצלמה
+  const handleCameraIntroEnd = () => {
+    setVisible(true);
+    if (onIntroFinish) onIntroFinish(); 
+  };
 
-  useFrame((_, delta) => {
-    if (meshRef.current) {
-      meshRef.current.rotation.y += delta * 0.5;
+
+  const scrollToAbout = () => {
+    const target = document.getElementById('about');
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth' });
     }
-  });
+  };
+
+  // הקלדה של הטקסט + העלמת הקו המהבהב
+  useEffect(() => {
+    if (visible) {
+      setTimeout(() => {
+        document.querySelector('.typing-text')?.classList.add('typed');
+      }, 2000); // 3s delay + 2s typing
+
+      setTimeout(() => {
+        document.querySelector('.typing-text-2')?.classList.add('typed');
+      }, 3500); // 5s delay + 2s typing
+    }
+  }, [visible]);
 
   return (
-    <mesh ref={meshRef} rotation={[0.5, 0.5, 0]}>
-      <boxGeometry args={[2, 2, 2]} />
-      <meshPhongMaterial color="#5faafc" shininess={80} />
-    </mesh>
-  );
-}
-
-const scrollToAbout = () => {
-  const target = document.getElementById('about');
-  if (target) {
-    target.scrollIntoView({ behavior: 'smooth' });
-  }
-};
-
-
-
-export default function Hero3D() {
-  return (
-    <div className="hero-wrapper">
-      <div className="hero-background" />
-
-      <Canvas
-        style={{ position: 'relative', zIndex: 1 }}
-        camera={{ position: [5, 5, 5] }}
-        gl={{ alpha: true }}
-      >
-        <ambientLight intensity={0.3} />
-        <directionalLight position={[5, 10, 5]} intensity={1.2} castShadow />
-        <pointLight position={[10, 10, 10]} />
-        <Box />
-        <OrbitControls enableZoom={false} />
-      </Canvas>
-
-      <div className="hero-overlay">
-        <h1>Omer Mandalaoui</h1>
-        <p>Fullstack Developer</p>
+    <section className="hero">
+      {/* רקע תלת-ממד */}
+      <div className="hero-background">
+        <Canvas camera={{ position: [0, 8, 80] }}>
+          <ambientLight intensity={0.5} />
+          <directionalLight position={[2, 5, 2]} intensity={1} />
+          {/* פיניקס מופיע מיד */}
+          <PhoenixModel />
+          {/* מצלמה זזה ב־3 שניות, ואז onFinish */}
+          <CameraIntro onFinish={handleCameraIntroEnd} />
+        </Canvas>
       </div>
 
-      <button
-        className="scroll-button"
-        onClick={scrollToAbout}
-      >
-        ↓ Explore More
-      </button>
+      {/* תוכן שמופיע רק אחרי שהמצלמה הגיעה */}
+      {visible && (
+        <div className="hero-content">
+          <div className="hero-top visible">
+            <div className="typing-container">
+              <h1 className="typing-text">Omer Mandalaoui</h1>
+            </div>
+            <div className="typing-container">
+              <p className="typing-text-2">Fullstack Developer</p>
+            </div>
+          </div>
 
-    </div>
+          <div className="hero-bottom visible">
+            <button className="scroll-button" onClick={scrollToAbout}>
+              ↓ Explore More
+            </button>
+          </div>
+        </div>
+      )}
+    </section>
   );
-}
+};
+
+export default Hero3D;

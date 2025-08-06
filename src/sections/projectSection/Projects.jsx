@@ -1,8 +1,8 @@
-// ✅ Projects.jsx
 import { useRef, useState, useEffect } from "react";
 import ProjectCard from "./ProjectCard";
 import Modal from "../../components/Modal";
 import projects from "../../data/projects";
+import useFadeAndLineObserver from "../../hooks/useFadeAndLineObserver";
 import "./Projects.css";
 
 export default function Projects() {
@@ -48,8 +48,8 @@ export default function Projects() {
 
   const renderSection = (title, list, ref, key) => (
     <>
-      <h2 className="projects-title">{title}</h2>
-      <div className="projects-carousel-wrapper">
+      <h2 className="projects-title reveal-line" style={{ '--delay': '0s' }}>{title}</h2>
+      <div className="projects-carousel-wrapper reveal-line" style={{ '--delay': '0.6s' }}>
         {showArrows[key].left && (
           <button className="carousel-arrow left" onClick={() => scroll(ref, -1, key)}>←</button>
         )}
@@ -65,15 +65,19 @@ export default function Projects() {
     </>
   );
 
+  useFadeAndLineObserver();
+
   return (
-    <section className="projects-section">
-      {renderSection("University Projects", projects.university, universityRef, "university")}
-      {renderSection("Independent Projects", projects.independent, independentRef, "independent")}
-      {selectedVideo && (
-        <Modal open={!!selectedVideo} onClose={() => setSelectedVideo(null)}>
-          <video src={selectedVideo} controls autoPlay style={{ width: "100%", borderRadius: "10px" }} />
-        </Modal>
-      )}
+    <section id="projects" className="reveal-line" style={{ '--delay': '0.1s' }}>
+      <section className="projects-section">
+        {renderSection("University Projects", projects.university, universityRef, "university")}
+        {renderSection("Independent Projects", projects.independent, independentRef, "independent")}
+        {selectedVideo && (
+          <Modal open={!!selectedVideo} onClose={() => setSelectedVideo(null)}>
+            <video src={selectedVideo} controls autoPlay muted style={{ width: "100%", borderRadius: "10px" }} />
+          </Modal>
+        )}
+      </section>
     </section>
   );
 }

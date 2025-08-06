@@ -4,7 +4,7 @@
   width: 100%;
   max-width: 340px;
   flex-shrink: 0;
-  perspective: 1000px; /* עומק תלת מימד */
+  perspective: 1000px;
 }
 
 .project-card {
@@ -30,10 +30,6 @@
   animation-delay: 0.2s;
 }
 
-.tilt-wrapper:hover .project-card {
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
-  background: linear-gradient(135deg, #223344, #1c2733);
-}
 
 .project-card::before {
   content: "";
@@ -66,7 +62,7 @@
   position: absolute;
   top: 1rem;
   right: 1.25rem;
-  font-size: 1.6rem;
+  font-size: 1.7rem;
   color: #60a5fa;
   opacity: 0.85;
 }
@@ -75,7 +71,7 @@
   font-size: 1.6rem;
   font-weight: 700;
   color: #ffffff;
-  margin-top: 1rem;
+  margin-top: 0.5rem;
   margin-bottom: 0.4rem;
 }
 
@@ -155,11 +151,5 @@
   object-fit: cover;
   border-radius: 1rem;
   transition: opacity 0.3s ease;
-}
-
-
-.project-media:hover {
-  transform: scale(1.01);
-  filter: brightness(1.05);
 }
 

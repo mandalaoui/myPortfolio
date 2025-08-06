@@ -7,21 +7,26 @@ import { Tilt } from "react-tilt";
 
 export default function ProjectCard({ project, onWatchDemo }) {
   const tiltOptions = {
-    max: 15,
-    speed: 400,
+    max: 5,
+    speed: 500,
     glare: true,
     "max-glare": 0.2,
-    scale: 1.02,
+    scale: 1,
   };
 
   const [hovered, setHovered] = useState(false);
   const videoRef = useRef(null);
 
-   const handleMouseEnter = () => {
+  const handleMouseEnter = () => {
     setHovered(true);
     if (videoRef.current) {
       videoRef.current.currentTime = 0;
-      videoRef.current.play();
+      videoRef.current
+        .play()
+        .catch((e) => {
+          // מדיניות דפדפן מונעת autoplay או קריאה כפולה
+          console.warn("Autoplay failed or was interrupted:", e.message);
+        });
     }
   };
 
@@ -34,7 +39,11 @@ export default function ProjectCard({ project, onWatchDemo }) {
   };
 
   return (
-    <Tilt className="tilt-wrapper" options={tiltOptions}>
+    <Tilt
+      className="tilt-wrapper"
+      options={tiltOptions}
+      key={JSON.stringify(tiltOptions)} 
+    >
       <div
         className="project-card"
         onMouseEnter={handleMouseEnter}
@@ -60,8 +69,6 @@ export default function ProjectCard({ project, onWatchDemo }) {
               muted
               loop
               playsInline
-              onMouseOver={(e) => e.target.play()}
-              onMouseOut={(e) => e.target.pause()}
               className="project-media"
             />
           ) : (
