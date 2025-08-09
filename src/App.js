@@ -7,7 +7,6 @@ import NatureBackground from './components/NatureBackground';
 import Resume from './sections/resumeSection/resume';
 import Skills from './sections/skillsSection/skills';
 import Contact from './sections/contactSection/contact';
-import useViewportVH from './hooks/useViewportVH';
 import './styles/App.css'; // Assuming you have a global CSS file for styles
 
 
@@ -23,8 +22,6 @@ function App() {
   const resumeRef = useRef();
   const contactRef = useRef();
 
-  useViewportVH();
-  
   useEffect(() => {
     if (scrollLocked) return;
 

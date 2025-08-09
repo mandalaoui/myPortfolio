@@ -5,8 +5,12 @@
 }
 
 html, body {
+  background: transparent;
   margin: 0;
   padding: 0;
-  height: auto;
+  height: auto; 
+  -webkit-text-size-adjust: 100%;
+  overscroll-behavior: none; /* אופציונלי */
+
 }
 
