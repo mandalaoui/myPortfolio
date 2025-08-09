@@ -28,37 +28,6 @@ a:hover {
   text-decoration: underline;
 }
 
-/* ===== Background Canvas ===== */
-.background-canvas {
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  background: linear-gradient(to bottom, #0f172a, #1e293b, #0f172a);
-  height: var(--app-vh, 100vh);
-}
-
-/* iOS/מכשירים דינמיים – ודא גובה אמיתי */
-@supports (height: 100dvh) {
-  .background-canvas { height: 100dvh; }
-}
-
-/* פוּלבק נוסף: */
-@supports (height: 100svh) {
-  .background-canvas { height: 100svh; }
-}
-
-.background-canvas > canvas {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  display: block;
-  backface-visibility: hidden;
-  transform: translateZ(0);
-}
-
-
 /* ===== Global Reveal Animations ===== */
 
 /* Applies to individual lines or components inside a section */
@@ -116,11 +85,5 @@ img, video, canvas {
 
   .h2 {
     font-size: 1.125rem; /* שמירה על אותו סגנון, מותאם למסכים צרים */
-  }
-
-  /* וידוא שהקנבס באמת מכסה את כל המסך בניידים */
-  .background-canvas {
-    width: 100svw;
-    height: 100svh;
   }
 }

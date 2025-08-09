@@ -8,14 +8,13 @@ import CameraRig from './CameraRig';
 export default function NatureBackground({ currentSection }) {
   return (
     <Canvas
-      className="background-canvas" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }}
+      style={{ width: '100%', height: '100%', display: 'block' }}
       frameloop="always"
     >
       <color attach="background" args={['#0a0f24']} />
       <StarsBackground count={800} size={0.15} color="#888" />
       <ambientLight intensity={0.3} />
       <directionalLight position={[2, 5, 2]} intensity={1} />
-
       <CameraRig currentSection={currentSection} />
       <FloatingCodeBlocks />
       <OrbitControls enableZoom={false} />
