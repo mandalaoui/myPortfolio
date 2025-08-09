@@ -20,28 +20,24 @@ function AvatarModelInternal({ modelPath, onFinishLoad }) {
   const targetRotation = useRef(new THREE.Euler());
   const targetScale = 4;
 
-  // הפעלת אנימציה בעת טעינת המודל
   useEffect(() => {
     if (!actions || Object.keys(actions).length === 0) return;
-    // עצירה בטוחה של כל האנימציות והפעלת הראשונה
-    Object.values(actions).forEach((action) => action?.stop?.());
-    const firstAction = actions[Object.keys(actions)[0]];
-    firstAction?.reset().fadeIn(0.3).play();
+    Object.values(actions).forEach((a) => a?.stop?.());
+    const first = actions[Object.keys(actions)[0]];
+    first?.reset().fadeIn(0.3).play();
     onFinishLoad?.();
   }, [actions, onFinishLoad]);
 
-  // תזוזת עכבר
   useEffect(() => {
-    const handleMouseMove = (event) => {
-      const x = (event.clientX / window.innerWidth) * 2 - 1;
-      const y = -(event.clientY / window.innerHeight) * 2 + 1;
+    const handleMouseMove = (e) => {
+      const x = (e.clientX / window.innerWidth) * 2 - 1;
+      const y = -(e.clientY / window.innerHeight) * 2 + 1;
       mouse.current.set(x, y);
     };
     window.addEventListener('mousemove', handleMouseMove);
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
-  // רוטציה לפי עכבר
   useFrame(() => {
     if (!group.current) return;
     const maxTilt = 0.4;
@@ -52,14 +48,13 @@ function AvatarModelInternal({ modelPath, onFinishLoad }) {
     group.current.rotation.y += (targetRotation.current.y - group.current.rotation.y) * 0.05;
   });
 
-  // גדילה חלקה
   useFrame(() => {
     if (!group.current) return;
     const s = group.current.scale;
     const t = 0.02;
-    s.x += (targetScale - s.x) * t;
-    s.y += (targetScale - s.y) * t;
-    s.z += (targetScale - s.z) * t;
+    s.x += (4 - s.x) * t;
+    s.y += (4 - s.y) * t;
+    s.z += (4 - s.z) * t;
   });
 
   return (
@@ -71,12 +66,10 @@ function AvatarModelInternal({ modelPath, onFinishLoad }) {
 
 export default function AvatarModel() {
   const [modelName, setModelName] = useState(null);
-  const [loaded, setLoaded] = useState(false);
 
   const loadRandomModel = () => {
-    const randomIndex = Math.floor(Math.random() * modelFiles.length);
-    setModelName(modelFiles[randomIndex]);
-    setLoaded(false);
+    const idx = Math.floor(Math.random() * modelFiles.length);
+    setModelName(modelFiles[idx]);
   };
 
   useEffect(() => {
@@ -91,7 +84,6 @@ export default function AvatarModel() {
         <Suspense fallback={null}>
           <AvatarModelInternal
             modelPath={modelPath}
-            onFinishLoad={() => setLoaded(true)}
           />
         </Suspense>
       )}
