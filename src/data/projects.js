@@ -28,7 +28,7 @@ const projects = {
 
   independent: [
     {
-      id: 4,
+      id: 3,
       title: "TrueValueIL",
       description: "Interactive web tool for estimating real estate property value in the Em HaMoshavot neighborhood of Petah Tikva.",
       longDescription: "Estimate apartment value using advanced logic based on dynamic parameters such as floor, rooms, parking, and renovations.",
@@ -39,7 +39,7 @@ const projects = {
       linkLabel: "To the website"
     },
     {
-      id: 5,
+      id: 4,
       title: "משכנתאות AI",
       description: "An AI-driven tool that analyzes your mortgage and provides personalized refinancing suggestions in Hebrew, with automated rate updates.",
       longDescription: "Combines React, Node.js, OpenAI, GitHub Actions and Render to deliver smart mortgage optimization with real-time recommendations.",
@@ -48,18 +48,6 @@ const projects = {
       image: "/images/MortgAI.png",
       link: "https://mortgage-ai.netlify.app",
       linkLabel: "To the website"
-    },
-        {
-      id: 6,
-      title: "General",
-      description: "A modular, object-oriented Arkanoid-style game in Java with animations, scoring, and collision logic using the biuoop library.",
-      longDescription: "Developed in Java with Ant, this project demonstrates OOP design principles and GUI logic through game development.",
-      tags: ["Java", "OOP", "biuoop", "Ant"],
-      icon: "fas fa-gamepad",
-      image: "/images/Brick-Breaker.png",
-      video: "/videos/Brick-Breaker.mp4",
-      link: "https://github.com/mandalaoui/Brick-Breaker",
-      linkLabel: "GitHub"
     }
   ]
 };
