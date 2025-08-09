@@ -12,7 +12,7 @@ const modelFiles = [
   'boy-breakdance.glb',
 ];
 
-function AvatarModelInternal({ modelPath, onFinishLoad, loadRandomModel, loaded }) {
+function AvatarModelInternal({ modelPath, onFinishLoad }) {
   const group = useRef();
   const { scene, animations } = useGLTF(modelPath);
   const { actions } = useAnimations(animations, group);
@@ -20,15 +20,15 @@ function AvatarModelInternal({ modelPath, onFinishLoad, loadRandomModel, loaded 
   const targetRotation = useRef(new THREE.Euler());
   const targetScale = 4;
 
-  // הפעלת אנימציה
+  // הפעלת אנימציה בעת טעינת המודל
   useEffect(() => {
-    if (actions && Object.keys(actions).length > 0) {
-      Object.values(actions).forEach((action) => action.stop?.());
-      const firstAction = actions[Object.keys(actions)[0]];
-      firstAction?.reset().fadeIn(0.3).play();
-      onFinishLoad();
-    }
-  }, [actions]);
+    if (!actions || Object.keys(actions).length === 0) return;
+    // עצירה בטוחה של כל האנימציות והפעלת הראשונה
+    Object.values(actions).forEach((action) => action?.stop?.());
+    const firstAction = actions[Object.keys(actions)[0]];
+    firstAction?.reset().fadeIn(0.3).play();
+    onFinishLoad?.();
+  }, [actions, onFinishLoad]);
 
   // תזוזת עכבר
   useEffect(() => {
@@ -54,22 +54,18 @@ function AvatarModelInternal({ modelPath, onFinishLoad, loadRandomModel, loaded 
 
   // גדילה חלקה
   useFrame(() => {
-    if (group.current) {
-      const s = group.current.scale;
-      const t = 0.02;
-      s.x += (targetScale - s.x) * t;
-      s.y += (targetScale - s.y) * t;
-      s.z += (targetScale - s.z) * t;
-    }
+    if (!group.current) return;
+    const s = group.current.scale;
+    const t = 0.02;
+    s.x += (targetScale - s.x) * t;
+    s.y += (targetScale - s.y) * t;
+    s.z += (targetScale - s.z) * t;
   });
 
   return (
-    <>
-      {/* אווטאר במקום הרגיל */}
-      <group ref={group} scale={[-0.1, 0, 0]} >
-        <primitive object={scene} position={[0, -1.5, 0]}/>
-      </group>
-    </>
+    <group ref={group} scale={[-0.1, 0, 0]}>
+      <primitive object={scene} position={[0, -1.5, 0]} />
+    </group>
   );
 }
 
@@ -96,8 +92,6 @@ export default function AvatarModel() {
           <AvatarModelInternal
             modelPath={modelPath}
             onFinishLoad={() => setLoaded(true)}
-            loadRandomModel={loadRandomModel}
-            loaded={loaded}
           />
         </Suspense>
       )}
