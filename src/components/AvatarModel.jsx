@@ -18,7 +18,6 @@ function AvatarModelInternal({ modelPath, onFinishLoad }) {
   const { actions } = useAnimations(animations, group);
   const mouse = useRef(new THREE.Vector2(0, 0));
   const targetRotation = useRef(new THREE.Euler());
-  const targetScale = 4;
 
   useEffect(() => {
     if (!actions || Object.keys(actions).length === 0) return;
