@@ -8,8 +8,7 @@ const CODE_SNIPPETS = [
   "HTML", "CSS", "JS", "React", "Node.js", "Express", "MongoDB",
   "TypeScript", "Three.js", "Python", "Git", "Docker", "REST",
   "Linux", "JWT", "MySQL", "C#", "C++", "Machine Learning", "AI",
-  "DevOps", "Agile", "UI/UX", "VS Code", "Cursor", "Wix",
-  "Firebase", "GraphQL", "Redux", "Framer", "Tailwind", "Vite"
+  "DevOps", "UI/UX", "VS Code", "Cursor", "Wix",
 ];
 
 export default function FloatingCodeBlocks({ count = 30, scrollY = 0 }) {
@@ -56,7 +55,7 @@ export default function FloatingCodeBlocks({ count = 30, scrollY = 0 }) {
 
           <Text
             position={[0, 0, 0.12]}
-            fontSize={0.18}
+            fontSize={0.24}
             maxWidth={1.4}
             textAlign="center"
             color="black"

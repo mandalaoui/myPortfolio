@@ -1,6 +1,4 @@
-// components/StarsBackground.jsx
 import { useMemo } from 'react';
-import * as THREE from 'three';
 
 export default function StarsBackground({ count = 1000 }) {
   const positions = useMemo(() => {

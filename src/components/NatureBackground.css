@@ -1,7 +1,25 @@
 .canvas-wrapper {
   position: absolute;
-  top: 0; left: 0;
-  width: 100vw;
-  height: 100vh;
+  top: 0;
+  left: 0;
+  width: 100vw;   /* fallback */
+  height: 100vh;  /* fallback */
   z-index: 0;
+  overflow: hidden; /* מונע גלישה לא רצויה במסכים קטנים */
+}
+
+/* שימוש ביחידות דינמיות לניידים – מונע קפיצות בשורת הכתובת */
+@supports (height: 100dvh) {
+  .canvas-wrapper {
+    width: 100dvw;
+    height: 100dvh;
+  }
+}
+
+/* קצה למכשירים ישנים עם svh */
+@supports (height: 100svh) {
+  .canvas-wrapper {
+    width: 100svw;
+    height: 100svh;
+  }
 }

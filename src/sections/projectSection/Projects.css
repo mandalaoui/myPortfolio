@@ -25,14 +25,8 @@
 }
 
 @keyframes slideIn {
-  from {
-    width: 0;
-    opacity: 0;
-  }
-  to {
-    width: 60px;
-    opacity: 1;
-  }
+  from { width: 0; opacity: 0; }
+  to   { width: 60px; opacity: 1; }
 }
 
 .projects-carousel-wrapper {
@@ -50,6 +44,8 @@
   padding: 1rem 2rem;
   scroll-behavior: smooth;
   scrollbar-width: none; /* Firefox */
+  -webkit-overflow-scrolling: touch; /* גלילה נעימה במובייל */
+  overscroll-behavior-x: contain;    /* מונע "קפיצות" */
 }
 
 .projects-carousel::-webkit-scrollbar {
@@ -80,10 +76,42 @@
   color: white;
 }
 
-.carousel-arrow.left {
-  left: -1rem;
+.carousel-arrow.left  { left: -1rem; }
+.carousel-arrow.right { right: -1rem; }
+
+/* ===== התאמות רספונסיביות (ללא שינוי עיצוב בדסקטופ) ===== */
+
+/* טאבלטים / בינוני */
+@media (max-width: 1024px) {
+  .projects-section { padding: 3.5rem 1.75rem; }
+  .projects-carousel { gap: 1.25rem; padding: 1rem 1.5rem; }
+  .carousel-arrow { width: 40px; height: 40px; font-size: 1.6rem; }
+  .carousel-arrow.left  { left: -0.5rem; }
+  .carousel-arrow.right { right: -0.5rem; }
 }
 
-.carousel-arrow.right {
-  right: -1rem;
+/* מובייל גדול */
+@media (max-width: 768px) {
+  .projects-section { padding: 3rem 1.5rem; }
+  .projects-title   { font-size: 2.2rem; }
+  .projects-carousel { gap: 1rem; padding: 0.75rem 1rem; }
+  .carousel-arrow { width: 38px; height: 38px; font-size: 1.4rem; }
+  .carousel-arrow.left  { left: 0.25rem; }
+  .carousel-arrow.right { right: 0.25rem; }
+}
+
+/* מובייל קטן */
+@media (max-width: 480px) {
+  .projects-section { padding: 2.5rem 1rem; }
+  .projects-title   { font-size: 1.9rem; }
+  .projects-carousel { gap: 0.9rem; padding: 0.5rem 0.75rem; }
+  .carousel-arrow { width: 34px; height: 34px; font-size: 1.25rem; }
+  .carousel-arrow.left  { left: 0.4rem; }
+  .carousel-arrow.right { right: 0.4rem; }
+}
+
+/* הפחתת תנועה (ללא שינוי עיצובי) */
+@media (prefers-reduced-motion: reduce) {
+  .projects-title::after { animation: none; }
+  .projects-carousel { scroll-behavior: auto; }
 }

@@ -4,15 +4,23 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
-  /* background: rgba(15, 23, 42, 0.8); navy-transparent */
+  width: 100vw;   /* fallback */
+  height: 100vh;  /* fallback */
   backdrop-filter: blur(5px);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 999;
-  padding: 1rem;
+  padding: 2rem;
+  margin-top: 10%;
+}
+
+/* תמיכה ביחידות דינמיות בניידים (מונע חיתוך בגלל שורת הכתובת) */
+@supports (height: 100dvh) {
+  .modal-backdrop {
+    width: 100dvw;
+    height: 100dvh;
+  }
 }
 
 .modal-content {
@@ -28,6 +36,12 @@
   animation: fadeIn 0.3s ease;
 }
 
+/* גלילה חלקה ונוחה בתוכן המודל במסכים קטנים */
+.modal-content {
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+}
+
 .modal-close {
   position: absolute;
   top: 12px;
@@ -39,6 +53,8 @@
   cursor: pointer;
   z-index: 10;
   transition: transform 0.2s ease;
+  /* אזור מגע ידידותי ללא שינוי ויזואלי */
+  padding: 6px;
 }
 
 .modal-close:hover {
@@ -60,5 +76,70 @@ video {
   to {
     opacity: 1;
     transform: scale(1);
+  }
+}
+
+/* הפחתת תנועה למי שמעדיף פחות אנימציות (ללא שינוי עיצוב) */
+@media (prefers-reduced-motion: reduce) {
+  .modal-content {
+    animation: none;
+  }
+}
+
+/* ===== התאמות רספונסיביות ===== */
+
+/* טאבלטים / מסכים בינוניים */
+@media (max-width: 1024px) {
+  .modal-backdrop {
+    padding: 1.75rem;
+  }
+  .modal-content {
+    max-width: 720px;
+    padding: 1.4rem;
+    max-height: 92vh;
+  }
+}
+
+/* מובייל גדול / טאבלט קטן */
+@media (max-width: 768px) {
+  .modal-backdrop {
+    padding: 1.25rem;
+    margin-top: 6%; /* שומר על ה־look הכללי אך מתאים לגובה קטן יותר */
+  }
+  .modal-content {
+    max-width: 640px;
+    padding: 1.25rem;
+    border-radius: 12px;
+    max-height: 92vh;
+  }
+  .modal-close {
+    top: 10px;
+    right: 12px;
+  }
+}
+
+/* מובייל קטן */
+@media (max-width: 480px) {
+  .modal-backdrop {
+    padding: 1rem;
+    margin-top: 0; /* ממרכז טוב יותר במסכים נמוכים מאוד */
+  }
+  .modal-content {
+    max-width: 100%;
+    padding: 1rem;
+    border-radius: 10px;
+    max-height: 94vh; /* מניעת חיתוך עם מקלדת/סרגלים */
+  }
+  .modal-close {
+    font-size: 1.35rem; /* קריא אך לא דומיננטי */
+    top: 8px;
+    right: 10px;
+  }
+}
+
+/* שימוש ביחידות 'svh' כמקרה קצה לדפדפנים ישנים של מובייל */
+@supports (height: 100svh) {
+  .modal-backdrop {
+    height: 100svh;
   }
 }

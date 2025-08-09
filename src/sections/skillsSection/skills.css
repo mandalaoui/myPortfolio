@@ -43,13 +43,22 @@
   border-radius: 16px;
   padding: 1.5rem 1rem;
   text-align: center;
-  transition: transform 0.3s ease;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
   color: white;
   width: 100%;
   max-width: 160px;
   opacity: 0;
   transform: translateY(20px);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+
+  animation: fadeUp 0s ease forwards;
 }
 
 .skill-card:nth-child(1) { animation-delay: 0.1s; }
@@ -65,8 +74,9 @@
 .skill-card:nth-child(11) { animation-delay: 1.1s; }
 .skill-card:nth-child(12) { animation-delay: 1.2s; }
 
-.skill-card:hover {
-  transform: translateY(-5px) scale(1.05);
+.skill-card:hover,
+.skill-card:focus-visible {
+  transform: translateY(-5px) scale(1.05) !important;
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
 }
 
@@ -98,3 +108,54 @@
   }
 }
 
+@media (hover: none) {
+  .skill-card:hover { transform: none; box-shadow: 0 8px 20px rgba(0,0,0,0.2); }
+}
+
+/* ===== התאמות רספונסיביות (ללא שינוי עיצוב בדסקטופ) ===== */
+
+/* טאבלטים / בינוני */
+@media (max-width: 1024px) {
+  .skills-section { padding: 4.5rem 1.75rem; }
+  .skills-grid {
+    gap: 1.75rem;
+    max-width: 920px;
+  }
+}
+
+/* מובייל גדול */
+@media (max-width: 768px) {
+  .skills-section { padding: 4rem 1.5rem; }
+  .section-title { font-size: 2.2rem; margin-bottom: 2rem; }
+  .skills-grid {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 1.5rem;
+    max-width: 680px;
+  }
+  .skill-card { max-width: 150px; padding: 1.25rem 0.9rem; }
+  .skill-card span, .skill-name { font-size: 0.95rem; }
+}
+
+/* מובייל קטן */
+@media (max-width: 480px) {
+  .skills-section { padding: 3.5rem 1rem; }
+  .section-title { font-size: 1.9rem; margin-bottom: 1.6rem; }
+  .skills-grid {
+    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+    gap: 1.2rem;
+    max-width: 100%;
+  }
+  .skill-card {
+    max-width: 140px;
+    padding: 1.1rem 0.85rem;
+    border-radius: 14px;
+  }
+  .skill-icon { font-size: 2.2rem; }
+  .skill-card img { width: 36px; height: 36px; }
+  .skill-card span, .skill-name { font-size: 0.93rem; }
+}
+
+/* הפחתת תנועה (ללא שינוי ויזואלי) */
+@media (prefers-reduced-motion: reduce) {
+  .skill-card { transition: none; animation: none; }
+}

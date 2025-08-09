@@ -7,4 +7,21 @@
   font-size: 0.8rem;
   font-weight: 500;
   margin: 0.25rem;
+  white-space: nowrap; /* מונע שבירת שורה בתוך תג */
+}
+
+/* התאמה לטאבלטים ומובייל */
+@media (max-width: 768px) {
+  .tag {
+    font-size: 0.75rem;
+    padding: 0.35rem 0.65rem;
+  }
+}
+
+/* מובייל קטן מאוד */
+@media (max-width: 480px) {
+  .tag {
+    font-size: 0.7rem;
+    padding: 0.3rem 0.6rem;
+  }
 }

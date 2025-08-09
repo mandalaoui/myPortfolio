@@ -4,7 +4,6 @@
   color: white;
 }
 
-
 .section-title {
   font-size: 2.8rem;
   margin-bottom: 2rem;
@@ -32,6 +31,8 @@
   font-size: 1.1rem;
   line-height: 1.8;
   text-align: left;
+  word-wrap: break-word;
+  overflow-wrap: anywhere; /* מונע גלישה של לינקים/אימייל ארוך */
 }
 
 .contact-info strong {
@@ -75,6 +76,13 @@
   backdrop-filter: blur(6px);
   font-family: inherit;
   font-size: 1rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.contact-form textarea {
+  min-height: 160px; /* שמירה על שימושיות במסכים קטנים */
+  resize: vertical;
 }
 
 .contact-form input::placeholder,
@@ -97,4 +105,59 @@
 
 .contact-form button:hover {
   background-color: #2563eb;
+}
+
+/* ===== התאמות רספונסיביות ===== */
+
+/* טאבלטים / בינוניים */
+@media (max-width: 1024px) {
+  .contact-section {
+    padding: 3.5rem 1.75rem;
+  }
+  .contact-container {
+    gap: 2.5rem;
+    max-width: 920px;
+  }
+}
+
+/* מובייל גדול / טאבלט קטן */
+@media (max-width: 768px) {
+  .contact-section {
+    padding: 3rem 1.5rem;
+  }
+  .section-title {
+    font-size: 2.3rem;
+  }
+  .contact-info {
+    font-size: 1.05rem;
+    line-height: 1.75;
+    text-align: center; /* שומר מראה נקי בעמודה אחת */
+  }
+  .social-links a {
+    margin-right: 0.75rem;
+  }
+}
+
+/* מובייל קטן */
+@media (max-width: 480px) {
+  .contact-section {
+    padding: 2.5rem 1rem;
+  }
+  .section-title {
+    font-size: 2rem;
+  }
+  .contact-container {
+    gap: 2rem;
+  }
+  .contact-form button {
+    width: 100%;       /* נגישות טובה יותר באגודל */
+    max-width: 360px;  /* שומר על פרופורציה */
+  }
+}
+
+/* הפחתת תנועה (ללא שינוי עיצוב) */
+@media (prefers-reduced-motion: reduce) {
+  .social-links a {
+    transition: none;
+  }
 }

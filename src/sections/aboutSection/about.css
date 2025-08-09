@@ -210,3 +210,81 @@
   background: #2563eb;
   box-shadow: 0 0 15px #2563eb;
 }
+
+/* ===== התאמות רספונסיביות (ללא שינוי עיצוב בדסקטופ) ===== */
+
+/* טאבלטים / בינוני */
+@media (max-width: 1024px) {
+  .about-section {
+    padding: 5rem 1.75rem;
+  }
+  .about-wrapper {
+    gap: 3.5rem;
+  }
+  .about-text {
+    padding: 1.75rem;
+  }
+}
+
+/* מובייל גדול */
+@media (max-width: 768px) {
+  .about-section {
+    padding: 4.5rem 1.5rem;
+  }
+  .section-title {
+    font-size: 2.3rem;
+  }
+  .about-wrapper {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+  .about-text {
+    padding: 1.5rem;
+  }
+  .highlight-glow {
+    font-size: 1.6rem;
+  }
+  .glass-card {
+    max-width: 100%;
+  }
+  .about-buttons {
+    gap: 0.75rem;
+  }
+  .btn {
+    padding: 0.7rem 1.25rem;
+  }
+}
+
+/* מובייל קטן */
+@media (max-width: 480px) {
+  .about-section {
+    padding: 4rem 1rem;
+  }
+  .section-title {
+    font-size: 2rem;
+  }
+  .about-text p {
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+  .highlight-glow {
+    font-size: 1.45rem;
+  }
+  .card-3d {
+    width: 240px;
+    height: 240px;
+  }
+  .btn {
+    padding: 0.65rem 1.1rem;
+  }
+}
+
+/* הפחתת תנועה למי שמעדיף פחות אנימציות – ללא שינוי ויזואלי */
+@media (prefers-reduced-motion: reduce) {
+  .card-inner,
+  .glass-card,
+  .about-text {
+    transition: none;
+    animation: none;
+  }
+}

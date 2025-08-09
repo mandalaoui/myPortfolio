@@ -1,4 +1,3 @@
-// useFadeAndLineObserver.js
 import { useEffect } from 'react';
 
 export default function useFadeAndLineObserver() {

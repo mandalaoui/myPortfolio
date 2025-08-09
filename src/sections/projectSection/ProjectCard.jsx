@@ -1,4 +1,3 @@
-// ✅ ProjectCard.jsx (מעודכן עם Tilt ואפקטים)
 import "./ProjectCard.css";
 import Tag from "../../components/Tag";
 import { FaExternalLinkAlt, FaGithub, FaPlayCircle } from "react-icons/fa";

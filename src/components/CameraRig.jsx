@@ -4,21 +4,21 @@ import { useRef, useEffect, useState } from 'react';
 import * as THREE from 'three';
 
 const rotations = [
-  new THREE.Euler(0, 0, 0),                     // 0 – Hero: מבט ישיר קדימה
-  new THREE.Euler(-0.3, -1.2, 1.5),             // 1 – About: מבט צד בזווית חדה
-  new THREE.Euler(0.6, 0.8, 0.2),               // 2 – Projects: מבט מלמעלה באלכסון
-  new THREE.Euler(-0.2, 1.2, 0),                // 3 – Skills: מבט הפוך קלות
-  new THREE.Euler(0.5, -0.5, 0.7),              // 4 – Resume: מבט דינאמי שמאלה-למעלה
-  new THREE.Euler(0.8, 1.2, 0.3),               // 5 – Contact: מבט פנורמי יותר
+  new THREE.Euler(0, 0, 0),                   // 0 – Hero: מבט קדמי ישר
+  new THREE.Euler(0.1, Math.PI / 3, 0.1),     // 1 – אלכסון ימני קדמי
+  new THREE.Euler(0.2, 2 * Math.PI / 3, -0.1),// 2 – ימינה אחורה
+  new THREE.Euler(0.05, Math.PI, 0),          // 3 – אחורה (180 מעלות)
+  new THREE.Euler(0.05, Math.PI, 0),// 4 – שמאלה אחורה
+  new THREE.Euler(0.05, Math.PI, 0),  // 5 – שמאלה קדימה
 ];
 
 const positions = [
-  new THREE.Vector3(0, 0, 15),         // 0 – Hero: רחוק ומרוכז
-  new THREE.Vector3(0, -5, -5),        // 1 – About: עמוק מהצד
-  new THREE.Vector3(0, 0, 5),          // 2 – Projects: מתקרב פנימה
-  new THREE.Vector3(3, 1, 3),          // 3 – Skills: טיפה אלכסונית
-  new THREE.Vector3(-4, 2, 6),         // 4 – Resume: מבט משמאל-קדימה
-  new THREE.Vector3(0, 6, 10),         // 5 – Contact: מבט רחב מלמעלה
+  new THREE.Vector3(0, 0, 15),                // 0 – Hero: מקדימה
+  new THREE.Vector3(10, 3, 10),               // 1 – מצד ימין קדימה
+  new THREE.Vector3(10, 2, -8),               // 2 – מצד ימין אחורה
+  new THREE.Vector3(0, -3, 0),             // 3 – מאחורה
+  new THREE.Vector3(-10, 3, -8),              // 4 – שמאל אחורי
+  new THREE.Vector3(-10, 1.5, 10),            // 5 – שמאל קדמי
 ];
 
 export default function CameraRig({ currentSection }) {
@@ -72,6 +72,7 @@ export default function CameraRig({ currentSection }) {
 
     // אנימציית מיקום עדינה
     groupRef.current.position.lerp(targetPosition.current, 0.03);
+    
   });
 
   return <group ref={groupRef}>{camera && <primitive object={camera} />}</group>;

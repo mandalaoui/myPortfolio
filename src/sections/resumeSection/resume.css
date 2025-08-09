@@ -18,10 +18,54 @@
   color: white;
   border: none;
   border-radius: 8px;
+  margin-top: 50px;
   cursor: pointer;
+  transition: background-color 0.25s ease, transform 0.25s ease;
 }
 
 .btn.btn-animate:hover {
   background-color: #388e3c;
   transform: translateY(-2px);
+}
+
+.arrow-down {
+  font-size: 2rem;
+  margin: 20px 0;
+  animation: blink 1.2s infinite;
+  display: block;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; transform: translateY(0); }
+  50% { opacity: 0.3; transform: translateY(6px); }
+}
+
+/* ===== התאמות רספונסיביות (ללא שינוי עיצוב בדסקטופ) ===== */
+
+/* טאבלטים / בינוני */
+@media (max-width: 1024px) {
+  .resume-section { padding: 90px 18px; }
+  .section-title { font-size: 2.3rem; }
+}
+
+/* מובייל גדול */
+@media (max-width: 768px) {
+  .resume-section { padding: 80px 16px; }
+  .section-title { font-size: 2.1rem; margin-bottom: 26px; }
+  .btn.btn-animate { font-size: 1rem; padding: 12px 22px; margin-top: 40px; }
+  .arrow-down { font-size: 1.8rem; margin: 18px 0; }
+}
+
+/* מובייל קטן */
+@media (max-width: 480px) {
+  .resume-section { padding: 70px 14px; }
+  .section-title { font-size: 1.9rem; margin-bottom: 22px; }
+  .btn.btn-animate { font-size: 0.95rem; padding: 11px 20px; margin-top: 32px; }
+  .arrow-down { font-size: 1.6rem; margin: 16px 0; }
+}
+
+/* הפחתת תנועה (ללא שינוי עיצובי) */
+@media (prefers-reduced-motion: reduce) {
+  .btn.btn-animate { transition: none; }
+  .arrow-down { animation: none; }
 }

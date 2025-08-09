@@ -30,7 +30,6 @@
   animation-delay: 0.2s;
 }
 
-
 .project-card::before {
   content: "";
   position: absolute;
@@ -94,7 +93,6 @@
   transform: scale(1.05);
 }
 
-
 .project-image {
   width: 100%;
   height: 180px;
@@ -153,3 +151,64 @@
   transition: opacity 0.3s ease;
 }
 
+/* ===== התאמות רספונסיביות (ללא שינוי עיצוב בדסקטופ) ===== */
+
+/* טאבלטים / בינוני */
+@media (max-width: 1024px) {
+  .project-card {
+    min-height: 500px;
+    padding: 1.6rem 1.3rem 1.8rem;
+  }
+  .project-card h3 { font-size: 1.45rem; }
+  .project-card p { font-size: 0.92rem; }
+}
+
+/* מובייל גדול */
+@media (max-width: 768px) {
+  .tilt-wrapper {
+    max-width: 360px; /* נשאר בקירוב למראה המקורי, מתאים לרוחב מסך */
+  }
+  .project-card {
+    min-height: 460px;
+    padding: 1.5rem 1.2rem 1.6rem;
+  }
+  .project-icon {
+    top: 0.85rem;
+    right: 1rem;
+    font-size: 1.5rem;
+  }
+  .project-image,
+  .project-preview { height: 170px; }
+  .project-card h3 { font-size: 1.35rem; }
+  .project-card p { font-size: 0.9rem; line-height: 1.55; }
+  .project-link { font-size: 0.83rem; padding: 7px 12px; }
+}
+
+/* מובייל קטן */
+@media (max-width: 480px) {
+  .tilt-wrapper {
+    max-width: 100%;
+  }
+  .project-card {
+    min-height: 420px;
+    padding: 1.35rem 1rem 1.4rem;
+    border-radius: 1rem;
+  }
+  .project-icon {
+    top: 0.75rem;
+    right: 0.9rem;
+    font-size: 1.4rem;
+  }
+  .project-image,
+  .project-preview { height: 160px; }
+  .project-card h3 { font-size: 1.25rem; }
+  .project-card p { font-size: 0.88rem; }
+  .project-links { gap: 0.5rem; }
+  .project-link { font-size: 0.8rem; padding: 6px 11px; }
+}
+
+/* הפחתת תנועה (ללא שינוי עיצוב) */
+@media (prefers-reduced-motion: reduce) {
+  .project-card { animation: none; transform: none; }
+  .project-card::before { animation: none; }
+}

@@ -1,10 +1,14 @@
 .hero {
   position: relative;
   width: 100vw;
-  height: 100vh;
-  /* background: radial-gradient(ellipse at center, #0f172a 0%, #1e293b 100%); */
+  height: 100vh; /* fallback */
   background: transparent !important;
   overflow: hidden;
+}
+
+/* תמיכה בגבהי מסך דינמיים במובייל */
+@supports (height: 100dvh) {
+  .hero { height: 100dvh; }
 }
 
 .hero-background {
@@ -25,10 +29,16 @@
   justify-content: space-between;
   align-items: center;
   text-align: center;
-  height: 100vh;
+  height: 100vh; /* fallback */
   padding: 4rem 2rem;
 }
 
+/* גובה דינמי בטוח לניידים */
+@supports (height: 100dvh) {
+  .hero-content { height: 100dvh; }
+}
+
+/* טקסט עליון */
 .hero-top h1 {
   font-size: 4rem; /* היה 3rem */
   font-weight: 800;
@@ -39,34 +49,48 @@
 .hero-top p {
   font-size: 2rem; /* היה 1.5rem */
   font-weight: 500;
-  color: #60a5fa;
+  color: #94fbff;
   text-shadow: 0 0 10px rgba(0, 255, 255, 0.2);
+  letter-spacing: 0.5px;
 }
 
 .hero-bottom {
   margin-bottom: 2rem;
 }
 
-.scroll-button {
-  padding: 12px 24px;
-  font-size: 1.1rem;
-  border-radius: 999px;
-  background: transparent;
-  border: 2px solid white;
-  color: white;
-  cursor: pointer;
-  transition: all 0.3s ease;
+.scroll-label {
+  font-size: 1.5rem;
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: default;
+  user-select: none;
+  font-weight: 500;
 }
 
-.scroll-button:hover {
-  background-color: white;
-  color: #0f172a;
+.arrow-svg {
+  animation: arrow-bounce 1.2s infinite;
 }
 
+@keyframes arrow-bounce {
+  0%, 100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(4px);
+    opacity: 0.7;
+  }
+}
+
+/* Typing effect */
 .typing-container {
   display: flex;
   justify-content: center;
+  max-width: 100%;
 }
+
 .typing-text,
 .typing-text-2 {
   position: relative;
@@ -117,4 +141,37 @@
 }
 @keyframes blink {
   50% { opacity: 0; }
+}
+
+/* ===== התאמות רספונסיביות (ללא שינוי עיצוב בדסקטופ) ===== */
+
+/* טאבלטים / בינוני */
+@media (max-width: 1024px) {
+  .hero-content { padding: 3.5rem 1.75rem; }
+  .hero-top h1 { font-size: 3.2rem; }
+  .hero-top p { font-size: 1.6rem; }
+}
+
+/* מובייל גדול */
+@media (max-width: 768px) {
+  .hero-content { padding: 3rem 1.5rem; }
+  .hero-top h1 { font-size: 2.6rem; }
+  .hero-top p { font-size: 1.35rem; }
+  .scroll-label { font-size: 1.2rem; gap: 4px; }
+}
+
+/* מובייל קטן */
+@media (max-width: 480px) {
+  .hero { width: 100svw; height: 100svh; } /* תמיכה נוספת */
+  .hero-content { padding: 2.5rem 1rem; }
+  .hero-top h1 { font-size: 2.2rem; }
+  .hero-top p { font-size: 1.15rem; letter-spacing: 0.4px; }
+  .scroll-label { font-size: 1rem; }
+}
+
+/* הפחתת תנועה למי שמעדיף פחות אנימציות */
+@media (prefers-reduced-motion: reduce) {
+  .arrow-svg { animation: none; }
+  .typing-text, .typing-text-2 { animation: none; width: auto; }
+  .typing-text::after, .typing-text-2::after { display: none; }
 }

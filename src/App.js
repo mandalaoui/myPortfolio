@@ -1,31 +1,55 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Hero3D from './sections/heroSection/Hero3D';
 import Projects from './sections/projectSection/Projects';
 import About from './sections/aboutSection/about';
-import './styles/App.css'; // Assuming you have a global CSS file for styles
 import useFadeAndLineObserver from './hooks/useFadeAndLineObserver';
 import NatureBackground from './components/NatureBackground';
 import Resume from './sections/resumeSection/resume';
 import Skills from './sections/skillsSection/skills';
 import Contact from './sections/contactSection/contact';
+import './styles/App.css'; // Assuming you have a global CSS file for styles
 
 
 function App() {
   const [currentSection, setCurrentSection] = useState(0); // 0=Hero, 1=Projects, 2=About
   const [scrollLocked, setScrollLocked] = useState(true);
 
+    // 🔽 refs לכל section
+  const heroRef = useRef();
+  const aboutRef = useRef();
+  const projectsRef = useRef();
+  const skillsRef = useRef();
+  const resumeRef = useRef();
+  const contactRef = useRef();
+
   useEffect(() => {
-    if (scrollLocked) return; // ❌ אל תאזין אם הגלילה חסומה
+    if (scrollLocked) return;
 
     const handleScroll = () => {
       const scrollY = window.scrollY;
+      const buffer = window.innerHeight / 2; // מרווח כדי לזהות "אמצע מסך"
 
-      if (scrollY < 600) setCurrentSection(0); // Hero
-      else if (scrollY < 1800) setCurrentSection(1); // About
-      else if (scrollY < 2400) setCurrentSection(2); // Projects
-      else if (scrollY < 3000) setCurrentSection(3); // Skills
-      else if (scrollY < 3600) setCurrentSection(4); // Resume
-      else setCurrentSection(5); // Contact
+      const sectionOffsets = [
+        heroRef.current?.offsetTop || 0,
+        aboutRef.current?.offsetTop || 0,
+        projectsRef.current?.offsetTop || 0,
+        skillsRef.current?.offsetTop || 0,
+        resumeRef.current?.offsetTop || 0,
+        contactRef.current?.offsetTop || 0
+      ];
+
+      let active = 0;
+      for (let i = 0; i < sectionOffsets.length; i++) {
+        const start = sectionOffsets[i];
+        const end = sectionOffsets[i + 1] || Infinity;
+
+        if (scrollY + buffer >= start && scrollY + buffer < end) {
+          active = i;
+          break;
+        }
+      }
+
+      setCurrentSection(active);
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -87,12 +111,12 @@ function App() {
       <div className="background-canvas">
         <NatureBackground currentSection={currentSection} />
       </div>
-      <Hero3D onIntroFinish={() => setScrollLocked(false)} />
-      <About />
-      <Projects />
-      <Resume />
-      <Skills />
-      <Contact />
+      <Hero3D ref={heroRef} onIntroFinish={() => setScrollLocked(false)} />
+      <div ref={aboutRef}><About /></div>
+      <div ref={projectsRef}><Projects /></div>
+      <div ref={skillsRef}><Skills /></div>
+      <div ref={resumeRef}><Resume /></div>
+      <div ref={contactRef}><Contact /></div>
     </>
   );
 }
