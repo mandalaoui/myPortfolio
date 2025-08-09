@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState, Suspense } from 'react';
-import { useGLTF, useAnimations, Text } from '@react-three/drei';
+import { useGLTF, useAnimations } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 
