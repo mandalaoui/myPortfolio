@@ -47,8 +47,6 @@ a:hover {
   .background-canvas { height: 100svh; }
 }
 
-html, body { background-color: #0a0f24; }
-
 /* ===== Global Reveal Animations ===== */
 
 /* Applies to individual lines or components inside a section */
