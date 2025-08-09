@@ -23,18 +23,6 @@ const projects = {
       video: "/videos/Brick-Breaker.mp4",
       link: "https://github.com/mandalaoui/Brick-Breaker",
       linkLabel: "GitHub"
-    },
-    {
-      id: 3,
-      title: "General",
-      description: "A modular, object-oriented Arkanoid-style game in Java with animations, scoring, and collision logic using the biuoop library.",
-      longDescription: "Developed in Java with Ant, this project demonstrates OOP design principles and GUI logic through game development.",
-      tags: ["Java", "OOP", "biuoop", "Ant"],
-      icon: "fas fa-gamepad",
-      image: "/images/Brick-Breaker.png",
-      video: "/videos/Brick-Breaker.mp4",
-      link: "https://github.com/mandalaoui/Brick-Breaker",
-      linkLabel: "GitHub"
     }
   ],
 
