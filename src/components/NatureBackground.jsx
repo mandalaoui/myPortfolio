@@ -8,7 +8,7 @@ import CameraRig from './CameraRig';
 export default function NatureBackground({ currentSection }) {
   return (
     <Canvas
-      style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }}
+      className="background-canvas" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }}
       frameloop="always"
     >
       <color attach="background" args={['#0a0f24']} />

@@ -1,25 +1,18 @@
-.canvas-wrapper {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100vw;   /* fallback */
-  height: 100vh;  /* fallback */
-  z-index: 0;
-  overflow: hidden; /* מונע גלישה לא רצויה במסכים קטנים */
+.background-canvas {
+  position: fixed;
+  inset: 0;               /* מכסה את כל המסך */
+  width: 100%;
+  height: 100%;
+  z-index: -1;             /* מאחורי כל התוכן */
+  pointer-events: none;    /* שלא יחסום קליקים */
+  display: block;
+  backface-visibility: hidden;
+  transform: translateZ(0);
 }
 
-/* שימוש ביחידות דינמיות לניידים – מונע קפיצות בשורת הכתובת */
 @supports (height: 100dvh) {
-  .canvas-wrapper {
-    width: 100dvw;
-    height: 100dvh;
-  }
+  .background-canvas { height: 100dvh; }
 }
-
-/* קצה למכשירים ישנים עם svh */
 @supports (height: 100svh) {
-  .canvas-wrapper {
-    width: 100svw;
-    height: 100svh;
-  }
+  .background-canvas { height: 100svh; }
 }
