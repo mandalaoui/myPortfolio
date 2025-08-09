@@ -7,7 +7,10 @@ import CameraRig from './CameraRig';
 
 export default function NatureBackground({ currentSection }) {
   return (
-    <Canvas>
+    <Canvas
+      style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }}
+      frameloop="always"
+    >
       <color attach="background" args={['#0a0f24']} />
       <StarsBackground count={800} size={0.15} color="#888" />
       <ambientLight intensity={0.3} />
