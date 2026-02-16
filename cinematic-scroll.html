@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cinematic Scroll Experience</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif;
+            background: radial-gradient(ellipse 90% 70% at 60% 35%, #161B22 0%, #0D1117 52%, #1F2636 100%);
+            background-color: #0D1117;
+            color: #fff;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+        }
+
+        .background-glow {
+            position: fixed;
+            pointer-events: none;
+            z-index: 0;
+            width: 80vw;
+            height: 80vw;
+            left: 50%;
+            top: 48%;
+            transform: translate(-50%, -50%);
+            background: radial-gradient(circle, rgba(85,113,255,0.18) 0%, rgba(13,17,23,0.08) 55%, rgba(13,17,23,0) 100%);
+            filter: blur(38px);
+        }
+        .background-noise {
+            pointer-events: none;
+            z-index: 1;
+            position: fixed;
+            left: 0; top: 0; width: 100vw; height: 100vh;
+            opacity: 0.22;
+            background: url('https://assets-global.website-files.com/641e9a4fe46e1a9ac09a1cf1/64301c7ef543fda2d6ae22e6_noise.webp');
+            background-size: 350px 350px;
+            mix-blend-mode: soft-light;
+            animation: bg-noise 6s linear infinite;
+        }
+        @keyframes bg-noise {
+            0% {background-position: 0 0;}
+            100% {background-position: 100px 60px;}
+        }
+
+        .scroll-container {
+            height: 500vh;
+            position: relative;
+        }
+
+        .canvas-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .tech-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+            overflow: hidden;
+            opacity: 1;
+            transition: opacity 0.8s;
+        }
+
+        .grid-container {
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            top: -50%;
+            left: -50%;
+            background-image: 
+                linear-gradient(rgba(59, 130, 246, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(59, 130, 246, 0.1) 1px, transparent 1px);
+            background-size: 60px 60px;
+            animation: gridMove 20s linear infinite;
+            transform: perspective(1000px) rotateX(60deg);
+        }
+        @keyframes gridMove {
+            0% { transform: perspective(1000px) rotateX(60deg) translateY(0); }
+            100% { transform: perspective(1000px) rotateX(60deg) translateY(60px); }
+        }
+
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: rgba(59, 130, 246, 0.6);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: float linear infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) translateX(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100px) translateX(var(--x-move)); opacity: 0; }
+        }
+
+        .tech-lines {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        .tech-line {
+            position: absolute;
+            height: 1px;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(59, 130, 246, 0.5), 
+                transparent);
+            animation: lineMove linear infinite;
+        }
+        @keyframes lineMove {
+            0% { transform: translateX(-100%); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateX(100%); opacity: 0; }
+        }
+
+        /* Section 1: Hello World Center */
+        .hello-world {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: clamp(60px, 12vw, 160px);
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            color: #fff;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: none;
+            z-index: 10;
+            text-shadow: 0 0 40px rgba(59, 130, 246, 0.5);
+        }
+
+        /* Laptop Container - full in view, centered vertically */
+        .laptop-container {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            /* Start off the left edge, will be animated via JS! */
+            transform: translate(-110%, -50%) perspective(2000px);
+            opacity: 0;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 5;
+            width: 600px;
+            height: 380px;
+            pointer-events: none;
+        }
+
+        model-viewer {
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            --poster-color: transparent;
+        }
+
+        .laptop,
+        .laptop-base,
+        .laptop-screen-container,
+        .laptop-screen,
+        .laptop-screen-inner {
+            display: none !important;
+        }
+
+        .website-preview {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 65%;
+            height: 57%;
+            opacity: 0;
+            transform: scale(0.9);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: none;
+            z-index: 1;
+            box-shadow: 0 6px 52px 0 rgba(80,120,255,0.14);
+            border-radius: 14px;
+            outline: 1.5px solid rgba(245,247,255,0.035);
+        }
+        .website-preview .preview-nav,
+        .website-preview .preview-hero {
+            pointer-events: none;
+        }
+        .preview-nav {
+            height: 60px;
+            background: #0D1117;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+            display: flex;
+            align-items: center;
+            padding: 0 40px;
+            gap: 30px;
+        }
+        .preview-nav-item {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.72);
+            letter-spacing: 0.02em;
+        }
+        .preview-hero {
+            height: calc(100% - 60px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            text-align: center;
+        }
+        .preview-title {
+            font-size: 48px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.73) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .preview-subtitle {
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.62);
+            max-width: 400px;
+            line-height: 1.6;
+        }
+        .preview-cta {
+            margin-top: 30px;
+            padding: 14px 32px;
+            background: #fff;
+            color: #0D1117;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* Full Website View */
+        .full-website {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 15;
+            pointer-events: none;
+        }
+
+        .full-website-inner {
+            width: 100%;
+            height: 100%;
+            background: #0D1117;
+            overflow-y: auto;
+        }
+
+        .full-nav {
+            height: 80px;
+            background: rgba(13, 17, 23, 0.95);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+            display: flex;
+            align-items: center;
+            padding: 0 80px;
+            gap: 50px;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            backdrop-filter: blur(10px);
+            z-index: 20;
+        }
+        .full-nav-item {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.81);
+            letter-spacing: 0.02em;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        .full-nav-item:hover {
+            color: #fff;
+        }
+        .full-hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 100px 40px 40px;
+            text-align: center;
+        }
+        .full-title {
+            font-size: clamp(60px, 10vw, 120px);
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, #fff 0%, rgba(255, 255, 255, 0.7) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .full-subtitle {
+            font-size: 24px;
+            color: rgba(255, 255, 255, 0.62);
+            max-width: 700px;
+            line-height: 1.6;
+            margin-bottom: 50px;
+        }
+        .full-cta {
+            padding: 20px 50px;
+            background: #fff;
+            color: #0D1117;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .full-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.14);
+        }
+
+        .scroll-indicator {
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            opacity: 1;
+            transition: opacity 0.5s;
+            z-index: 100;
+        }
+        .scroll-text {
+            font-size: 12px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.48);
+            text-shadow: 0 3px 14px #0D1117, 0 1px 2px rgba(80,120,255,0.10);
+        }
+        .scroll-arrow {
+            width: 24px;
+            height: 24px;
+            border-left: 2px solid rgba(255, 255, 255, 0.5);
+            border-bottom: 2px solid rgba(255, 255, 255, 0.5);
+            transform: rotate(-45deg);
+            animation: bounce 2s infinite;
+            filter: drop-shadow(0 2px 8px rgba(40,60,140,0.12));
+        }
+        @keyframes bounce {
+            0%, 100% { transform: rotate(-45deg) translateY(0); }
+            50% { transform: rotate(-45deg) translateY(8px); }
+        }
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 2.5px;
+            background: linear-gradient(90deg, #9ABFFF, #fff, rgba(190, 210, 255, 0.55) 84%);
+            z-index: 1000;
+            border-radius: 2.5px;
+            transition: width 0.1s linear;
+            box-shadow: 0 4px 32px 0 rgba(120,160,255,0.11);
+        }
+    </style>
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+    <!-- <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Floating particles
+            const techBg = document.getElementById('techBg');
+            if (techBg) {
+                for (let i = 0; i < 30; i++) {
+                    const particle = document.createElement('div');
+                    particle.className = 'particle';
+                    particle.style.left = Math.random() * 100 + '%';
+                    particle.style.setProperty('--x-move', (Math.random() - 0.5) * 200 + 'px');
+                    particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                    particle.style.animationDelay = Math.random() * 5 + 's';
+                    techBg.appendChild(particle);
+                }
+            }
+
+            // Tech lines
+            const techLines = document.getElementById('techLines');
+            if (techLines) {
+                for (let i = 0; i < 8; i++) {
+                    const line = document.createElement('div');
+                    line.className = 'tech-line';
+                    line.style.top = Math.random() * 100 + '%';
+                    line.style.width = (Math.random() * 30 + 20) + '%';
+                    line.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                    line.style.animationDelay = Math.random() * 3 + 's';
+                    techLines.appendChild(line);
+                }
+            }
+        });
+    </script> -->
+</head>
+<body>
+    <div class="background-glow"></div>
+    <div class="background-noise"></div>
+    <div class="progress-bar"></div>
+    <div class="tech-background" id="techBg">
+        <div class="grid-container"></div>
+        <div class="tech-lines" id="techLines"></div>
+    </div>
+    <div class="scroll-container">
+        <div class="canvas-container">
+            <div class="hello-world">hello world</div>
+            <div class="laptop-container">
+                <model-viewer id="laptopModel"
+                    src="laptop.glb"
+                    alt="3D laptop"
+                    camera-controls
+                    disable-zoom
+                    interaction-prompt="none"
+                    exposure="1.2"
+                    shadow-intensity="1"
+                    style="background:transparent;"
+                ></model-viewer>
+                <div class="website-preview" id="websitePreview"
+                    style="
+                        top:27%;
+                        left:17.5%;
+                     ">
+                    <div class="preview-nav">
+                        <div class="preview-nav-item">Home</div>
+                        <div class="preview-nav-item">About</div>
+                        <div class="preview-nav-item">Work</div>
+                        <div class="preview-nav-item">Contact</div>
+                    </div>
+                    <!-- <div class="preview-hero">
+                        <div class="preview-title">Welcome</div>
+                        <div class="preview-subtitle">Crafting digital experiences with precision and purpose</div>
+                        <div class="preview-cta">Explore</div>
+                    </div> -->
+                </div>
+            </div>
+            <div class="full-website">
+                <div class="full-website-inner">
+                    <nav class="full-nav">
+                        <div class="full-nav-item">Home</div>
+                        <div class="full-nav-item">About</div>
+                        <div class="full-nav-item">Work</div>
+                        <div class="full-nav-item">Contact</div>
+                    </nav>
+                    <!-- <div class="full-hero">
+                        <h1 class="full-title">Welcome</h1>
+                        <p class="full-subtitle">Crafting digital experiences with precision and purpose. Every pixel tells a story, every interaction matters.</p>
+                        <button class="full-cta">Get Started</button>
+                    </div> -->
+                </div>
+            </div>
+            <div class="scroll-indicator">
+                <div class="scroll-text">Scroll</div>
+                <div class="scroll-arrow"></div>
+            </div>
+        </div>
+    </div>
+    <script>
+        // Cinematic laptop entrance: from left, backwards (rotated), turning as it slides in.
+        const scrollContainer = document.querySelector('.scroll-container');
+        const helloWorld = document.querySelector('.hello-world');
+        const laptopContainer = document.querySelector('.laptop-container');
+        const modelViewer = document.querySelector('#laptopModel');
+        const websitePreview = document.querySelector('#websitePreview');
+        const fullWebsite = document.querySelector('.full-website');
+        const scrollIndicator = document.querySelector('.scroll-indicator');
+        const progressBar = document.querySelector('.progress-bar');
+        let totalHeight = scrollContainer.offsetHeight - window.innerHeight;
+
+        function updateScene() {
+            const scrollY = window.scrollY;
+            const progress = Math.min(scrollY / totalHeight, 1);
+
+            progressBar.style.width = `${progress * 100}%`;
+
+            // Section bounds
+            const s1 = 0.1;
+            const s2 = 0.2;
+            const s3 = 0.3;
+            const s4 = 0.5;
+
+            // Helper functions
+            const clamp = (v) => Math.max(0, Math.min(1, v));
+            const ease = (t) => {
+                t = clamp(t);
+                return 1 - Math.pow(1 - t, 3);
+            };
+
+            // Reset visuals
+            helloWorld.style.opacity = 0;
+            laptopContainer.style.opacity = 0;
+            websitePreview.style.opacity = 0;
+            fullWebsite.style.opacity = 0;
+            fullWebsite.style.pointerEvents = 'none';
+
+            // State variables for debugging/logic
+            let currentHelloX = 0, currentHelloOpacity = 0;
+            let currentLaptopX = 0, currentLaptopOpacity = 0, currentLaptopScale = 1, currentLaptopRotateY = 0;
+            let currentHelloTransform = '', currentLaptopTransform = '';
+
+            // ===============================
+            // SECTION 1 — HELLO CENTER
+            // ===============================
+            if (progress < s1) {
+                currentHelloX = -50;
+                currentHelloOpacity = 1;
+                currentLaptopX = -120;
+                currentLaptopOpacity = 1;
+                currentLaptopScale = 1;
+                currentLaptopRotateY = 180;
+                currentHelloTransform = `translate(-50%, -50%) scale(1)`;
+                currentLaptopTransform = `translate(-120vw, -50%) scale(1)`;
+
+                helloWorld.style.opacity = currentHelloOpacity;
+                helloWorld.style.transform = currentHelloTransform;
+                laptopContainer.style.opacity = currentLaptopOpacity;
+                laptopContainer.style.transform = currentLaptopTransform;
+                scrollIndicator.style.opacity = 1;
+            } 
+
+            // ===============================
+            // TRANSITION 1 → 2 (hello/laptop split sides)
+            // ===============================
+            else if (progress < s2) {
+                const t = ease((progress - s1) / (s2 - s1));
+                currentHelloX = 25 * t;
+                currentHelloOpacity = 1;
+                currentHelloTransform = `translate(${currentHelloX}vw, -50%) translateX(-50%)`;
+
+                currentLaptopX = 10 * t;
+                currentLaptopOpacity = 1;
+                currentLaptopScale = 1;
+                currentLaptopTransform = `translate(${currentLaptopX}vw, -50%) scale(1)`;
+
+                helloWorld.style.opacity = currentHelloOpacity;
+                helloWorld.style.transform = currentHelloTransform;
+                laptopContainer.style.opacity = currentLaptopOpacity;
+                laptopContainer.style.transform = currentLaptopTransform;
+                scrollIndicator.style.opacity = 0;
+            } 
+
+            // ===============================
+            // TRANSITION 2 → 3 (hello exits, laptop moves/rotates)
+            // ===============================
+            else if (progress < s3) {
+                const t = ease((progress - s2) / (s3 - s2));
+                currentHelloX = 50 * t;
+                currentHelloOpacity = 1 - t;
+                currentHelloTransform = `translate(${currentHelloX}vw, -50%) translateX(-50%)`;
+
+                currentLaptopX = 10 + (50 - 25) * t;
+                currentLaptopOpacity = 1;
+                currentLaptopScale = 1;
+                currentLaptopRotateY = 180 - 180 * t;
+                currentLaptopTransform = `translate(${currentLaptopX}vw, -50%) scale(1)`;
+
+                helloWorld.style.opacity = currentHelloOpacity;
+                helloWorld.style.transform = currentHelloTransform;
+                laptopContainer.style.opacity = currentLaptopOpacity;
+                laptopContainer.style.transform = currentLaptopTransform;
+                // Camera orbit/other features remain commented as before
+            } 
+
+            // ===============================
+            // TRANSITION 3 → 4 (zoom/fade laptop, fade in html)
+            // ===============================
+            else if (progress <= s4) {
+                const t = clamp((progress - s3) / (s4 - s3));
+                currentLaptopX = 50;
+                let laptopAlpha = 1;
+                if (t > 0.9) {
+                    laptopAlpha = 1 - (t - 0.9) / 0.1;
+                    if (laptopAlpha < 0) laptopAlpha = 0;
+                }
+                currentLaptopOpacity = laptopAlpha;
+                currentLaptopScale = 1 + 10 * t;
+                const currentLaptopPerspective = 'perspective(2000px) ';
+                currentLaptopTransform = `${currentLaptopPerspective}translate(${currentLaptopX}vw, -20%) translateX(-50%) scale(${currentLaptopScale})`;
+
+                helloWorld.style.opacity = 0;
+                laptopContainer.style.opacity = currentLaptopOpacity;
+                laptopContainer.style.transform = currentLaptopTransform;
+
+                // Fade in fullWebsite
+                let siteAlpha = 0;
+                if (t > 0.2) siteAlpha = (t - 0.2) / 0.8;
+                fullWebsite.style.opacity = siteAlpha;
+                fullWebsite.style.transform = `scale(${0.8 + 0.2 * siteAlpha})`;
+                if (siteAlpha === 1) fullWebsite.style.pointerEvents = 'auto';
+            }
+
+            // Expose state for debugging/inspection
+            window.__cinematicScrollState = {
+                progress: progress,
+                hello: {
+                    x: currentHelloX,
+                    opacity: currentHelloOpacity,
+                    transform: helloWorld.style.transform
+                },
+                laptop: {
+                    x: currentLaptopX,
+                    opacity: currentLaptopOpacity,
+                    scale: currentLaptopScale,
+                    rotateY: typeof currentLaptopRotateY !== 'undefined' ? currentLaptopRotateY : 0,
+                    transform: laptopContainer.style.transform
+                }
+            };
+        }
+
+        let ticking = false;
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    updateScene();
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        });
+        window.addEventListener('resize', () => {
+            totalHeight = scrollContainer.offsetHeight - window.innerHeight;
+            updateScene();
+        });
+        updateScene();
+    </script>
+    <script src="assets/js/techBg.js"></script>
+    <script src="assets/js/opener.js"></script>
+
+</body>
+</html>
