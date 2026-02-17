@@ -8,11 +8,22 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="assets/css/styles.css">
     <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Bebas+Neue&family=Syne:wght@400;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+
 </head>
 
 <body>
     <!-- Custom Cursor -->
-    <div class="cursor"></div>
+    <div class="cursor" id="cursor"></div>
+    <div class="cursor-follower" id="cursor-follower"></div>
+
+    <div class="corner corner-tl" id="corner-tl"></div>
+    <div class="corner corner-tr" id="corner-tr"></div>
+    <div class="corner corner-bl" id="corner-bl"></div>
+    <div class="corner corner-br" id="corner-br"></div>
 
     <!-- Scroll Progress -->
     <div class="scroll-progress" id="scrollProgress"></div>
@@ -24,23 +35,35 @@
         <div class="grid-container"></div>
         <div class="tech-lines" id="techLines"></div>
     </div>
-    <div class="scroll-container">
+    <div class="scroll-container" id="scrollContainer">
         <div class="canvas-container">
-            <div class="hello-world" style="
-                position: fixed;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%) scale(0.4);
-                opacity: 0;
-                transition: transform 4s cubic-bezier(0.56,1.74,0.21,0.96), opacity 1.2s;
-                z-index: 1001;">
-                hello world
+            <div class="terminal-wrapper">
+                <div class="terminal" id="introTerminal" style="
+                animation: terminalScaleIn 2s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+            ">
+                    <div class="terminal-bar">
+                        <div class="dot dot-r"></div>
+                        <div class="dot dot-y"></div>
+                        <div class="dot dot-g"></div>
+                        <span class="terminal-title">~/portfolio — bash</span>
+                    </div>
+                    <div class="terminal-body" id="terminalBody"></div>
+                    <div class="status-bar">
+                        <div class="status-item">
+                            <div class="status-dot"></div>SYSTEM: ONLINE
+                        </div>
+                        <div class="status-item" style="margin-left:auto">UTC+02:00</div>
+                        <div class="status-item">NODE v20</div>
+                    </div>
+                </div>
             </div>
-            <div class="laptop-container">
-                <model-viewer id="laptopModel" src="laptop.glb" alt="3D laptop" camera-controls disable-zoom
-                    interaction-prompt="none" exposure="1.2" shadow-intensity="1"
-                    style="background:transparent;"></model-viewer>
-            </div>          
+            <div class="laptop-container" style="width: 700px; height: 450px; max-width: 90vw; margin: 0 auto;">
+                <model-viewer id="laptopHero" src="laptop.glb" camera-orbit="-90deg 90deg auto" disable-zoom
+                    exposure="1" shadow-intensity="0" interaction-prompt="none"
+                    style="background: transparent; width: 100%; height: 100%;">
+                </model-viewer>
+            </div>
+
             <div class="scroll-indicator" id="scrollInd">
                 <div class="scroll-text">Scroll</div>
                 <div class="scroll-arrow"></div>
@@ -74,7 +97,11 @@
                             onerror="this.onerror=null;this.src='https://via.placeholder.com/400'">
                     </div>
                     <div class="hero-text">
-                        <div class="hero-subtitle">Fullstack Developer</div>
+                        <div class="badge">
+                            <div class="badge-pulse"></div>Fullstack Developer
+                        </div>
+
+                        <!-- <div class="hero-subtitle">Fullstack Developer</div> -->
                         <h1 class="hero-title">Turning Ideas<br>Into Reality</h1>
                         <p class="hero-description">Building modern web applications with precision, creativity, and
                             cutting-edge technology.</p>
@@ -85,99 +112,103 @@
 
             <!-- Skills -->
             <section id="skills" class="skills-section">
-                <h2 class="section-title">My Skills</h2>
+                <h2 class="section-title">Technical Stack</h2>
                 <div class="skills-carousel">
                     <div class="skills-track">
-                        <!-- First set -->
-                        <div class="skill-card">
-                            <div class="skill-icon"><i class="fab fa-react"></i></div>
-                            <div class="skill-name">React</div>
+                        <!-- Frontend -->
+                        <div class="skill-group">
+                            <div class="skill-group-cards">
+                                <div class="skill-card">
+                                    <div class="skill-icon"><i class="fab fa-react"></i></div>
+                                    <div class="skill-name">React</div>
+                                </div>
+                                <div class="skill-card">
+                                    <div class="skill-icon"><i class="fab fa-js"></i></div>
+                                    <div class="skill-name">JavaScript</div>
+                                </div>
+                                <div class="skill-card">
+                                    <div class="skill-icon"><i class="fab fa-css3-alt"></i></div>
+                                    <div class="skill-name">CSS3</div>
+                                </div>
+                            </div>
+                            <div class="skill-group-header" style="background: #1565c0; color: #fff;">
+                                <h3 class="skill-group-title">Frontend</h3>
+                            </div>
                         </div>
-                        <div class="skill-card">
-                            <div class="skill-icon"><i class="fab fa-node-js"></i></div>
-                            <div class="skill-name">Node.js</div>
+                        <!-- Backend -->
+                        <div class="skill-group">
+                            <div class="skill-group-cards">
+                                <div class="skill-card">
+                                    <div class="skill-icon"><i class="fab fa-node-js"></i></div>
+                                    <div class="skill-name">Node.js</div>
+                                </div>
+                                <div class="skill-card">
+                                    <div class="skill-icon"><i class="fab fa-java"></i></div>
+                                    <div class="skill-name">Java</div>
+                                </div>
+                                <div class="skill-card">
+                                    <div class="skill-icon"><i class="fab fa-python"></i></div>
+                                    <div class="skill-name">Python</div>
+                                </div>
+                            </div>
+                            <div class="skill-group-header" style="background: #0d47a1; color: #fff;">
+                                <h3 class="skill-group-title">Backend</h3>
+                            </div>
                         </div>
-                        <div class="skill-card">
-                            <div class="skill-icon"><i class="fab fa-python"></i></div>
-                            <div class="skill-name">Python</div>
+                        <!-- Data -->
+                        <div class="skill-group">
+                            <div class="skill-group-cards">
+                                <div class="skill-card">
+                                    <div class="skill-icon"><i class="fas fa-database"></i></div>
+                                    <div class="skill-name">SQL</div>
+                                </div>
+                                <div class="skill-card">
+                                    <div class="skill-icon"><i class="fas fa-leaf"></i></div>
+                                    <div class="skill-name">MongoDB</div>
+                                </div>
+                            </div>
+                            <div class="skill-group-header" style="background: #102840; color: #fff;">
+                                <h3 class="skill-group-title">Data</h3>
+                            </div>
                         </div>
-                        <div class="skill-card">
-                            <div class="skill-icon"><i class="fas fa-database"></i></div>
-                            <div class="skill-name">MongoDB</div>
+                        <!-- DevOps -->
+                        <div class="skill-group">
+                            <div class="skill-group-cards">
+                                <div class="skill-card">
+                                    <div class="skill-icon"><i class="fab fa-git-alt"></i></div>
+                                    <div class="skill-name">Git</div>
+                                </div>
+                                <div class="skill-card">
+                                    <div class="skill-icon"><i class="fab fa-docker"></i></div>
+                                    <div class="skill-name">Docker</div>
+                                </div>
+                            </div>
+                            <div class="skill-group-header" style="background: #283593; color: #fff;">
+                                <h3 class="skill-group-title">Infrastructure</h3>
+                            </div>
                         </div>
-                        <div class="skill-card">
-                            <div class="skill-icon"><i class="fab fa-git-alt"></i></div>
-                            <div class="skill-name">Git</div>
-                        </div>
-                        <div class="skill-card">
-                            <div class="skill-icon"><i class="fab fa-docker"></i></div>
-                            <div class="skill-name">Docker</div>
-                        </div>
-                        <div class="skill-card">
-                            <div class="skill-icon"><i class="fab fa-js"></i></div>
-                            <div class="skill-name">JavaScript</div>
-                        </div>
-                        <div class="skill-card">
-                            <div class="skill-icon"><i class="fab fa-css3-alt"></i></div>
-                            <div class="skill-name">CSS3</div>
-                        </div>
-                        <div class="skill-card">
-                            <div class="skill-icon"><i class="fab fa-java"></i></div>
-                            <div class="skill-name">Java</div>
-                        </div>
-                        <div class="skill-card">
-                            <div class="skill-icon"><img
-                                    src="https://upload.wikimedia.org/wikipedia/commons/1/18/ISO_C%2B%2B_Logo.svg" alt="C++"
-                                    style="height:2em;width:auto;vertical-align:middle;"></div>
-                            <div class="skill-name">C++</div>
-                        </div>
-                        <!-- Duplicate set for infinite loop -->
-                        <div class="skill-card">
-                            <div class="skill-icon"><i class="fab fa-react"></i></div>
-                            <div class="skill-name">React</div>
-                        </div>
-                        <div class="skill-card">
-                            <div class="skill-icon"><i class="fab fa-node-js"></i></div>
-                            <div class="skill-name">Node.js</div>
-                        </div>
-                        <div class="skill-card">
-                            <div class="skill-icon"><i class="fab fa-python"></i></div>
-                            <div class="skill-name">Python</div>
-                        </div>
-                        <div class="skill-card">
-                            <div class="skill-icon"><i class="fas fa-database"></i></div>
-                            <div class="skill-name">MongoDB</div>
-                        </div>
-                        <div class="skill-card">
-                            <div class="skill-icon"><i class="fab fa-git-alt"></i></div>
-                            <div class="skill-name">Git</div>
-                        </div>
-                        <div class="skill-card">
-                            <div class="skill-icon"><i class="fab fa-docker"></i></div>
-                            <div class="skill-name">Docker</div>
-                        </div>
-                        <div class="skill-card">
-                            <div class="skill-icon"><i class="fab fa-js"></i></div>
-                            <div class="skill-name">JavaScript</div>
-                        </div>
-                        <div class="skill-card">
-                            <div class="skill-icon"><i class="fab fa-css3-alt"></i></div>
-                            <div class="skill-name">CSS3</div>
-                        </div>
-                        <div class="skill-card">
-                            <div class="skill-icon"><i class="fab fa-java"></i></div>
-                            <div class="skill-name">Java</div>
-                        </div>
-                        <div class="skill-card">
-                            <div class="skill-icon"><img
-                                    src="https://upload.wikimedia.org/wikipedia/commons/1/18/ISO_C%2B%2B_Logo.svg" alt="C++"
-                                    style="height:2em;width:auto;vertical-align:middle;"></div>
-                            <div class="skill-name">C++</div>
+                        <!-- Core Computer Science -->
+                        <div class="skill-group">
+                            <div class="skill-group-cards">
+                                <div class="skill-card">
+                                    <div class="skill-icon">
+                                        <i class="devicon-cplusplus-plain"></i>
+                                    </div>
+                                    <div class="skill-name">C++</div>
+                                </div>
+                                <div class="skill-card">
+                                    <div class="skill-icon"><i class="fas fa-cubes"></i></div>
+                                    <div class="skill-name">OOP</div>
+                                </div>
+                            </div>
+                            <div class="skill-group-header" style="background: #0a192f; color: #fff;">
+                                <h3 class="skill-group-title">Core Computer Science</h3>
+                            </div>
                         </div>
                     </div>
                 </div>
             </section>
-
+    
             <!-- Projects (University / Independent) -->
             <section id="projects" class="projects-section">
                 <div class="projects-sticky">
@@ -194,7 +225,8 @@
                                     </div>
                                     <h3 class="project-title">Netfilm</h3>
                                     <p class="project-description">Fullstack movie streaming platform with content
-                                        management, real-time recommendations, and an intuitive user experience on web and
+                                        management, real-time recommendations, and an intuitive user experience on web
+                                        and
                                         mobile.</p>
                                     <div class="project-tags">
                                         <span class="tag">React</span>
@@ -223,7 +255,8 @@
                                             onerror="this.onerror=null;this.parentElement.innerHTML='<i class=\'fas fa-gamepad\'></i>'">
                                     </div>
                                     <h3 class="project-title">Brick-Breaker</h3>
-                                    <p class="project-description">A modular, object-oriented Arkanoid-style game in Java
+                                    <p class="project-description">A modular, object-oriented Arkanoid-style game in
+                                        Java
                                         with animations, scoring, and collision logic using the biuoop library.</p>
                                     <div class="project-tags">
                                         <span class="tag">Java</span>
@@ -233,8 +266,7 @@
                                     </div>
                                 </div>
                                 <div class="project-links">
-                                    <a href="https://github.com/mandalaoui/Brick-Breaker" target="_blank"
-                                        class="project-link">
+                                    <a href="https://github.com/mandalaoui/Brick-Breaker" target="_blank" class="project-link">
                                         <i class="fab fa-github"></i> GitHub
                                     </a>
                                 </div>
@@ -251,7 +283,8 @@
                                             onerror="this.onerror=null;this.parentElement.innerHTML='<i class=\'fas fa-building\'></i>'">
                                     </div>
                                     <h3 class="project-title">TrueValueIL</h3>
-                                    <p class="project-description">Interactive web tool for estimating real estate property
+                                    <p class="project-description">Interactive web tool for estimating real estate
+                                        property
                                         value in the Em HaMoshavot neighborhood of Petah Tikva.</p>
                                     <div class="project-tags">
                                         <span class="tag">Wix Velo</span>
@@ -305,24 +338,45 @@
                 <div class="about-grid">
                     <div class="about-text">
                         <h3>Who I Am</h3>
-                        <p>I am a passionate Computer Science student and Fullstack Developer with a strong interest in
-                            building modern web applications. With a background in military service, I bring discipline,
-                            leadership, and problem-solving skills to every project I work on.</p>
-                        <p>I enjoy tackling complex problems and creating elegant solutions through clean, efficient code.
-                            My goal is to continue growing as a developer and contribute to meaningful projects that make a
-                            difference.</p>
+                        <h2 class="bio-title">Computer Science Student &amp; Fullstack Developer</h2>
+                        <p class="bio-text">
+                            I'm a passionate CS student and Fullstack Developer with a strong interest in building modern web applications. With a background in military service, I bring discipline, leadership, and problem-solving skills to every project I work on.
+                          </p>
+                          <p class="bio-text">
+                            I enjoy tackling complex problems and creating elegant solutions through clean, efficient code. My goal is to continue growing as a developer and contribute to meaningful projects that make a difference.
+                          </p>
                     </div>
-                    <div>
+                    <div class="timeline-section">
                         <h3 style="color: var(--primary); margin-bottom: 2rem;">Education & Experience</h3>
-                        <div class="timeline-item">
-                            <h4>Bachelor of Science in Computer Science</h4>
-                            <div class="date">Bar Ilan University | 2023 - Present</div>
-                        </div>
-                        <div class="timeline-item">
-                            <h4>Military Service - Human Resources Officer</h4>
-                            <div class="date">IDF | 2019 - 2022</div>
-                            <p>Served nearly four years as an HR officer in multiple roles across different military units.
-                                Gained extensive leadership and management experience.</p>
+
+                        <div class="timeline">
+                  
+                          <div class="timeline-item">
+                            <div class="timeline-card">
+                              <div class="card-year">2023 — Present</div>
+                              <div class="card-title">B.Sc. in Computer Science</div>
+                              <div class="card-org">Bar Ilan University</div>
+                              <div class="card-desc">Studying core CS fundamentals alongside modern software engineering practices, with a focus on algorithms, web systems, and software design.</div>
+                            </div>
+                          </div>
+                  
+                          <div class="timeline-item">
+                            <div class="timeline-card">
+                              <div class="card-year">2019 — 2022</div>
+                              <div class="card-title">Military Service — HR Officer</div>
+                              <div class="card-org">Israel Defense Forces (IDF)</div>
+                              <div class="card-desc">Served nearly four years as an HR officer across multiple units. Gained extensive leadership, management, and operational decision-making experience.</div>
+                            </div>
+                          </div>
+                  
+                          <div class="timeline-item">
+                            <div class="timeline-card">
+                              <div class="card-year">Personal Projects</div>
+                              <div class="card-title">Fullstack Development</div>
+                              <div class="card-org">Self-Directed</div>
+                              <div class="card-desc">Building real-world applications combining frontend finesse with solid backend architecture — always focused on clean code and great user experience.</div>
+                            </div>
+                          </div>
                         </div>
                     </div>
                 </div>
@@ -370,24 +424,32 @@
                     <a href="https://github.com/mandalaoui" target="_blank" class="social-link">
                         <i class="fab fa-github"></i>
                     </a>
-                    <a href="https://www.linkedin.com/in/omer-mandalaoui-997a6433b/" target="_blank" class="social-link">
+                    <a href="https://www.linkedin.com/in/omer-mandalaoui/" target="_blank" class="social-link">
                         <i class="fab fa-linkedin-in"></i>
                     </a>
                 </div>
-            </section>                
+            </section>
         </main>
 
         <!-- Footer -->
         <footer>
-            <p>© 2025 Omer Mandalaoui. All Rights Reserved.</p>
+            <p>© 2026 Omer Mandalaoui. All Rights Reserved.</p>
             <p>Built with focus and precision</p>
         </footer>
     </div>
 
     <!-- WhatsApp Float Button -->
-    <a href="https://wa.me/972538228882" target="_blank" class="whatsapp-float" aria-label="Contact me on WhatsApp">
+    <a id="whatsappFloat" href="https://wa.me/972538228882" target="_blank" class="whatsapp-float"
+        aria-label="Contact me on WhatsApp">
         <i class="fab fa-whatsapp"></i>
     </a>
+
+    <!-- Laptop Float -->
+    <div class="laptop-float">
+        <model-viewer id="laptopFloat" src="laptop.glb" camera-orbit="0deg 75deg auto" disable-zoom exposure="1"
+            shadow-intensity="0" interaction-prompt="none" style="background: transparent; width: 100%; height: 100%;">
+        </model-viewer>
+    </div>
 
 
     <!-- Modals (Video, Toast) -->
@@ -409,7 +471,10 @@
     <!-- JavaScript (modular, behavior unchanged) -->
     <!-- <script src="assets/js/loader.js"></script> -->
     <script src="assets/js/techBg.js"></script>
-    <script src="assets/js/opener.js"></script>
+    <!-- <script src="assets/js/laptopController.js"></script> -->
+    <!-- <script src="assets/js/opener.js"></script> -->
+    <!-- <script src="assets/js/terminalTyping.js"></script> -->
+    <script src="assets/js/carousel.js"></script>
     <script src="assets/js/theme.js"></script>
     <script src="assets/js/navigation.js"></script>
     <script src="assets/js/cursor.js"></script>
