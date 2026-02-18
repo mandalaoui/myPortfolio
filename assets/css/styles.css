@@ -644,14 +644,15 @@ header.site-header nav {
 .project-card {
     flex-shrink: 0;
     width: 600px;
-    height: 700px;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    min-height: 700px;
+    background: rgba(255, 255, 255, 0.06); /* Slightly more background for more contrast */
+    border: 1px solid rgba(255, 255, 255, 0.18); /* Higher border for better edge separation */
     border-radius: 30px;
     padding: 3rem;
     position: relative;
     overflow: hidden;
     transition: all 0.3s var(--transition-smooth);
+    color: #f4f6fb; /* Make overall card text a light color */
 }
 
 .project-card::before {
@@ -671,17 +672,35 @@ header.site-header nav {
 
 .project-card:hover {
     transform: translateY(-10px);
-    box-shadow: 0 30px 60px rgba(99, 102, 241, 0.3);
+    box-shadow: 0 30px 60px rgba(99, 102, 241, 0.34);
 }
+
+.project-preview {
+    position: absolute;
+    bottom: 8px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    font-size: 1.05em; /* Slightly larger */
+    background: rgba(20, 20, 35, 0.72); /* Darker bg for better text contrast */
+    color: #fff;
+    padding: 4px 0;
+    border-radius: 0 0 8px 8px;
+    opacity: 1;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+}
+
 
 .project-number {
     font-size: 8rem;
     font-weight: 900;
-    color: rgba(255, 255, 255, 0.03);
+    color: rgba(255, 255, 255, 0.055); /* Slightly higher for more clarity */
     position: absolute;
     top: 0;
     right: 2rem;
     line-height: 1;
+    user-select: none;
 }
 
 .project-content {
@@ -695,7 +714,7 @@ header.site-header nav {
 .project-image {
     width: 100%;
     height: 300px;
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.13); /* More visible for image box */
     border-radius: 20px;
     margin-bottom: 2rem;
     display: flex;
@@ -709,6 +728,9 @@ header.site-header nav {
     height: 100%;
     object-fit: cover;
     transition: transform 0.3s var(--transition-smooth);
+    border-radius: 14px;
+    border: 1.5px solid rgba(149,164,255,0.09);
+    background: #15182c;
 }
 
 .project-card:hover .project-image img {
@@ -717,19 +739,28 @@ header.site-header nav {
 
 .project-image i {
     font-size: 4rem;
-    color: rgba(255, 255, 255, 0.2);
+    color: rgba(255, 255, 255, 0.26); /* Slightly more visible fallback icon */
 }
 
 .project-title {
-    font-size: 2rem;
+    font-size: 2.2rem;
     font-weight: 700;
-    margin-bottom: 1rem;
+    margin-bottom: 1.1rem;
+    color: #ffffff; /* pure white for titles */
+    text-shadow: 0 2px 12px rgba(44, 73, 180, 0.09);
+    letter-spacing: 0.01em;
+    line-height: 1.18;
 }
 
 .project-description {
-    color: rgba(255, 255, 255, 0.6);
+    color: #cfe1ff; /* higher contrast and blue-tinted for readability */
+    background: rgba(26, 36, 62, 0.22); /* subtle bg for separation */
+    border-radius: 7px;
+    padding: 0.85rem 1rem;
     margin-bottom: 1.5rem;
-    line-height: 1.6;
+    line-height: 1.82;
+    font-size: 1.09rem;
+    font-weight: 400;
 }
 
 .project-tags {
@@ -740,12 +771,15 @@ header.site-header nav {
 }
 
 .tag {
-    padding: 0.4rem 1rem;
-    background: rgba(99, 102, 241, 0.2);
-    border: 1px solid rgba(99, 102, 241, 0.3);
+    padding: 0.48rem 1.1rem;
+    background: rgba(99, 102, 241, 0.34);
+    border: 1.5px solid rgba(99, 102, 241, 0.8);
     border-radius: 20px;
-    font-size: 0.9rem;
-    color: var(--primary);
+    font-size: 1rem;
+    color: #fff;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    box-shadow: 0 1px 3px rgba(99, 102, 241, 0.08);
 }
 
 .project-links {
@@ -755,23 +789,32 @@ header.site-header nav {
 
 .project-link {
     flex: 1;
-    padding: 0.8rem;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 10px;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.13);
+    border: 1.5px solid rgba(255, 255, 255, 0.19);
+    border-radius: 12px;
     text-decoration: none;
-    color: var(--white);
+    color: #fff;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 0.5rem;
+    gap: 0.6rem;
     transition: all 0.3s var(--transition-smooth);
+    font-size: 1.04rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    box-shadow: 0 2px 10px rgba(53, 81, 186, 0.07);
+    outline: none;
 }
 
-.project-link:hover {
+.project-link:hover,
+.project-link:focus-visible {
     background: var(--primary);
     border-color: var(--primary);
-    transform: translateY(-2px);
+    color: #fff;
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 4px 18px rgba(99, 102, 241, 0.16);
+    text-shadow: 0 1px 7px rgba(44,73,180,0.10);
 }
 
 /* About Section */
@@ -1646,4 +1689,76 @@ footer {
         flex-direction: column;
         gap: 1rem;
     }
+}
+
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 11000;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: auto;
+    background: linear-gradient(120deg, rgba(10,12,24,0.90) 0%, rgba(45,52,75,0.93) 100%);
+    backdrop-filter: blur(3px);
+    transition: background 0.3s, backdrop-filter 0.3s;
+}
+.modal-content {
+    background: var(--background);
+    padding: 1rem 1.5rem 0.5rem 1.5rem;
+    border-radius: 18px;
+    box-shadow: 0 6px 32px rgba(32,40,86,0.18);
+    width: 90vw;
+    max-width: 700px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: modal-fade-in 0.25s cubic-bezier(.34,1.56,.64,1);
+}
+
+@keyframes modal-fade-in {
+    0% {
+        transform: translateY(30px) scale(0.96);
+        opacity: 0;
+    }
+    100% {
+        transform: none;
+        opacity: 1;
+    }
+}
+  
+.modal-content iframe {
+    border-radius: 10px;
+    width: 100%;
+    height: 400px;
+    box-shadow: 0 3px 12px rgba(32,40,86,0.14);
+    background: #181F32;
+    border: none;
+    transition: box-shadow 0.25s;
+}
+
+.close {
+    position: absolute;
+    top: 14px;
+    right: 20px;
+    color: var(--primary, #5585ea);
+    font-size: 2rem;
+    font-weight: bold;
+    cursor: pointer;
+    background: rgba(20,25,40,0.08);
+    border-radius: 50%;
+    padding: 3px 10px;
+    transition: color 0.16s, background 0.16s, transform 0.18s cubic-bezier(.49,1.62,.55,.95);
+    line-height: 1;
+    box-shadow: 0 1px 4px rgba(42,60,120,0.07);
+    z-index: 1;
+    outline: none;
+}
+.close:hover, .close:focus {
+    color: #ef5350;
+    background: rgba(255,86,106,0.15);
+    transform: scale(1.11) rotate(-8deg);
 }

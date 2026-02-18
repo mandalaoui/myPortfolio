@@ -229,9 +229,12 @@
                             <div class="project-number">01</div>
                             <div class="project-content">
                                 <div>
-                                    <div class="project-image">
-                                        <img src="images/netfilm.png" alt="Netfilm"
+                                    <div class="project-image" style="position: relative;">
+                                        <img src="images/netfilm.png" alt="Netfilm" onclick="openVideoModal('videos/Netfilm.mp4')"
                                             onerror="this.onerror=null;this.parentElement.innerHTML='<i class=\'fas fa-film\'></i>'">
+                                        <div class="project-preview">
+                                            Press the image to play the preview.
+                                        </div>
                                     </div>
                                     <h3 class="project-title">Netfilm</h3>
                                     <p class="project-description">Fullstack movie streaming platform with content
@@ -260,9 +263,12 @@
                             <div class="project-number">02</div>
                             <div class="project-content">
                                 <div>
-                                    <div class="project-image">
-                                        <img src="images/brick_breaker.png" alt="Brick-Breaker"
+                                    <div class="project-image"  style="position: relative;">
+                                        <img src="images/brick_breaker.png" alt="Brick-Breaker" onclick="openVideoModal('videos/brick_breaker.mp4')"
                                             onerror="this.onerror=null;this.parentElement.innerHTML='<i class=\'fas fa-gamepad\'></i>'">
+                                        <div class="project-preview">
+                                            Press the image to play the preview.
+                                        </div>
                                     </div>
                                     <h3 class="project-title">Brick-Breaker</h3>
                                     <p class="project-description">A modular, object-oriented Arkanoid-style game in
@@ -461,18 +467,11 @@
         </model-viewer>
     </div>
 
-
-    <!-- Modals (Video, Toast) -->
-    <div id="videoModal" class="modal" aria-hidden="true" role="dialog" aria-modal="true">
-        <div class="modal__content">
-            <button type="button" class="modal__close" data-modal-close aria-label="Close video">
-                &times;
-            </button>
-            <div class="modal__body">
-                <iframe src="" title="Video" width="100%" height="480" frameborder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowfullscreen></iframe>
-            </div>
+    <!-- Video Modal -->
+    <div id="videoModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <iframe id="videoFrame" width="100%" height="400" frameborder="0" allowfullscreen></iframe>
         </div>
     </div>
 
@@ -485,6 +484,7 @@
     <script src="assets/js/opener.js"></script>
     <script src="assets/js/terminalTyping.js"></script>
     <script src="assets/js/carousel.js"></script>
+    <script src="assets/js/videoModal.js"></script>
     <script src="assets/js/theme.js"></script>
     <script src="assets/js/navigation.js"></script>
     <script src="assets/js/cursor.js"></script>
