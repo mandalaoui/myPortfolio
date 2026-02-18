@@ -2,6 +2,19 @@ document.addEventListener("DOMContentLoaded", () => {
   const terminal = document.getElementById("terminalBody");
   const scrollInd = document.querySelector('.scroll-indicator');
 
+  // Helper: detect isMobile via screen size or user agent (broad catch)
+  function isMobile() {
+    return (
+      window.matchMedia &&
+      window.matchMedia("(max-width: 600px)").matches
+    ) || /Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i.test(navigator.userAgent);
+  }
+
+  // Typing parameters, adjusted for mobile UX
+  const charSpeed = isMobile() ? 7 : 25;
+  const linePause = isMobile() ? 10 : 25;
+
+  // Terminal lines (shared)
   const lines = [
     { type: "command", text: "run Omer_Mandalaoui_Portfolio.sh" },
     { type: "output", text: "[Parsing ideas…]" },
@@ -10,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
     { type: "output", text: "[Shipping results…]" },
     { type: "space" },
     { type: "success", text: "System ready." },
-    { type: "muted", text: "Scroll to continue." },
+    { type: "muted", text: isMobile() ? "Swipe down to continue." : "Scroll to continue." },
     { type: "cursor" }
   ];
 
@@ -19,35 +32,51 @@ document.addEventListener("DOMContentLoaded", () => {
   let activeElement = null;
   let typingActive = true;
 
-  const charSpeed = 25;
-  const linePause = 25;
-
-  // Skip terminalTyping if user already scrolled
+  // If user already scrolled, skip terminal typing
   if (window.scrollY > 50) {
     document.body.classList.add('skip-terminalTyping');
   }
 
+  // Adjust terminal text size on mobile for smaller font
+  function adjustTerminalFontSize() {
+    if (isMobile() && terminal) {
+      terminal.style.fontSize = "12px";
+    }
+  }
+  adjustTerminalFontSize();
+
+  // On resize, continuously ensure small text for mobile
+  window.addEventListener("resize", adjustTerminalFontSize);
+
   function updateScrollIndicator() {
     if (scrollInd) {
-      // When typing, hide; else, show
+      // Hide on typing, show after
       scrollInd.style.opacity = typingActive ? "0" : "1";
+      // Add mobile hint if on mobile
+      if (isMobile()) {
+        const scrollText = scrollInd.querySelector('.scroll-text');
+        if (scrollText) {
+          scrollText.textContent = typingActive ? '' : "Swipe";
+        }
+      }
     }
   }
 
   function freezeScroll(freeze) {
     if (!document.body.classList.contains('skip-terminalTyping')) {
-      // Set scroll freeze
-      if (freeze) {        
+      // For mobile, also disable touch scroll
+      if (freeze) {
         document.body.style.overflow = "hidden";
+        document.body.style.touchAction = "none";
       } else {
         document.body.style.overflow = "";
+        document.body.style.touchAction = "";
       }
     }
     updateScrollIndicator();
   }
 
   function typeLine() {
-    // Freeze scroll only while typing (also triggers scroll indicator update)
     freezeScroll(typingActive);
 
     if (lineIndex >= lines.length) {
@@ -69,8 +98,10 @@ document.addEventListener("DOMContentLoaded", () => {
       const div = document.createElement("div");
       div.className = "t-line";
       div.innerHTML = `<span class="prompt">❯</span><span class="cursor-blink"></span>`;
+      if (isMobile()) {
+        div.style.fontSize = "12px";
+      }
       terminal.appendChild(div);
-      // Typing ends after showing cursor
       typingActive = false;
       freezeScroll(false);
       return;
@@ -79,9 +110,11 @@ document.addEventListener("DOMContentLoaded", () => {
     // When a new line starts, create containers appropriately and set activeElement
     if (charIndex === 0) {
       if (line.type === "command") {
-        // Command line: ❯ + typing span
         const container = document.createElement("div");
         container.className = "t-line";
+        if (isMobile()) {
+          container.style.fontSize = "12px";
+        }
 
         const prompt = document.createElement("span");
         prompt.className = "prompt";
@@ -89,6 +122,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const typingSpan = document.createElement("span");
         typingSpan.className = "typing";
+        if (isMobile()) {
+          typingSpan.style.fontSize = "12px";
+        }
 
         container.appendChild(prompt);
         container.appendChild(typingSpan);
@@ -96,21 +132,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
         activeElement = typingSpan;
       } else {
-        // Output & other lines: simple colored div
         const container = document.createElement("div");
         container.className = "out typing";
         container.style.color =
           line.type === "success" ? "#00f5ff" :
           line.type === "muted" ? "#8892a4" :
           "#a4ff80";
-
+        if (isMobile()) {
+          container.style.fontSize = "12px";
+        }
         terminal.appendChild(container);
 
         activeElement = container;
       }
     }
 
-    // Append next character
     if (activeElement && line.text) {
       activeElement.textContent += line.text.charAt(charIndex);
     }
@@ -129,4 +165,56 @@ document.addEventListener("DOMContentLoaded", () => {
   typingActive = true;
   freezeScroll(true);
   typeLine();
+
+  // Optionally, if on mobile: allow user to tap/scroll to skip animation fast
+  if (isMobile()) {
+    let skipped = false;
+    function skipTyping() {
+      if (!skipped && typingActive) {
+        skipped = true;
+        typingActive = false;
+        // Clear terminal and show all lines instantly, at smaller font
+        terminal.innerHTML = "";
+        lines.forEach(line => {
+          if (line.type === "space") {
+            terminal.appendChild(document.createElement("br"));
+          } else if (line.type === "cursor") {
+            const div = document.createElement("div");
+            div.className = "t-line";
+            div.innerHTML = `<span class="prompt">❯</span><span class="cursor-blink"></span>`;
+            div.style.fontSize = "12px";
+            terminal.appendChild(div);
+          } else if (line.type === "command") {
+            const container = document.createElement("div");
+            container.className = "t-line";
+            container.style.fontSize = "12px";
+            const prompt = document.createElement("span");
+            prompt.className = "prompt";
+            prompt.textContent = "❯";
+            const typingSpan = document.createElement("span");
+            typingSpan.className = "typing";
+            typingSpan.textContent = line.text;
+            typingSpan.style.fontSize = "12px";
+            container.appendChild(prompt);
+            container.appendChild(typingSpan);
+            terminal.appendChild(container);
+          } else {
+            const container = document.createElement("div");
+            container.className = "out typing";
+            container.style.color =
+              line.type === "success" ? "#00f5ff" :
+              line.type === "muted" ? "#8892a4" :
+              "#a4ff80";
+            container.textContent = line.text;
+            container.style.fontSize = "12px";
+            terminal.appendChild(container);
+          }
+        });
+        freezeScroll(false);
+      }
+    }
+    // Allow tap anywhere or quick swipe to skip
+    document.addEventListener("touchstart", skipTyping, { passive: true });
+    document.addEventListener("mousedown", skipTyping, { passive: true });
+  }
 });

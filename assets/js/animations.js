@@ -1,5 +1,3 @@
-// Fade-in and fade-out on scroll: elements smoothly appear when in view, disappear when out.
-
 (function () {
   const FADE_SELECTORS = [
     '.timeline-item',
