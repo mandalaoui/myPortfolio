@@ -664,7 +664,6 @@ header.site-header nav {
     overflow: hidden;
     transition: all 0.3s var(--transition-smooth);
     color: #f4f6fb; /* Make overall card text a light color */
-    height: 80vh;
 
 }
 
