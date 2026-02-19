@@ -35,6 +35,8 @@ window.addEventListener("load", () => {
         cornerTR: document.getElementById('corner-tr'),
         cornerBL: document.getElementById('corner-bl'),
         cornerBR: document.getElementById('corner-br'),
+        canvasContainer: document.querySelector('.canvas-container'),
+
     };
 
     // ─── Helpers ──────────────────────────────────────────────────────────────
@@ -121,7 +123,6 @@ window.addEventListener("load", () => {
             state.hello.transform = `translate3d(100vw, -50%, 0) translateX(-50%)`;
             state.scrollIndicatorOpacity = 0;
             state.uiVisible = true;
-            // state.scrollContainerDisplay = 'none';
         }
         return state;
     }
@@ -166,6 +167,16 @@ window.addEventListener("load", () => {
         if (el.cornerTR) el.cornerTR.style.opacity = state.uiVisible ? '1' : '0';
         if (el.cornerBL) el.cornerBL.style.opacity = state.uiVisible ? '1' : '0';
         if (el.cornerBR) el.cornerBR.style.opacity = state.uiVisible ? '1' : '0';
+
+        if (el.canvasContainer) {
+            if (state.uiVisible) {
+                el.canvasContainer.style.pointerEvents = 'none';
+                el.canvasContainer.style.zIndex = '-1';
+            } else {
+                el.canvasContainer.style.pointerEvents = 'auto';
+                el.canvasContainer.style.zIndex = '5';
+            }
+        }
     }
 
     // ─── Smoothed scroll loop ─────────────────────────────────────────────────

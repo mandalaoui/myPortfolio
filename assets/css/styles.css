@@ -542,7 +542,7 @@ header.site-header nav {
     color: #fff;
     font-size: 1rem;
     font-weight: bold;
-    cursor: pointer;
+    cursor: grab;
     position: relative;
 }
 
@@ -637,12 +637,10 @@ header.site-header nav {
 .projects-sticky {
     position: sticky;
     top: 10%;
-    height: 80vh;
     overflow: hidden;
     display: flex;
     align-items: center;
     height: 90vh;
-
 }
 
 .projects-container {
@@ -650,12 +648,20 @@ header.site-header nav {
     gap: 3rem;
     padding: 0 4rem;
     will-change: transform;
+    /* Add space before first and after last project card */
+}
+.projects-container > .project-card:first-child {
+    margin-left: 10vw;
+}
+
+.projects-container > .project-card:last-child {
+    margin-right: 10vw;
 }
 
 .project-card {
     flex-shrink: 0;
-    width: 600px;
-    min-height: 700px;
+    width: 30vw;
+    height: 85vh;
     background: rgba(255, 255, 255, 0.06); /* Slightly more background for more contrast */
     border: 1px solid rgba(255, 255, 255, 0.18); /* Higher border for better edge separation */
     border-radius: 30px;
@@ -664,7 +670,6 @@ header.site-header nav {
     overflow: hidden;
     transition: all 0.3s var(--transition-smooth);
     color: #f4f6fb; /* Make overall card text a light color */
-
 }
 
 .project-card::before {
@@ -687,22 +692,83 @@ header.site-header nav {
     box-shadow: 0 30px 60px rgba(99, 102, 241, 0.34);
 }
 
-.project-preview {
+.project-ribbon {
     position: absolute;
-    bottom: 8px;
-    left: 0;
-    width: 100%;
+    top: 18px;
+    left: -45px;
+    width: 160px;
     text-align: center;
-    font-size: 1.05em; /* Slightly larger */
-    background: rgba(20, 20, 35, 0.72); /* Darker bg for better text contrast */
+    background: linear-gradient(135deg, #6366f1, #4f46e5);
     color: #fff;
-    padding: 4px 0;
-    border-radius: 0 0 8px 8px;
-    opacity: 1;
-    font-weight: 500;
-    letter-spacing: 0.01em;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    padding: 6px 0;
+    transform: rotate(-45deg);
+    box-shadow: 0 6px 18px rgba(99, 102, 241, 0.4);
+    text-transform: uppercase;
+    z-index: 5;
+    cursor: pointer;
+    transition: all 0.3s ease;
 }
 
+/* ─── Project Header ───────────────────────── */
+
+.project-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* ─── Project Type Badge ───────────────────── */
+
+.project-type {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 5px 12px;
+    border-radius: 999px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.project-type i {
+    font-size: 0.75rem;
+}
+
+/* Academic */
+
+.project-type.academic {
+    background: linear-gradient(90deg, #005a6e 0%, #6366f1 100%);
+    color: #fff;
+    border: 2px solid #017690;
+    /* box-shadow: 0 2px 12px 0 rgba(0,207,255,0.22); */
+}
+
+/* Client */
+
+.project-type.client {
+    background: rgba(0, 255, 136, 0.12);
+    color: #00ff88;
+    border: 1px solid rgba(0, 255, 136, 0.4);
+}
+
+/* Independent */
+
+.project-type.independent {
+    background: rgba(255, 196, 0, 0.12);
+    color: #ffc400;
+    border: 1px solid rgba(255, 196, 0, 0.4);
+}
+
+.project-card:hover .project-ribbon {
+    background: linear-gradient(135deg, #00f5ff, #5b7fff);
+    box-shadow: 0 10px 28px rgba(0, 245, 255, 0.5);
+    transform: rotate(-45deg) scale(1.05);
+}
 
 .project-number {
     font-size: 2.4rem;
@@ -717,7 +783,6 @@ header.site-header nav {
     z-index: 2;
 }
 
-
 .project-content {
     position: relative;
     height: 100%;
@@ -728,7 +793,7 @@ header.site-header nav {
 
 .project-image {
     width: 100%;
-    height: 300px;
+    height: 250px;
     background: rgba(255, 255, 255, 0.13); /* More visible for image box */
     border-radius: 20px;
     margin-bottom: 2rem;
@@ -760,8 +825,7 @@ header.site-header nav {
 .project-title {
     font-size: 1.85rem;
     font-weight: 700;
-    margin-bottom: 0.9rem;
-    color: #ffffff; /* pure white for titles */
+    color: #ffffff;
     text-shadow: 0 2px 12px rgba(44, 73, 180, 0.09);
     letter-spacing: 0.01em;
     line-height: 1.18;
@@ -786,11 +850,11 @@ header.site-header nav {
 }
 
 .tag {
-    padding: 0.43rem 0.98rem;
+    padding: 0.35rem 0.8rem;
     background: rgba(99, 102, 241, 0.34);
     border: 1.5px solid rgba(99, 102, 241, 0.8);
     border-radius: 20px;
-    font-size: 0.98rem;
+    font-size: 0.85rem;
     color: #fff;
     font-weight: 600;
     letter-spacing: 0.03em;
@@ -1689,9 +1753,9 @@ footer {
     border-radius: 18px;
     box-shadow: 0 6px 32px rgba(32,40,86,0.18);
     width: 90vw;
-    max-width: 700px;
+    max-width: 900px;
     position: absolute;
-    height: 450px;
+    height: 550px;
     top: 0; 
     left: 0; 
     right: 0; 
@@ -1717,7 +1781,7 @@ footer {
 .modal-content iframe {
     border-radius: 10px;
     width: 100%;
-    height: 400px;
+    height: 500px;
     box-shadow: 0 3px 12px rgba(32,40,86,0.14);
     background: #181F32;
     border: none;

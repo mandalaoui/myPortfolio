@@ -226,130 +226,9 @@
             <section id="projects" class="projects-section">
                 <h2 class="section-title">Projects</h2>
                 <div class="projects-sticky">
-                    <div class="projects-container" id="projectsContainer">
-                        <!-- Project 1: Netfilm -->
-                        <div class="project-card">
-                            <div class="project-number">01</div>
-                            <div class="project-content">
-                                <div>
-                                    <div class="project-image" style="position: relative;">
-                                        <img src="images/netfilm.png" alt="Netfilm" onclick="openVideoModal('videos/Netfilm.mp4')"
-                                            onerror="this.onerror=null;this.parentElement.innerHTML='<i class=\'fas fa-film\'></i>'">
-                                        <div class="project-preview">
-                                            Press the image to play the preview.
-                                        </div>
-                                    </div>
-                                    <h3 class="project-title">Netfilm</h3>
-                                    <p class="project-description">Fullstack movie streaming platform with content
-                                        management, real-time recommendations, and an intuitive user experience on web
-                                        and
-                                        mobile.</p>
-                                    <div class="project-tags">
-                                        <span class="tag">React</span>
-                                        <span class="tag">Node.js</span>
-                                        <span class="tag">MongoDB</span>
-                                        <span class="tag">JWT</span>
-                                        <span class="tag">REST API</span>
-                                        <span class="tag">Android</span>
-                                    </div>
-                                </div>
-                                <div class="project-links">
-                                    <a href="https://github.com/mandalaoui/Netfilm" target="_blank" class="project-link">
-                                        <i class="fab fa-github"></i> GitHub
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Project 2: Brick-Breaker -->
-                        <div class="project-card">
-                            <div class="project-number">02</div>
-                            <div class="project-content">
-                                <div>
-                                    <div class="project-image"  style="position: relative;">
-                                        <img src="images/brick_breaker.png" alt="Brick-Breaker" onclick="openVideoModal('videos/brick_breaker.mp4')"
-                                            onerror="this.onerror=null;this.parentElement.innerHTML='<i class=\'fas fa-gamepad\'></i>'">
-                                        <div class="project-preview">
-                                            Press the image to play the preview.
-                                        </div>
-                                    </div>
-                                    <h3 class="project-title">Brick-Breaker</h3>
-                                    <p class="project-description">A modular, object-oriented Arkanoid-style game in
-                                        Java
-                                        with animations, scoring, and collision logic using the biuoop library.</p>
-                                    <div class="project-tags">
-                                        <span class="tag">Java</span>
-                                        <span class="tag">OOP</span>
-                                        <span class="tag">biuoop</span>
-                                        <span class="tag">Ant</span>
-                                    </div>
-                                </div>
-                                <div class="project-links">
-                                    <a href="https://github.com/mandalaoui/Brick-Breaker" target="_blank" class="project-link">
-                                        <i class="fab fa-github"></i> GitHub
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Project 3: TrueValueIL -->
-                        <div class="project-card">
-                            <div class="project-number">03</div>
-                            <div class="project-content">
-                                <div>
-                                    <div class="project-image">
-                                        <img src="images/TrueValueIL.png" alt="TrueValueIL"
-                                            onerror="this.onerror=null;this.parentElement.innerHTML='<i class=\'fas fa-building\'></i>'">
-                                    </div>
-                                    <h3 class="project-title">TrueValueIL</h3>
-                                    <p class="project-description">Interactive web tool for estimating real estate
-                                        property
-                                        value in the Em HaMoshavot neighborhood of Petah Tikva.</p>
-                                    <div class="project-tags">
-                                        <span class="tag">Wix Velo</span>
-                                        <span class="tag">JavaScript</span>
-                                        <span class="tag">Wix CMS</span>
-                                    </div>
-                                </div>
-                                <div class="project-links">
-                                    <a href="https://www.truevalueil.com/" target="_blank" class="project-link">
-                                        <i class="fas fa-external-link-alt"></i> Visit Site
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Project 4: AI משכנתאות -->
-                        <div class="project-card">
-                            <div class="project-number">04</div>
-                            <div class="project-content">
-                                <div>
-                                    <div class="project-image">
-                                        <img src="images/mortgAI.png" alt="AI משכנתאות"
-                                            onerror="this.onerror=null;this.parentElement.innerHTML='<i class=\'fas fa-chart-line\'></i>'">
-                                    </div>
-                                    <h3 class="project-title">AI משכנתאות</h3>
-                                    <p class="project-description">An AI-driven tool that analyzes your mortgage and
-                                        provides personalized refinancing suggestions in Hebrew, with automated rate
-                                        updates.</p>
-                                    <div class="project-tags">
-                                        <span class="tag">React</span>
-                                        <span class="tag">Node.js</span>
-                                        <span class="tag">OpenAI API</span>
-                                        <span class="tag">Express</span>
-                                    </div>
-                                </div>
-                                <div class="project-links">
-                                    <a href="https://mortgage-ai.netlify.app/" target="_blank" class="project-link">
-                                        <i class="fas fa-external-link-alt"></i> Visit Site
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
+                    <div class="projects-container" id="projectsContainer"></div>
                 </div>
-            </section>
+            </section>         
 
             <!-- About -->
             <section id="about" class="about-section">
@@ -489,6 +368,7 @@
     <script src="assets/js/carousel.js"></script>
     <script src="assets/js/videoModal.js"></script>
     <script src="assets/js/mobileNav.js"></script>
+    <script type="module" src="assets/js/projectsRenderer.js"></script>
     <script src="assets/js/theme.js"></script>
     <script src="assets/js/navigation.js"></script>
     <script src="assets/js/cursor.js"></script>
