@@ -1995,9 +1995,12 @@ footer {
     overflow: visible;
   }
   .projects-container {
+    display: flex;
     flex-direction: column;
     gap: 1.5rem;
     padding: 0;
+    align-items: center;
+    /* Center contents horizontally */
   }
   .projects-container > .project-card:first-child {
     margin-left: 0;
@@ -2017,6 +2020,8 @@ footer {
     display: flex;
     flex-direction: column;
     align-items: center;
+    /* Center self horizontally */
+    justify-content: center;
   }
   .project-type {
     font-size: 0.62rem;
@@ -2058,7 +2063,9 @@ footer {
   }
   .project-links {
     gap: .5rem;
-    flex-direction: column;
+    /* flex-direction: column; */
+    align-items: center;
+    display: flex;
   }
   .project-link {
     font-size: .96rem;
