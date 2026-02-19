@@ -651,11 +651,11 @@ header.site-header nav {
     /* Add space before first and after last project card */
 }
 .projects-container > .project-card:first-child {
-    margin-left: 10vw;
+    margin-left: 20vw;
 }
 
 .projects-container > .project-card:last-child {
-    margin-right: 10vw;
+    margin-right: 20vw;
 }
 
 .project-card {
@@ -1236,6 +1236,18 @@ header.site-header nav {
     font-size: 1.5rem;
     color: var(--primary);
 }
+
+.contact-link {
+    color: inherit;
+    text-decoration: none;
+}
+
+.contact-link:visited,
+.contact-link:active,
+.contact-link:hover {
+    color: inherit;
+}
+
 
 .social-links {
     display: flex;
@@ -1985,7 +1997,13 @@ footer {
   .projects-container {
     flex-direction: column;
     gap: 1.5rem;
-    padding: 0 0vw;
+    padding: 0;
+  }
+  .projects-container > .project-card:first-child {
+    margin-left: 0;
+  }
+  .projects-container > .project-card:last-child {
+    margin-right: 0;
   }
   .project-card {
     min-width: 0;
@@ -1994,11 +2012,15 @@ footer {
     padding: 1.3rem 0.95rem 1.7rem 0.95rem;
     border-radius: 15px;
     min-height: 340px;
-    margin-left: auto;
-    margin-right: auto;
+    margin-left: 0;
+    margin-right: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
+  }
+  .project-type {
+    font-size: 0.62rem;
+    padding: 3px 9px;
   }
   .project-image {
     height: 135px;
