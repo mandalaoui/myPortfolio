@@ -4,7 +4,7 @@ export const projectsData = [
     title: "TeacherAssistantAI",
     type: "academic",
     image: "images/TeacherAssistantAI.png",
-    video: "videos/TeacherAssistantAI.mp4",
+    video: "https://res.cloudinary.com/dpwwlrcvz/video/upload/v1771521854/TeacherAssistantAI_nhtibi.mp4",
     description:
       "A full-stack platform that helps students discover new research ideas through SQL-based exploration and large-scale analysis of academic literature, featuring an integrated AI agent for intelligent research guidance.",
     tags: ["Sql", "TypeScript", "JavaScript", "OpenAlex", "Groq"],
@@ -16,7 +16,7 @@ export const projectsData = [
     title: "Netfilm",
     type: "academic",
     image: "images/netfilm.png",
-    video: "videos/Netfilm.mp4",
+    video: "https://res.cloudinary.com/dpwwlrcvz/video/upload/v1771521858/Netfilm_rkigdk.mp4",
     description:
       "Fullstack movie streaming platform with content management, real-time recommendations, and an intuitive user experience on web and mobile.",
     tags: ["React", "Node.js", "MongoDB", "JWT", "REST API", "Android"],
@@ -48,7 +48,7 @@ export const projectsData = [
     title: "wanderwise",
     type: "independent",
     image: "images/wanderwise.png",
-    video: "videos/wanderwise.mp4",
+    video: "https://res.cloudinary.com/dpwwlrcvz/video/upload/v1771521863/wanderwise_bq3gbz.mp4",
     description:
       "WanderWise is a personalized trip recommendation system that constructs multi-day hiking itineraries across Israel based on user preferences, powered by a modular backend and ready for AI-driven logic.",
     tags: [
@@ -110,7 +110,7 @@ export const projectsData = [
     title: "Brick-Breaker",
     type: "academic",
     image: "images/brick_breaker.png",
-    video: "videos/brick_breaker.mp4",
+    video: "https://res.cloudinary.com/dpwwlrcvz/video/upload/v1771521846/brick_breaker_msnwwz.mp4",
     description:
       "A modular, object-oriented Arkanoid-style game in Java with animations, scoring, and collision logic using the biuoop library.",
     tags: ["Java", "OOP", "biuoop", "Ant"],

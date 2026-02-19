@@ -1,24 +1,40 @@
 const modal = document.getElementById("videoModal");
-const videoFrame = document.getElementById("videoFrame");
+const video = document.getElementById("videoPlayer");
 const closeBtn = document.querySelector(".modal .close");
+const source = document.getElementById("videoSource");
 
 function openVideoModal(videoUrl) {
-    videoFrame.src = videoUrl;
+    source.src = videoUrl;
+    video.load();
+
     modal.style.display = "block";
+    video.play();
+
 }
 
 closeBtn.onclick = () => {
-    videoFrame.src = ""; // Stop video
-    videoFrame.muted = true; 
+    video.pause();
+    video.currentTime = 0;
     modal.style.display = "none";
 };
 
 window.onclick = (event) => {
     if (event.target === modal) {
-        videoFrame.src = "";
+        video.pause();
+        video.currentTime = 0;
         modal.style.display = "none";
     }
 };
+
+document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+        video.pause();
+        video.currentTime = 0;
+        modal.style.display = "none";
+    }
+});
+
+
 
 function showToast(message, isError = false) {
     const toast = document.getElementById('toast');
