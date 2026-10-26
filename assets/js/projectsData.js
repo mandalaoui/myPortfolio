@@ -20,6 +20,27 @@ export const projectsData = [
   },
   {
     id: 2,
+    title: "AI Automation Marketplace",
+    type: "academic",
+    image: "images/AI_Marketplace.png",
+    video: "videos/AI_Marketplace.mp4",
+    description:
+      "A marketplace for AI-agent and automation products. Creators build automations in a visual, node-based workflow builder; once a workflow is reviewed and published, it becomes a purchasable product; customers buy it and receive their own running instance.",
+    tags: [
+      "Angular",
+      "TypeScript",
+      "Node.js",
+      "PostgreSQL",
+      "REST API",
+      "JWT",
+      "Docker Compose",
+      "AI Integration"
+    ],
+    github: "https://github.com/mandalaoui/LOT",
+    ribbon: true
+  },
+  {
+    id: 3,
     title: "WanderWise",
     type: "independent",
     image: "images/wanderwise.png",
@@ -40,7 +61,7 @@ export const projectsData = [
     ribbon: true
   },
   {
-    id: 3,
+    id: 4,
     title: "TeacherAssistantAI",
     type: "academic",
     image: "images/TeacherAssistantAI.png",
@@ -60,7 +81,7 @@ export const projectsData = [
     ribbon: true
   },
   {
-    id: 4,
+    id: 5,
     title: "Real Estate Management & Content Platform",
     type: "client",
     image: "images/rannadlan.png",
@@ -77,7 +98,7 @@ export const projectsData = [
     live: "https://ran-nadlan.netlify.app/"
   },
   {
-    id: 5,
+    id: 6,
     title: "Netfilm",
     type: "academic",
     image: "images/netfilm.png",
@@ -97,7 +118,7 @@ export const projectsData = [
     ribbon: true
   },
   {
-    id: 6,
+    id: 7,
     title: "Coupon Marketplace",
     type: "independent",
     image: "images/couponMarketplace.png",
@@ -117,7 +138,7 @@ export const projectsData = [
     ribbon: true
   },
   {
-    id: 7,
+    id: 8,
     title: "Mortgage AI",
     type: "client",
     image: "images/mortgAI.png",
@@ -134,7 +155,7 @@ export const projectsData = [
     live: "https://mortgage-ai.netlify.app/"
   },
   {
-    id: 8,
+    id: 9,
     title: "Argentina Travel Companion",
     type: "independent",
     image: "images/Argentina.png",
@@ -151,7 +172,7 @@ export const projectsData = [
     live: "https://argentina-2026-mandalaoui.vercel.app/"
   },
   {
-    id: 9,
+    id: 10,
     title: "Mika Coffee",
     type: "client",
     image: "images/mika.png",
@@ -167,7 +188,7 @@ export const projectsData = [
     live: "https://mikacoffee.netlify.app/"
   },
   {
-    id: 10,
+    id: 11,
     title: "Pilates Studio",
     type: "client",
     image: "images/Pilates.png",
@@ -182,7 +203,7 @@ export const projectsData = [
     live: "https://lightfitstudio.netlify.app/"
   },
   {
-    id: 11,
+    id: 12,
     title: "Guess The Country",
     type: "independent",
     image: "images/GuessTheCountry.png",
@@ -200,7 +221,7 @@ export const projectsData = [
     live: "https://guess-the-country-game.netlify.app/"
   },
   {
-    id: 12,
+    id: 13,
     title: "Brick-Breaker",
     type: "academic",
     image: "images/brick_breaker.png",
