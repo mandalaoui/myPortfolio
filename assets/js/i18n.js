@@ -8,10 +8,12 @@
     const dict = {
         en: {
             dir: 'ltr',
+            logo: 'Omer Mandalaoui',
             nav: { home: 'Home', about: 'About', projects: 'Projects', skills: 'Skills', resume: 'Resume', contact: 'Contact' }
         },
         he: {
             dir: 'rtl',
+            logo: 'עומר מנדלאוי',
             nav: { home: 'בית', about: 'אודות', projects: 'פרויקטים', skills: 'מיומנויות', resume: 'רזומה', contact: 'צור קשר' }
         }
     };
