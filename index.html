@@ -6,8 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Omer Mandalaoui | Fullstack Developer</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="assets/css/styles.css?v=l0">
     <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <link
         href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Bebas+Neue&family=Syne:wght@400;700;800&display=swap"
         rel="stylesheet">
@@ -20,70 +22,27 @@
     <div class="cursor" id="cursor"></div>
     <div class="cursor-follower" id="cursor-follower"></div>
 
-    <div class="corner corner-tl" id="corner-tl"></div>
-    <div class="corner corner-tr" id="corner-tr"></div>
-    <div class="corner corner-bl" id="corner-bl"></div>
-    <div class="corner corner-br" id="corner-br"></div>
-
     <!-- Scroll Progress -->
     <div class="scroll-progress" id="scrollProgress"></div>
 
-    <div class="background-glow"></div>
     <div class="background-noise"></div>
-    <div class="progress-bar"></div>
-    <div class="tech-background" id="techBg">
-        <div class="grid-container"></div>
-        <div class="tech-lines" id="techLines"></div>
-    </div>
-    <div class="scroll-container" id="scrollContainer">
-        <div class="canvas-container">
-            <div class="terminal-wrapper">
-                <div class="terminal" id="introTerminal" style="
-                animation: terminalScaleIn 2s cubic-bezier(0.23, 1, 0.32, 1) forwards;
-            ">
-                    <div class="terminal-bar">
-                        <div class="dot dot-r"></div>
-                        <div class="dot dot-y"></div>
-                        <div class="dot dot-g"></div>
-                        <span class="terminal-title">~/portfolio — bash</span>
-                    </div>
-                    <div class="terminal-body" id="terminalBody"></div>
-                    <div class="status-bar">
-                        <div class="status-item">
-                            <div class="status-dot"></div>SYSTEM: ONLINE
-                        </div>
-                        <div class="status-item" style="margin-left:auto">UTC+02:00</div>
-                        <div class="status-item">NODE v20</div>
-                    </div>
-                </div>
-            </div>
-            <div class="laptop-container" style="width: 700px; height: 450px; max-width: 90vw; margin: 0 auto;">
-                <model-viewer id="laptopHero" src="laptop.glb" camera-orbit="-90deg 90deg auto" disable-zoom
-                    exposure="1" shadow-intensity="0" interaction-prompt="none"
-                    style="background: transparent; width: 100%; height: 100%;">
-                </model-viewer>
-            </div>
-
-            <div class="scroll-indicator" id="scrollInd">
-                <div class="scroll-text">Scroll</div>
-                <div class="scroll-arrow"></div>
-            </div>
-        </div>
-    </div>
 
     <div>
-        <!-- Header / Navigation (initially hidden, shown only after opener) -->
+        <!-- Header / Navigation -->
         <header class="site-header" id="mainNavbar">
             <nav>
                 <div class="logo">Portfolio</div>
                 <ul class="nav-links">
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#projects">Projects</a></li>
-                    <li><a href="#skills">Skills</a></li>
-                    <li><a href="#resume">Resume</a></li>
-                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="#home" data-i18n="nav.home">Home</a></li>
+                    <li><a href="#about" data-i18n="nav.about">About</a></li>
+                    <li><a href="#projects" data-i18n="nav.projects">Projects</a></li>
+                    <li><a href="#skills" data-i18n="nav.skills">Skills</a></li>
+                    <li><a href="#resume" data-i18n="nav.resume">Resume</a></li>
+                    <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
                 </ul>
+                <button class="lang-toggle" id="langToggle" type="button" aria-label="Switch language">
+                    <i class="fas fa-globe"></i> <span id="langToggleLabel">EN</span>
+                </button>
                 <button class="hamburger">
                     <i class="fas fa-bars"></i>
                 </button>
@@ -126,7 +85,7 @@
                             I work across the development lifecycle — from understanding requirements and designing solutions to frontend and backend development, AI integrations, and production deployment. I enjoy turning real-world needs into practical, reliable software and continuously expanding my skills as a developer.                          </p>
                     </div>
                     <div class="timeline-section">
-                        <h3 style="color: var(--primary); margin-bottom: 2rem;">Education & Experience</h3>
+                        <h3 style="color: var(--on-sky); margin-bottom: 2rem;">Education & Experience</h3>
 
                         <div class="timeline">
                             <div class="timeline-item">
@@ -428,12 +387,10 @@
 
     <div id="toastContainer" class="toast-container" aria-live="polite" aria-atomic="true"></div>
 
-    <!-- JavaScript (modular, behavior unchanged) -->
-    <!-- <script src="assets/js/loader.js"></script> -->
-    <script src="assets/js/techBg.js"></script>
+    <!-- JavaScript (modular) -->
     <script src="assets/js/laptopController.js"></script>
-    <script src="assets/js/opener.js"></script>
-    <script src="assets/js/terminalTyping.js"></script>
+    <script src="assets/js/opener.js?v=l0"></script>
+    <script src="assets/js/i18n.js"></script>
     <script src="assets/js/carousel.js"></script>
     <script src="assets/js/videoModal.js"></script>
     <script src="assets/js/mobileNav.js"></script>
