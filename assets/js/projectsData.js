@@ -81,6 +81,23 @@ export const projectsData = [
     ribbon: true
   },
   {
+    id: 14,
+    title: "Family Vehicle Manager",
+    type: "independent",
+    image: "images/family-vehicle-manager.png",
+    description:
+      "A full-stack, mobile-first Next.js app for managing a household's vehicles — tracking license, insurance, and service renewals by mileage, with a secure multi-user backend and a fully RTL Hebrew interface.",
+    tags: [
+      "Next.js",
+      "TypeScript",
+      "Supabase",
+      "Row-Level Security",
+      "Google OAuth"
+    ],
+    github: "https://github.com/mandalaoui/family-vehicle-manager",
+    live: "https://family-vehicle-manager.vercel.app/"
+  },
+  {
     id: 5,
     title: "Real Estate Management & Content Platform",
     type: "client",
