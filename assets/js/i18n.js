@@ -42,6 +42,13 @@
                 resume: 'Download resume',
                 call: 'Book a call',
                 location: 'Petah Tikva, Israel'
+            },
+            footer: {
+                terms: 'Terms of Use',
+                privacy: 'Privacy Policy',
+                accessibility: 'Accessibility Statement',
+                copy: '© 2026 Omer Mandalaoui. All Rights Reserved.',
+                built: 'Built with focus and precision'
             }
         },
         he: {
@@ -80,6 +87,13 @@
                 resume: 'הורדת קורות חיים',
                 call: 'קביעת שיחה',
                 location: 'פתח תקווה, ישראל'
+            },
+            footer: {
+                terms: 'תנאי שימוש',
+                privacy: 'מדיניות פרטיות',
+                accessibility: 'הצהרת נגישות',
+                copy: '© 2026 עומר מנדלאוי. כל הזכויות שמורות.',
+                built: 'נבנה בקפידה ובדיוק'
             }
         }
     };

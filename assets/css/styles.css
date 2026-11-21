@@ -40,6 +40,9 @@
     /* Text sitting directly on the sky-blue page background (not inside a white card) */
     --on-sky: #ffffff;
     --on-sky-soft: rgba(255, 255, 255, 0.86);
+    /* One shadow for every white text sitting directly on the sky: a tight
+       dark edge for legibility on the light parts + a soft wider lift. */
+    --on-sky-shadow: 0 0.06rem 0.18rem rgba(8, 30, 70, 0.5), 0 0.25rem 1rem rgba(8, 30, 70, 0.32);
 }
 
 /* Universal resets */
@@ -780,7 +783,7 @@ header.site-header nav {
 
 .scene-title-text {
     font-family: 'Space Grotesk', 'Inter', sans-serif;
-    font-size: clamp(4rem, 18vw, 16rem);
+    font-size: clamp(3.2rem, 15vw, 16rem); /* 15vw: the longest title (PROJECTS) fits the width */
     font-weight: 700;
     line-height: 1;
     letter-spacing: -0.03em;
@@ -807,11 +810,415 @@ header.site-header nav {
     margin: 0;
 }
 
-/* The chat chip reuses .hero-chip's look but sits in normal flow here. */
-.scene-avatar .scene-chip {
-    position: static;
+/* ── Title cards with a 3D illustration (titleArt.js): Projects, AI ──
+   The image sits behind the giant title; titleArt.js drives its scroll motion
+   (entrance -> moving into it -> hand-off to the next section). */
+.title-art {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.title-art-glow {
+    position: absolute;
+    width: min(52rem, 78vw);
+    aspect-ratio: 2 / 1;
+    border-radius: 50%;
+    background: radial-gradient(closest-side, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0));
+    will-change: transform, opacity;
+}
+
+.title-art-float {
+    width: min(64rem, 88vw);
+    animation: title-art-float 6s ease-in-out infinite;
+}
+
+.title-art-img {
+    display: block;
+    width: 100%;
+    height: auto;
+    transform-origin: 50% 50%;
+    will-change: transform, opacity;
+}
+
+@keyframes title-art-float {
+    0%, 100% { translate: 0 0; }
+    50% { translate: 0 -0.75rem; }
+}
+
+.title-art-scene .scene-title-text {
+    position: relative;
+    z-index: 1;
+    will-change: transform, opacity;
+    /* White letters over light glass need more separation than the plain
+       title cards: a tight dark edge shadow for crisp outlines, a mid shadow
+       for lift, and a wide soft haze that darkens the art right behind them. */
+    filter: none;
+    text-shadow:
+        0 0.12rem 0.25rem rgba(8, 30, 70, 0.55),
+        0 0.4rem 1.4rem rgba(8, 30, 70, 0.45),
+        0 0 4.5rem rgba(8, 30, 70, 0.35);
+}
+
+/* Title text already drawn inside the illustration (AI card): keep the
+   element for structure and the scroll code, but don't show it. */
+.title-art-scene .scene-title-text.title-baked {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+}
+
+/* English-only baked title (Projects card): the English art has the word
+   built in; Hebrew shows the plain art and the live title instead. */
+html:not([dir="rtl"]) .title-art-scene .scene-title-text.title-baked-en {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+}
+
+html:not([dir="rtl"]) .title-art-img-he,
+[dir="rtl"] .title-art-img-en {
+    display: none;
+}
+
+/* Larger art when it carries the title itself. */
+.title-art-scene:has(.title-baked) .title-art-float,
+html:not([dir="rtl"]) .title-art-scene:has(.title-baked-en) .title-art-float {
+    width: min(58rem, 80vw);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .title-art-float { animation: none; }
+}
+
+@media (max-width: 37.5rem) {
+    .title-art-float { width: 96vw; }
+    .title-art-glow { width: 90vw; }
+}
+
+/* ── AI Omer: avatar + chat (avatarChat.js) ───────────────────── */
+.avatar-layout {
+    width: 100%;
+    max-width: 72rem;
+    display: grid;
+    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+    gap: 2.5rem;
+    align-items: center;
+    text-align: start;
+}
+
+.avatar-stage {
+    position: relative;
+    perspective: 60rem;
+}
+
+.avatar-figure {
+    --tilt-x: 0deg;
+    --tilt-y: 0deg;
+    position: relative;
+    aspect-ratio: 820 / 738;
+    transform: rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
+    transition: transform 0.4s ease;
+    animation: avatar-breathe 4.5s ease-in-out infinite;
+    filter: drop-shadow(0 1.5rem 2rem rgba(15, 40, 80, 0.25));
+}
+
+.avatar-pose {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    opacity: 0;
+}
+
+.avatar-pose.on {
+    opacity: 1;
+}
+
+/* Poses switch instantly (a cross-fade showed both arms half-transparent, a
+   "ghost" arm). Gesture changes get a quick pop instead to soften the jump;
+   the blink/talk mouth frames switch with no effect at all. */
+.avatar-pose.pop {
+    animation: avatar-pose-pop 0.22s ease-out;
+}
+
+@keyframes avatar-pose-pop {
+    0% { scale: 0.97; }
+    100% { scale: 1; }
+}
+
+@keyframes avatar-breathe {
+    0%, 100% { translate: 0 0; scale: 1; }
+    50% { translate: 0 -0.35rem; scale: 1.008; }
+}
+
+.avatar-figure.is-thinking .avatar-pose.on {
+    animation: avatar-ponder 2.4s ease-in-out infinite;
+}
+
+@keyframes avatar-ponder {
+    0%, 100% { rotate: 0deg; }
+    50% { rotate: -1.2deg; }
+}
+
+/* Suspicious: a quick shake and a warm warning glow. */
+.avatar-figure.is-suspicious {
+    animation: avatar-shake 0.45s ease-in-out 2;
+    filter: drop-shadow(0 0 1.6rem rgba(245, 120, 40, 0.75));
+}
+
+@keyframes avatar-shake {
+    0%, 100% { translate: 0 0; }
+    20% { translate: -0.4rem 0; }
+    40% { translate: 0.4rem 0; }
+    60% { translate: -0.25rem 0; }
+    80% { translate: 0.25rem 0; }
+}
+
+.avatar-online {
+    position: absolute;
+    top: 6%;
+    inset-inline-end: 8%;
+}
+
+.chat-panel {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 1.5rem;
+    box-shadow: 0 1.5rem 3rem -1rem rgba(20, 50, 100, 0.4);
+    padding: 1.4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    color: var(--ink);
+}
+
+.chat-header {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.chat-title {
+    font-family: 'Space Grotesk', 'Inter', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.chat-messages {
+    height: 18rem;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    padding: 0.2rem;
+    overscroll-behavior: contain;
+}
+
+.chat-msg {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.3rem;
+}
+
+.chat-msg-user {
+    align-items: flex-end;
+}
+
+.chat-bubble {
+    max-width: 88%;
+    padding: 0.65rem 0.95rem;
+    border-radius: 1rem;
+    background: #eef2ff;
+    font-size: 0.98rem;
+    line-height: 1.55;
+    white-space: pre-wrap;
+    unicode-bidi: plaintext;
+}
+
+.chat-msg-user .chat-bubble {
+    background: var(--ink);
+    color: #fff;
+}
+
+.chat-bubble.is-typing::after {
+    content: '•••';
+    letter-spacing: 0.15em;
+    color: #94a3b8;
+    animation: chat-dots 1s steps(3) infinite;
+}
+
+@keyframes chat-dots {
+    0% { opacity: 0.3; }
+    50% { opacity: 1; }
+    100% { opacity: 0.3; }
+}
+
+.chat-sources {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    align-items: center;
+    font-size: 0.78rem;
+    color: #64748b;
+}
+
+.chat-sources a {
+    padding: 0.15rem 0.6rem;
+    border-radius: 999px;
+    background: #fff;
+    border: 0.0625rem solid rgba(99, 102, 241, 0.35);
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.chat-suggestions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+}
+
+.chat-suggestions:empty {
+    display: none;
+}
+
+.chat-suggestions button {
+    font: inherit;
+    font-size: 0.85rem;
+    padding: 0.4rem 0.85rem;
+    border-radius: 999px;
+    border: 0.0625rem solid rgba(99, 102, 241, 0.35);
+    background: #fff;
+    color: var(--ink);
+    cursor: pointer;
+}
+
+.chat-suggestions button:hover {
+    background: #eef2ff;
+}
+
+.chat-cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.chat-cta[hidden] {
+    display: none;
+}
+
+.chat-cta .contact-btn {
+    padding: 0.55rem 1.1rem;
+    font-size: 0.9rem;
+}
+
+.chat-form {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.chat-form input {
+    flex: 1;
+    min-width: 0;
+    font: inherit;
     font-size: 1rem;
-    padding: 0.7rem 1.4rem;
+    padding: 0.75rem 1rem;
+    border-radius: 999px;
+    border: 0.0625rem solid rgba(15, 23, 42, 0.15);
+    background: #f8fafc;
+    color: var(--ink);
+}
+
+.chat-form input:focus {
+    outline: 0.125rem solid var(--primary);
+    outline-offset: 0.0625rem;
+}
+
+.chat-form button {
+    width: 3rem;
+    border-radius: 50%;
+    border: 0;
+    background: var(--ink);
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.chat-form button:disabled {
+    opacity: 0.5;
+    cursor: default;
+}
+
+[dir="rtl"] .chat-form button i {
+    transform: scaleX(-1);
+}
+
+.chat-how {
+    font-size: 0.82rem;
+    color: #475569;
+}
+
+.chat-how summary {
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--primary);
+}
+
+.chat-how p {
+    margin: 0.4rem 0 0;
+    line-height: 1.5;
+}
+
+.chat-privacy {
+    margin: 0;
+    font-size: 0.75rem;
+    color: #64748b;
+}
+
+.chat-privacy a {
+    color: var(--primary);
+    text-decoration: underline;
+    text-underline-offset: 0.15em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .avatar-figure,
+    .avatar-figure.is-thinking .avatar-pose.on,
+    .avatar-figure.is-suspicious,
+    .avatar-pose.pop {
+        animation: none;
+    }
+}
+
+@media (max-width: 37.5rem) {
+    .avatar-layout {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+    }
+    .avatar-stage {
+        width: min(14rem, 60vw);
+        margin: 0 auto;
+    }
+    .chat-panel {
+        padding: 1rem;
+        border-radius: 1.1rem;
+    }
+    .chat-messages {
+        height: 14rem;
+    }
 }
 
 .section-title {
@@ -1991,9 +2398,39 @@ a.contact-item:focus-visible {
 footer {
     padding: 3rem 4rem;
     text-align: center;
-    border-top: 0.0625rem solid rgba(255, 255, 255, 0.25);
-    color: var(--on-sky-soft);
-    font-size: 1rem;
+    border-top: 0.0625rem solid rgba(255, 255, 255, 0.45);
+    color: #fff;
+    font-size: 1.05rem;
+}
+
+footer p {
+    margin: 0.35rem 0;
+}
+
+.footer-copy {
+    font-weight: 700;
+}
+
+.footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.4rem 1.6rem;
+    margin-bottom: 1rem;
+    padding: 0; /* the global `nav` rule (site header) adds padding */
+}
+
+.footer-links a {
+    color: #fff;
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-color: rgba(255, 255, 255, 0.6);
+    text-underline-offset: 0.2em;
+}
+
+.footer-links a:hover,
+.footer-links a:focus-visible {
+    text-decoration-color: #fff;
 }
 
 
@@ -3138,3 +3575,26 @@ footer {
   }
 }
 /* --- END Responsive additions for scalable mobile UX --- */
+
+
+/* ── White text directly on the sky: one consistent shadow ──────────────
+   Replaces the mix of light text-shadows and filter: drop-shadow() that the
+   sections had before. Cards (white backgrounds) are not affected. Title
+   cards with an illustration keep their stronger shadow (more specific). */
+.hero-title,
+.hero-description,
+.tp-stage span,
+.tp-stage small,
+.section-title,
+.scene-title-text,
+.scene-heading,
+.scene-sub,
+.more-projects-title,
+.contact-title,
+.contact-lead,
+footer,
+footer a {
+    filter: none;
+    text-shadow: var(--on-sky-shadow);
+}
+

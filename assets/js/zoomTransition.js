@@ -59,7 +59,8 @@
             split = 0.5,    // share of the range spent on the outgoing half
             overlap = 0.1,  // how much the two halves overlap (crossfade)
             scaleOut = 1.35,
-            scaleIn = 0.75
+            scaleIn = 0.75,
+            outEase = 'power1.in' // how the outgoing section fades (later = steeper ease)
         } = options || {};
 
         const outgoing = resolve(outgoingTarget);
@@ -157,7 +158,7 @@
 
             tl.fromTo(outgoing,
                 { scale: 1, autoAlpha: 1, transformOrigin: outgoingCenter },
-                { scale: scaleOut, autoAlpha: 0, ease: 'power1.in', duration: split },
+                { scale: scaleOut, autoAlpha: 0, ease: outEase, duration: split },
                 0);
 
             tl.fromTo(incoming,
