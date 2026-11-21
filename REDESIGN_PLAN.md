@@ -1,10 +1,12 @@
 # Portfolio Redesign Plan (branch `v2-redesign`)
 
-Status snapshot as of 2026-11-21. Working branch is `v2-redesign`, currently 5 commits
-ahead of `origin/v2-redesign` (not pushed):
+Status snapshot as of 2026-11-21. Working branch is `v2-redesign`. Everything up
+to `976d149` is pushed to `origin/v2-redesign`; the Layer 4 commit on top of it
+is not pushed yet:
 
 ```
-(next)  Redesign v2: zoom transitions on mobile, Projects swipe row
+(next)  Redesign v2: Layer 4 Projects — featured cards and More projects index
+976d149 Redesign v2: zoom transitions on mobile, Projects swipe row
 fa078a1 Redesign v2: zoom-forward scroll transitions
 7f3624e Redesign v2: fix About/Projects contrast and polish colors
 c390e1a Fix navbar: RTL order, logo, mobile menu opacity
@@ -343,23 +345,66 @@ actually designed.
 - Fixed a white-on-white contrast bug that had crept into the About card
   background/text during the broader light-theme pass.
 
-## Layer 4 — Projects (started informally, not yet reviewed as its own layer)
+## Layer 4 — Projects (done, approved)
 
-Per commit `7f3624e`, some Projects-section fixes already landed alongside the
-About work:
+Reviewed as its own layer and approved. No project was removed; the 14
+projects are split into 6 featured + 8 "More projects".
 
-- Softened the project card background so it blends better with the sky
-  gradient instead of looking stark.
-- Made the large decorative project numbers (01, 02, …) visible again.
-- Differentiated the tech-tag chips (neutral styling) from the action buttons
-  (GitHub/Visit Site — indigo styling), which had looked too similar.
-- Softened the separation around the project description box.
+**Featured** (the sideways-scroll track, large cards), in this order:
+AIControlCenter, AI Automation Marketplace, WanderWise, TeacherAssistantAI,
+Mortgage AI, Real Estate Platform (short display name for "Real Estate
+Management & Content Platform").
 
-This was a contrast/polish pass carried over from the global light-theme
-change, not a deliberate, reviewed "Layer 4" redesign the way Hero and About
-got. **Next step when work resumes is to go through Projects properly as its
-own layer** (structure, content per project, category tabs if still wanted,
-etc.) and get explicit sign-off like the earlier layers.
+**More projects** (index below the track), in this order: Family Vehicle
+Manager, Netfilm, Coupon Marketplace, Argentina Travel Companion, Mika
+Coffee, Pilates Studio, Guess The Country, Brick-Breaker (numbered 07–14).
+
+Card format (data in `assets/js/projectsData.js`, templates in
+`projectCard.js`, index in `moreProjects.js`):
+
+- Every card keeps its type badge (Independent / Client / Academic) — the
+  user asked for this explicitly. AI projects (all 6 featured) also get an
+  **AI badge**: coral → violet gradient pill with a soft glow and a slow light
+  sweep (off with `prefers-reduced-motion`).
+- Featured card: one-sentence summary, 3 "Highlights" bullets, up to 5 tags,
+  and explicit buttons — Live / Code / **Video** (the video used to be hidden
+  behind a click on the image; the image click still works). The "LIVE DEMO"
+  ribbon was removed. Image is the original 15.6rem tall, shrinking to
+  11rem on short screens so content never overflows (letting it grow into
+  all free space was tried and read as too big).
+- All texts were rewritten from the existing descriptions only (no new
+  claims) and approved per project; English only for now (Layer 8).
+- Sideways track shortened for 6 cards: `.projects-section` 320vh → 200vh.
+
+"More projects" — rejected first attempt and final design:
+
+- A compact card grid (3–4 per row) was built and **rejected** ("didn't like
+  it at all"): it read as a generic template and competed with the featured
+  cards. Alternatives sketched: (A) one track with two card sizes, (B) an
+  index list, (C) a "View all" card opening an overlay. B was chosen, with
+  larger images.
+- **Final (B):** desktop — a list of rows (number, name, short line, type
+  badge) beside a large sticky preview (16:10 screenshot, project name on
+  the image, ▶ play button when there's a video, full sentence on a white
+  box, Live / Code / Video). The active project is the hovered row, or — when
+  the pointer isn't over the list — the row nearest the middle of the screen,
+  so the preview also changes while scrolling; swaps fade + zoom slightly.
+  Mobile — rows with a thumbnail; tapping a row expands it (full-width image,
+  sentence, buttons), one open at a time. Section heading "More projects" /
+  "פרויקטים נוספים" (i18n `projects.more`).
+
+Also in this layer: minimal position dots under the mobile swipe row of the
+featured cards (indicator only).
+
+Removed: three projects that were already commented out in the data file
+(MyStocks, Mathy, TrueValueIL — never shown on the site; still in git
+history), and the old compact-card code/styles.
+
+Open, small: Mortgage AI's summary/highlights are generic because the source
+description is short — can be strengthened if the user adds details.
+
+Earlier polish from commit `7f3624e` (softer card background, visible card
+numbers, tags vs buttons styling) still applies.
 
 ## Remaining layers (not started)
 

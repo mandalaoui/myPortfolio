@@ -32,7 +32,8 @@
                 aiTitle: 'AI',
                 hubTitle: 'AI Hub',
                 hubSoon: 'Videos, talks and articles on applied AI. Coming soon.'
-            }
+            },
+            projects: { more: 'More projects' }
         },
         he: {
             dir: 'rtl',
@@ -60,7 +61,8 @@
                 aiTitle: 'AI',
                 hubTitle: 'מרכז ה-AI',
                 hubSoon: 'סרטונים, הרצאות ומאמרים על AI יישומי. בקרוב.'
-            }
+            },
+            projects: { more: 'פרויקטים נוספים' }
         }
     };
 

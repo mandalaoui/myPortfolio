@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Omer Mandalaoui | Fullstack Developer</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="assets/css/styles.css?v=zt13">
+    <link rel="stylesheet" href="assets/css/styles.css?v=p7">
     <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
@@ -189,6 +189,25 @@
             <section id="projects" class="projects-section" aria-labelledby="projectsHeading">
                 <div class="projects-sticky">
                     <div class="projects-container" id="projectsContainer"></div>
+                </div>
+            </section>
+
+            <!-- More projects: index list of the non-featured projects beside a
+                 large sticky preview (desktop); expandable rows on mobile.
+                 Rendered by moreProjects.js. Plain scroll. -->
+            <section id="more-projects" class="more-projects-section" aria-labelledby="moreProjectsHeading">
+                <h2 class="more-projects-title" id="moreProjectsHeading" data-i18n="projects.more">More projects</h2>
+                <div class="more-index">
+                    <ol class="more-list" id="moreProjectsList"></ol>
+                    <div class="more-preview" id="moreProjectsPreview" aria-live="polite">
+                        <div class="more-preview-frame">
+                            <img class="more-preview-img" src="" alt="">
+                            <button type="button" class="more-play" aria-label="Play video" hidden><i class="fas fa-play"></i></button>
+                            <span class="more-preview-title"></span>
+                        </div>
+                        <p class="more-preview-summary"></p>
+                        <div class="more-preview-links"></div>
+                    </div>
                 </div>
             </section>
 
@@ -466,12 +485,12 @@
     <!-- JavaScript (modular) -->
     <script src="assets/js/laptopController.js"></script>
     <script src="assets/js/opener.js?v=l0"></script>
-    <script src="assets/js/i18n.js?v=zt1"></script>
+    <script src="assets/js/i18n.js?v=p1"></script>
     <script src="assets/js/heroCycle.js"></script>
     <script src="assets/js/carousel.js"></script>
     <script src="assets/js/videoModal.js"></script>
     <script src="assets/js/mobileNav.js"></script>
-    <script type="module" src="assets/js/projectsRenderer.js"></script>
+    <script type="module" src="assets/js/projectsRenderer.js?v=p4"></script>
     <script src="assets/js/theme.js"></script>
     <script src="assets/js/navigation.js"></script>
     <script src="assets/js/cursor.js"></script>

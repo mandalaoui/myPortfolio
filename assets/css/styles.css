@@ -973,8 +973,9 @@ header.site-header nav {
 .projects-section {
     position: relative;
     /* Scroll length of the sideways card scroll: taller = slower.
-       Was 256vh (~3.5px sideways per 1px scrolled at 14 cards). */
-    height: 320vh;
+       Tuned for the 6 featured cards (~2px sideways per 1px scrolled at
+       1024px wide). Was 320vh when all 14 projects were in the track. */
+    height: 200vh;
 }
 
 .projects-sticky {
@@ -993,6 +994,11 @@ header.site-header nav {
     will-change: transform;
     /* Add space before first and after last project card */
 }
+/* Position dots under the mobile swipe row (projectsRenderer.js). Desktop: hidden. */
+.projects-dots {
+    display: none;
+}
+
 .projects-container > .project-card:first-child {
     margin-inline-start: 20vw; /* left in EN, right in HE */
 }
@@ -1009,7 +1015,7 @@ header.site-header nav {
     backdrop-filter: blur(0.625rem);
     border: 0.0625rem solid rgba(99, 102, 241, 0.18);
     border-radius: 1.875rem;
-    padding: 3rem;
+    padding: 2rem 2.25rem;
     position: relative;
     overflow: hidden;
     transition: all 0.3s var(--transition-smooth);
@@ -1137,12 +1143,28 @@ header.site-header nav {
     justify-content: space-between;
 }
 
+/* Featured cards: the image is the original 15.6rem tall, and shrinks (down
+   to 11rem) on short screens so the content never overflows. It doesn't
+   grow past 15.6rem (growing into all free space read as too big). */
+.project-card .project-content > div:first-child {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+}
+
+.project-card .project-image {
+    flex: 0 1 15.625rem;
+    min-height: 11rem;
+    max-height: 15.625rem;
+}
+
 .project-image {
     width: 100%;
-    height: 15.625rem;
+    height: 11rem;
     background: var(--surface-3); /* More visible for image box */
     border-radius: 1.25rem;
-    margin-bottom: 2rem;
+    margin-bottom: 1.25rem;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1177,15 +1199,87 @@ header.site-header nav {
     line-height: 1.18;
 }
 
-.project-description {
-    color: var(--ink-soft); /* higher contrast and blue-tinted for readability */
-    background: rgba(243, 246, 253, 0.45); /* softer separation from the card */
-    border-radius: 0.4375rem;
-    padding: 0.85rem 1rem;
-    margin-bottom: 1.5rem;
-    line-height: 1.82;
-    font-size: 1.09rem;
-    font-weight: 400;
+/* Type badge + optional AI badge row (projectCard.js) */
+.project-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+}
+
+/* AI badge: coral -> violet gradient pill with a soft glow and a slow
+   light sweep, so AI projects stand out next to the type badge. */
+.project-ai-badge {
+    position: relative;
+    overflow: hidden;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.82rem;
+    font-weight: 800;
+    padding: 0.3125rem 0.85rem;
+    border-radius: 999px;
+    letter-spacing: 0.08em;
+    color: #fff;
+    background: linear-gradient(135deg, #ff5f7e 0%, #a855f7 55%, #6366f1 100%);
+    box-shadow: 0 0.35rem 1rem -0.3rem rgba(168, 85, 247, 0.65);
+    text-shadow: 0 0.05rem 0.15rem rgba(60, 0, 80, 0.35);
+}
+
+.project-ai-badge i {
+    font-size: 0.8rem;
+}
+
+.project-ai-badge::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(110deg, transparent 30%, rgba(255, 255, 255, 0.55) 50%, transparent 70%);
+    transform: translateX(-120%);
+    animation: ai-badge-shine 3.5s ease-in-out infinite;
+}
+
+@keyframes ai-badge-shine {
+    0%, 55% { transform: translateX(-120%); }
+    100% { transform: translateX(120%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .project-ai-badge::after { animation: none; }
+}
+
+/* One-sentence summary (all cards) */
+.project-summary {
+    color: var(--ink-soft);
+    margin: 0.5rem 0 1rem;
+    line-height: 1.6;
+    font-size: 1.05rem;
+}
+
+/* Featured cards only */
+.project-highlights-label {
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #64748b;
+    margin: 0 0 0.4rem;
+}
+
+.project-highlights {
+    margin: 0 0 1.25rem;
+    padding-inline-start: 1.2rem;
+    color: var(--ink-soft);
+    line-height: 1.55;
+    font-size: 0.98rem;
+}
+
+.project-highlights li {
+    margin-bottom: 0.3rem;
+}
+
+.project-highlights li::marker {
+    color: var(--primary);
 }
 
 .project-tags {
@@ -1231,10 +1325,208 @@ header.site-header nav {
     outline: none;
 }
 
+button.project-link {
+    font-family: inherit;
+    cursor: pointer;
+}
+
 .project-link:hover,
 .project-link:focus-visible {
     transform: translateY(-0.125rem) scale(1.03);
     box-shadow: 0 0.5rem 1.5rem -0.25rem rgba(79, 70, 229, 0.65);
+}
+
+/* More projects: index list + sticky preview (moreProjects.js) */
+.more-projects-section {
+    padding: 4rem 3rem 6rem;
+    max-width: 87.5rem;
+    margin: 0 auto;
+}
+
+.more-projects-title {
+    font-family: 'Space Grotesk', 'Inter', sans-serif;
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--on-sky);
+    text-align: center;
+    margin: 0 0 2.5rem;
+    filter: drop-shadow(0 0.3rem 1.25rem rgba(10, 30, 70, 0.35));
+}
+
+.more-index {
+    display: grid;
+    /* Preview gets the larger share so the screenshot reads big. */
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+    gap: 2rem;
+    align-items: start;
+}
+
+.more-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    background: rgba(255, 255, 255, 0.92);
+    border-radius: 1.25rem;
+    overflow: hidden;
+    box-shadow: 0 0.75rem 2rem -0.5rem rgba(20, 50, 100, 0.25);
+}
+
+.more-row + .more-row {
+    border-top: 0.0625rem solid rgba(15, 23, 42, 0.08);
+}
+
+.more-row-head {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 3rem minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.15rem 1.5rem;
+    background: none;
+    border: 0;
+    font: inherit;
+    color: var(--ink);
+    text-align: start;
+    cursor: pointer;
+    transition: background 0.25s ease;
+}
+
+.more-row-num {
+    font-family: 'Space Grotesk', 'Inter', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #94a3b8;
+    transition: color 0.25s ease, font-size 0.25s ease;
+}
+
+.more-row-text {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.more-row-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    transition: color 0.25s ease;
+}
+
+.more-row-short {
+    font-size: 0.92rem;
+    color: #64748b;
+}
+
+.more-row-head .project-badges {
+    margin: 0;
+}
+
+.more-row-head .project-type {
+    font-size: 0.7rem;
+    padding: 0.2rem 0.6rem;
+}
+
+.more-row.active .more-row-head {
+    background: rgba(99, 102, 241, 0.1);
+}
+
+.more-row.active .more-row-num {
+    color: var(--primary);
+    font-size: 1.5rem;
+}
+
+.more-row.active .more-row-title {
+    color: var(--primary);
+}
+
+/* Desktop: thumbnail, chevron and expandable body are mobile-only */
+.more-row-thumb,
+.more-row-chevron,
+.more-row-body {
+    display: none;
+}
+
+.more-preview {
+    position: sticky;
+    top: 18vh;
+}
+
+.more-preview-frame {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    border-radius: 1.25rem;
+    overflow: hidden;
+    background: var(--surface-3);
+    border: 0.3rem solid #fff;
+    box-shadow: 0 1.25rem 3rem -0.75rem rgba(20, 50, 100, 0.4);
+}
+
+.more-preview-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: opacity 0.25s ease, transform 0.4s ease;
+}
+
+.more-preview.swapping .more-preview-img {
+    opacity: 0.35;
+    transform: scale(0.97);
+}
+
+.more-preview-title {
+    position: absolute;
+    inset-inline-start: 0.9rem;
+    bottom: 0.9rem;
+    background: rgba(15, 23, 42, 0.78);
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.95rem;
+    padding: 0.35rem 0.8rem;
+    border-radius: 0.6rem;
+}
+
+.more-play {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 4rem;
+    height: 4rem;
+    margin: -2rem 0 0 -2rem;
+    border-radius: 50%;
+    border: 0;
+    background: rgba(255, 255, 255, 0.92);
+    color: var(--primary);
+    font-size: 1.3rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0.5rem 1.5rem rgba(15, 23, 42, 0.3);
+    transition: transform 0.2s ease;
+}
+
+.more-play[hidden] {
+    display: none;
+}
+
+.more-play:hover {
+    transform: scale(1.08);
+}
+
+.more-preview-summary {
+    color: var(--ink);
+    font-size: 1rem;
+    line-height: 1.6;
+    margin: 1rem 0;
+    padding: 0.85rem 1.1rem;
+    background: rgba(255, 255, 255, 0.92);
+    border-radius: 0.9rem;
+    box-shadow: 0 0.5rem 1.5rem -0.5rem rgba(20, 50, 100, 0.3);
+    transition: opacity 0.25s ease;
+}
+
+.more-preview.swapping .more-preview-summary {
+    opacity: 0.4;
 }
 
 /* About Section */
@@ -2417,6 +2709,23 @@ footer {
     scrollbar-width: none;
     transform: none !important;
   }
+  .projects-dots {
+    display: flex;
+    justify-content: center;
+    gap: 0.4rem;
+    padding-top: 0.25rem;
+  }
+  .projects-dots span {
+    width: 0.4rem;
+    height: 0.4rem;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+  .projects-dots span.active {
+    background: #fff;
+    transform: scale(1.35);
+  }
   .projects-container::-webkit-scrollbar {
     display: none;
   }
@@ -2449,6 +2758,11 @@ footer {
     font-size: 0.78rem;
     padding: 0.1875rem 0.5625rem;
   }
+  .project-card .project-image {
+    flex: 0 0 auto;
+    min-height: 0;
+    max-height: none;
+  }
   .project-image {
     height: 8.4375rem;
     border-radius: 0.5625rem;
@@ -2469,11 +2783,104 @@ footer {
     font-size: 1.24rem;
     margin-bottom: 0.3125rem;
   }
-  .project-description {
+  .project-summary {
     font-size: 0.94rem;
-    padding: 0.63rem 0.59rem;
     line-height: 1.5;
-    margin-bottom: 1rem;
+    margin: 0.3rem 0 0.8rem;
+  }
+  .project-highlights {
+    font-size: 0.88rem;
+    margin-bottom: 0.9rem;
+  }
+  .project-ai-badge {
+    font-size: 0.78rem;
+    padding: 0.1875rem 0.5625rem;
+  }
+  .more-projects-section {
+    padding: 3rem 4vw 4rem;
+  }
+  .more-projects-title {
+    font-size: 1.7rem;
+    margin-bottom: 1.5rem;
+  }
+  /* Mobile: single list, rows with thumbnails that expand in place */
+  .more-index {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  .more-preview {
+    display: none;
+  }
+  .more-row-head {
+    grid-template-columns: 2rem 3.5rem minmax(0, 1fr) auto;
+    gap: 0.7rem;
+    padding: 0.8rem 0.9rem;
+  }
+  .more-row-head .project-badges {
+    display: none;
+  }
+  .more-row-thumb {
+    display: block;
+    width: 3.5rem;
+    height: 2.5rem;
+    border-radius: 0.4rem;
+    overflow: hidden;
+    background: var(--surface-3);
+  }
+  .more-row-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .more-row-chevron {
+    display: block;
+    color: #94a3b8;
+    transition: transform 0.25s ease;
+  }
+  .more-row-title {
+    font-size: 1rem;
+  }
+  .more-row-short {
+    font-size: 0.82rem;
+  }
+  /* The desktop "active" highlight doesn't apply on mobile; "open" does. */
+  .more-row.active .more-row-head {
+    background: none;
+  }
+  .more-row.active .more-row-num {
+    color: #94a3b8;
+    font-size: 1.1rem;
+  }
+  .more-row.active .more-row-title {
+    color: var(--ink);
+  }
+  .more-row.open .more-row-head {
+    background: rgba(99, 102, 241, 0.1);
+  }
+  .more-row.open .more-row-chevron {
+    transform: rotate(180deg);
+    color: var(--primary);
+  }
+  .more-row.open .more-row-body {
+    display: block;
+    padding: 0 0.9rem 1rem;
+    background: rgba(99, 102, 241, 0.1);
+  }
+  .more-row-image {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    border-radius: 0.75rem;
+    overflow: hidden;
+    background: var(--surface-3);
+  }
+  .more-row-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .more-row-body .project-summary {
+    margin: 0.75rem 0;
   }
   .project-tags {
     gap: 0.25rem;

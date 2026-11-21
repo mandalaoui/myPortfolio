@@ -1,297 +1,224 @@
+// Projects shown in the Projects section, in display order.
+//
+// featured: true  -> large card in the sideways-scrolling track (with highlights)
+// featured: false -> row in the "More projects" index below it
+//
+// Fields:
+//   type        "independent" | "client" | "academic" (badge on every card)
+//   ai          true adds the "AI" badge
+//   summary     one sentence: what the project is / what it does
+//   short       condensed line for the "More projects" index rows
+//   highlights  2-3 bullets (featured cards only)
+//   tags        up to 5 (featured) / 4 (compact)
+//   github, live, video  optional; each one present becomes a button
 export const projectsData = [
+  // ─── Featured ───────────────────────────────────────────────
   {
     id: 1,
+    featured: true,
     title: "AIControlCenter",
     type: "independent",
+    ai: true,
     image: "images/AIControlCenter.png",
-    description:
-      "A full-stack AI usage intelligence platform that analyzes cost, ROI, efficiency, waste, and optimization opportunities across teams and tools, combining deterministic analytics with natural-language AI insights.",
-    tags: [
-      "Next.js",
-      "TypeScript",
-      "AI Analytics",
-      "Groq / Llama",
-      "Recharts",
-      "Tailwind CSS",
-      "Vercel"
+    summary:
+      "An AI usage intelligence platform that shows teams where their AI spend really goes.",
+    highlights: [
+      "Deterministic analytics for cost, ROI, efficiency and waste across teams and tools",
+      "Surfaces optimization opportunities from the data",
+      "Natural-language AI insights (Groq / Llama) on top of the numbers"
     ],
+    tags: ["Next.js", "TypeScript", "Groq / Llama", "Recharts", "Vercel"],
     github: "https://github.com/mandalaoui/AIControlCenter",
     live: "https://ai-control-center-omer.vercel.app/"
   },
   {
     id: 2,
+    featured: true,
     title: "AI Automation Marketplace",
     type: "academic",
+    ai: true,
     image: "images/AI_Marketplace.png",
     video: "videos/AI_Marketplace.mp4",
-    description:
-      "A marketplace for AI-agent and automation products. Creators build automations in a visual, node-based workflow builder; once a workflow is reviewed and published, it becomes a purchasable product; customers buy it and receive their own running instance.",
-    tags: [
-      "Angular",
-      "TypeScript",
-      "Node.js",
-      "PostgreSQL",
-      "REST API",
-      "JWT",
-      "Docker Compose",
-      "AI Integration"
+    summary:
+      "A marketplace where creators build AI automations and sell them as products.",
+    highlights: [
+      "Visual, node-based workflow builder for AI-agent and automation products",
+      "Review-and-publish flow that turns a workflow into a purchasable product",
+      "Each purchase gives the customer their own running instance"
     ],
-    github: "https://github.com/mandalaoui/LOT",
-    ribbon: true
+    tags: ["Angular", "Node.js", "PostgreSQL", "Docker Compose", "AI Integration"],
+    github: "https://github.com/mandalaoui/LOT"
   },
   {
     id: 3,
+    featured: true,
     title: "WanderWise",
     type: "independent",
+    ai: true,
     image: "images/wanderwise.png",
     video: "https://res.cloudinary.com/dpwwlrcvz/video/upload/v1771521863/wanderwise_bq3gbz.mp4",
-    description:
-      "A full-stack AI-assisted trip planning platform that generates personalized multi-day itineraries based on user preferences, with backend services, APIs, persistent data, and structured AI output processing.",
-    tags: [
-      "React",
-      "Node.js",
-      "Express",
-      "MongoDB",
-      "JWT",
-      "Docker",
-      "OpenRouter",
-      "AI Integration"
+    summary:
+      "An AI-assisted trip planner that builds personalized multi-day itineraries.",
+    highlights: [
+      "Itineraries generated from each user's preferences",
+      "Structured AI output processing via OpenRouter",
+      "Backend services and APIs with persistent data and JWT authentication"
     ],
-    github: "https://github.com/mandalaoui/WanderWise",
-    ribbon: true
+    tags: ["React", "Node.js", "MongoDB", "OpenRouter", "Docker"],
+    github: "https://github.com/mandalaoui/WanderWise"
   },
   {
     id: 4,
+    featured: true,
     title: "TeacherAssistantAI",
     type: "academic",
+    ai: true,
     image: "images/TeacherAssistantAI.png",
     video: "https://res.cloudinary.com/dpwwlrcvz/video/upload/v1771521854/TeacherAssistantAI_nhtibi.mp4",
-    description:
-      "A full-stack academic research analytics platform that ingests and organizes large-scale scholarly data, supports SQL-based exploration and visualization, and integrates AI-assisted research guidance.",
-    tags: [
-      "MySQL",
-      "SQL",
-      "ETL",
-      "OpenAlex",
-      "Data Analytics",
-      "TypeScript",
-      "Groq"
+    summary:
+      "A research analytics platform that makes large-scale scholarly data explorable.",
+    highlights: [
+      "ETL pipeline that ingests and organizes scholarly data from OpenAlex",
+      "SQL-based exploration and visualization",
+      "AI-assisted research guidance powered by Groq"
     ],
-    github: "https://github.com/mandalaoui/TeacherAssistantAI",
-    ribbon: true
+    tags: ["TypeScript", "MySQL", "ETL", "OpenAlex", "Groq"],
+    github: "https://github.com/mandalaoui/TeacherAssistantAI"
   },
   {
+    id: 8,
+    featured: true,
+    title: "Mortgage AI",
+    type: "client",
+    ai: true,
+    image: "images/mortgAI.png",
+    summary: "An AI-assisted mortgage platform built for a client.",
+    highlights: [
+      "Processes structured financial data",
+      "Generates clear, natural-language mortgage insights with the OpenAI API",
+      "CI/CD pipeline with GitHub Actions"
+    ],
+    tags: ["React", "Node.js", "OpenAI API", "CI/CD"],
+    live: "https://mortgage-ai.netlify.app/"
+  },
+  {
+    id: 5,
+    featured: true,
+    title: "Real Estate Platform",
+    type: "client",
+    ai: true,
+    image: "images/rannadlan.png",
+    summary:
+      "A production full-stack platform built for a real-estate business.",
+    highlights: [
+      "Property and content management with lead workflows",
+      "Custom valuation tool and a private admin CMS",
+      "LLM-powered content pipeline"
+    ],
+    tags: ["React", "TypeScript", "MongoDB", "LLM Integration", "Netlify"],
+    live: "https://ran-nadlan.netlify.app/"
+  },
+
+  // ─── More projects ──────────────────────────────────────────
+  {
     id: 14,
+    featured: false,
     title: "Family Vehicle Manager",
+    short: "Household vehicle renewals, Hebrew app",
     type: "independent",
     image: "images/family-vehicle-manager.png",
-    description:
-      "A full-stack, mobile-first Next.js app for managing a household's vehicles — tracking license, insurance, and service renewals by mileage, with a secure multi-user backend and a fully RTL Hebrew interface.",
-    tags: [
-      "Next.js",
-      "TypeScript",
-      "Supabase",
-      "Row-Level Security",
-      "Google OAuth"
-    ],
+    summary:
+      "Keeps a household's vehicle renewals on track in a secure, multi-user Hebrew app.",
+    tags: ["Next.js", "TypeScript", "Supabase", "Google OAuth"],
     github: "https://github.com/mandalaoui/family-vehicle-manager",
     live: "https://family-vehicle-manager.vercel.app/"
   },
   {
-    id: 5,
-    title: "Real Estate Management & Content Platform",
-    type: "client",
-    image: "images/rannadlan.png",
-    description:
-      "A production full-stack platform built for a real-estate business, combining property and content management, lead workflows, a custom valuation tool, a private admin CMS, and an LLM-powered content pipeline.",
-    tags: [
-      "React",
-      "TypeScript",
-      "MongoDB",
-      "LLM Integration",
-      "CMS",
-      "Netlify"
-    ],
-    live: "https://ran-nadlan.netlify.app/"
-  },
-  {
     id: 6,
+    featured: false,
     title: "Netfilm",
+    short: "Streaming, web and Android clients",
     type: "academic",
     image: "images/netfilm.png",
     video: "https://res.cloudinary.com/dpwwlrcvz/video/upload/v1771521858/Netfilm_rkigdk.mp4",
-    description:
-      "A cross-platform full-stack movie streaming system with web and Android clients, JWT authentication, RESTful backend services, and containerized infrastructure.",
-    tags: [
-      "React",
-      "Node.js",
-      "MongoDB",
-      "REST API",
-      "JWT",
-      "Docker",
-      "Android"
-    ],
-    github: "https://github.com/mandalaoui/Netfilm",
-    ribbon: true
+    summary:
+      "A movie streaming system with web and Android clients sharing one secure REST backend.",
+    tags: ["React", "Node.js", "MongoDB", "Android"],
+    github: "https://github.com/mandalaoui/Netfilm"
   },
   {
     id: 7,
+    featured: false,
     title: "Coupon Marketplace",
+    short: "Coupon store with atomic purchases",
     type: "independent",
     image: "images/couponMarketplace.png",
     video: "videos/couponMarketplace.mp4",
-    description:
-      "A full-stack digital coupon marketplace with customer, admin, and reseller flows, featuring JWT authentication, REST APIs, input validation, and atomic purchase logic designed to prevent duplicate sales.",
-    tags: [
-      "React",
-      "Node.js",
-      "Express",
-      "MongoDB",
-      "REST API",
-      "JWT",
-      "Docker Compose"
-    ],
-    github: "https://github.com/mandalaoui/Coupon-Marketplace",
-    ribbon: true
-  },
-  {
-    id: 8,
-    title: "Mortgage AI",
-    type: "client",
-    image: "images/mortgAI.png",
-    description:
-      "An AI-assisted mortgage platform that processes structured financial data and uses the OpenAI API to generate clear, natural-language mortgage insights and explanations.",
-    tags: [
-      "React",
-      "Node.js",
-      "OpenAI API",
-      "AI Integration",
-      "GitHub Actions",
-      "CI/CD"
-    ],
-    live: "https://mortgage-ai.netlify.app/"
+    summary:
+      "A digital coupon store with customer, admin and reseller flows, and atomic purchases that prevent duplicate sales.",
+    tags: ["React", "Node.js", "MongoDB", "Docker Compose"],
+    github: "https://github.com/mandalaoui/Coupon-Marketplace"
   },
   {
     id: 9,
+    featured: false,
     title: "Argentina Travel Companion",
+    short: "The whole trip in one app",
     type: "independent",
     image: "images/Argentina.png",
-    description:
-      "A full-stack travel companion that combines itinerary planning, maps, live external data, saved documents, translation tools, and location-based travel journaling in a single deployed application.",
-    tags: [
-      "Full-Stack",
-      "API Integration",
-      "Database",
-      "External APIs",
-      "Vercel"
-    ],
+    summary:
+      "One app for the whole trip: itinerary, maps, live data, saved documents, translation and a location-based travel journal.",
+    tags: ["Full-Stack", "External APIs", "Database", "Vercel"],
     github: "https://github.com/mandalaoui/Argentina-2026",
     live: "https://argentina-2026-mandalaoui.vercel.app/"
   },
   {
     id: 10,
+    featured: false,
     title: "Mika Coffee",
+    short: "Fast, accessible coffee-shop site",
     type: "client",
     image: "images/mika.png",
-    description:
-      "A production React website built and deployed for a coffee business, delivering a responsive user experience with a focus on performance, accessibility, and usability.",
-    tags: [
-      "React",
-      "JavaScript",
-      "Responsive Design",
-      "WCAG Accessibility",
-      "Netlify"
-    ],
+    summary:
+      "A fast, accessible, responsive website built and deployed for a coffee business.",
+    tags: ["React", "JavaScript", "WCAG Accessibility", "Netlify"],
     live: "https://mikacoffee.netlify.app/"
   },
   {
     id: 11,
+    featured: false,
     title: "Pilates Studio",
+    short: "Conversion-focused landing page",
     type: "client",
     image: "images/Pilates.png",
-    description:
-      "A production landing page built and deployed for a Pilates studio, delivering a responsive client-facing experience tailored to the business and its conversion goals.",
-    tags: [
-      "Web Frontend",
-      "Responsive Design",
-      "Landing Page",
-      "Netlify"
-    ],
+    summary: "A conversion-focused landing page built and deployed for a Pilates studio.",
+    tags: ["Responsive Design", "Landing Page", "Netlify"],
     live: "https://lightfitstudio.netlify.app/"
   },
   {
     id: 12,
+    featured: false,
     title: "Guess The Country",
+    short: "Country game with a Node.js API",
     type: "independent",
     image: "images/GuessTheCountry.png",
-    description:
-      "A deployed full-stack country guessing game with separate frontend and backend services, featuring a Node.js/Express API and persistent data storage with MongoDB Atlas.",
-    tags: [
-      "Node.js",
-      "Express",
-      "MongoDB Atlas",
-      "JavaScript",
-      "Netlify",
-      "Render"
-    ],
+    summary:
+      "A country-guessing game with a separate Node.js/Express API and persistent data in MongoDB Atlas.",
+    tags: ["Node.js", "Express", "MongoDB Atlas", "Render"],
     github: "https://github.com/mandalaoui/Guess-The-Country",
     live: "https://guess-the-country-game.netlify.app/"
   },
   {
     id: 13,
+    featured: false,
     title: "Brick-Breaker",
+    short: "Arkanoid-style game in Java",
     type: "academic",
     image: "images/brick_breaker.png",
     video: "https://res.cloudinary.com/dpwwlrcvz/video/upload/v1771521846/brick_breaker_msnwwz.mp4",
-    description:
-      "A modular object-oriented Arkanoid-style game built in Java, featuring animations, scoring, and collision detection using the biuoop library.",
-    tags: [
-      "Java",
-      "OOP",
-      "Collision Detection",
-      "biuoop",
-      "Ant"
-    ],
-    github: "https://github.com/mandalaoui/Brick-Breaker",
-    ribbon: true
-  },
-  // {
-  //   id: 7,
-  //   title: "MyStocks",
-  //   type: "independent",
-  //   image: "images/MyStocks.png",
-  //   description:
-  //     "Interactive web tool for estimating real estate property value in the Em HaMoshavot neighborhood of Petah Tikva.",
-  //   tags: ["Wix Velo", "JavaScript", "Wix CMS"],
-  //   github: "https://github.com/mandalaoui/Brick-Breaker",
-  //   ribbon: true
-  // },
-  // {
-  //   id: 8,
-  //   title: "Mathy",
-  //   type: "independent",
-  //   image: "images/Mathy.png",
-  //   description:
-  //     "Mathy is an AI-powered web app that lets students upload or snap a picture of a math problem and instantly get a step-by-step solution in Hebrew.",
-  //   tags: [
-  //     "React",
-  //     "Vite",
-  //     "TailwindCSS",
-  //     "Node.js",
-  //     "TypeScript",
-  //     "LLM Gateway"
-  //   ],
-  //   github: "https://github.com/mandalaoui/Mathy",
-  //   ribbon: true
-  // },
-  // {
-  //   id: 4,
-  //   title: "TrueValueIL",
-  //   type: "client",
-  //   image: "images/TrueValueIL.png",
-  //   description:
-  //     "Interactive web tool for estimating real estate property value in the Em HaMoshavot neighborhood of Petah Tikva.",
-  //   tags: ["Wix Velo", "JavaScript", "Wix CMS"],
-  //   live: "https://www.truevalueil.com/"
-  // },
+    summary:
+      "An Arkanoid-style game in Java with a modular object-oriented design, animations, scoring and collision detection.",
+    tags: ["Java", "OOP", "Collision Detection", "biuoop"],
+    github: "https://github.com/mandalaoui/Brick-Breaker"
+  }
 ];
