@@ -25,6 +25,13 @@
                 role0title: 'AI Solutions Engineer',
                 role0desc: 'Designing and implementing applied AI solutions for real business workflows — from automation to AI-integrated systems in production.',
                 new: 'New'
+            },
+            scenes: {
+                avatarTitle: 'Chat with AI Omer',
+                projectsTitle: 'Projects',
+                aiTitle: 'AI',
+                hubTitle: 'AI Hub',
+                hubSoon: 'Videos, talks and articles on applied AI. Coming soon.'
             }
         },
         he: {
@@ -46,6 +53,13 @@
                 role0title: 'AI Solutions Engineer',
                 role0desc: 'מתכנן ובונה פתרונות AI יישומיים לתהליכים עסקיים אמיתיים - מאוטומציה ועד מערכות עם AI משולב שרצות בפרודקשן.',
                 new: 'חדש'
+            },
+            scenes: {
+                avatarTitle: 'שוחח עם AI Omer',
+                projectsTitle: 'פרויקטים',
+                aiTitle: 'AI',
+                hubTitle: 'מרכז ה-AI',
+                hubSoon: 'סרטונים, הרצאות ומאמרים על AI יישומי. בקרוב.'
             }
         }
     };
