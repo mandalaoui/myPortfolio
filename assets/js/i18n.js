@@ -33,7 +33,16 @@
                 hubTitle: 'AI Hub',
                 hubSoon: 'Videos, talks and articles on applied AI. Coming soon.'
             },
-            projects: { more: 'More projects' }
+            projects: { more: 'More projects' },
+            contact: {
+                eyebrow: "What's next",
+                title: "Let's build something together",
+                lead: "Hiring for an AI or full-stack role, or have a business process that should run itself? I'd like to hear about it.",
+                cta: 'Get in touch',
+                resume: 'Download resume',
+                call: 'Book a call',
+                location: 'Petah Tikva, Israel'
+            }
         },
         he: {
             dir: 'rtl',
@@ -62,7 +71,16 @@
                 hubTitle: 'מרכז ה-AI',
                 hubSoon: 'סרטונים, הרצאות ומאמרים על AI יישומי. בקרוב.'
             },
-            projects: { more: 'פרויקטים נוספים' }
+            projects: { more: 'פרויקטים נוספים' },
+            contact: {
+                eyebrow: 'מה הלאה',
+                title: 'בואו נבנה משהו ביחד',
+                lead: 'מגייסים לתפקיד AI או פול-סטאק, או שיש לכם תהליך עסקי שצריך לרוץ מעצמו? אשמח לשמוע.',
+                cta: 'צרו קשר',
+                resume: 'הורדת קורות חיים',
+                call: 'קביעת שיחה',
+                location: 'פתח תקווה, ישראל'
+            }
         }
     };
 

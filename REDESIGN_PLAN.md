@@ -1,11 +1,12 @@
 # Portfolio Redesign Plan (branch `v2-redesign`)
 
 Status snapshot as of 2026-11-21. Working branch is `v2-redesign`. Everything up
-to `976d149` is pushed to `origin/v2-redesign`; the Layer 4 and Layer 6 commits
+to `976d149` is pushed to `origin/v2-redesign`; the Layer 4, 6 and 7 commits
 on top of it are not pushed yet:
 
 ```
-(next)  Redesign v2: Layer 6 Technical Stack — 3D logo ring
+(next)  Redesign v2: Layer 7 — merge Resume into one Contact section
+a47a1ef Redesign v2: Layer 6 Technical Stack — 3D logo ring
 41a2b1e Redesign v2: Layer 4 Projects — featured cards and More projects index
 976d149 Redesign v2: zoom transitions on mobile, Projects swipe row
 fa078a1 Redesign v2: zoom-forward scroll transitions
@@ -95,7 +96,8 @@ The sequence, top to bottom:
    reels / grid / hybrid is still an open decision.)*
 8. **↓ normal scroll** → **Technical Stack** — a 3D ring of logo cards
    *(built — Layer 6)*.
-9. **↓ normal scroll** → **Resume** and **Contact**, unchanged.
+9. **↓ normal scroll** → **Contact** — one closing call-to-action section
+   with Resume merged in *(built — Layer 7)*.
 
 **Why the zoom-forward technique was chosen:** early in the background
 discussion, a reference site (superplay.co) was looked at for a scroll style
@@ -447,6 +449,33 @@ sketched and the user chose **3D**.
 - `animations.js` no longer fades `.skill-card` (its transitions fought the
   ring's per-frame transforms).
 
+## Layer 7 — Resume & Contact (done, approved)
+
+The separate Resume section (heading + one sentence + a button) was too thin
+to justify its own full section, and both sections answer the same "what do I
+do next?" — so they were **merged into one closing section**, `#contact`
+(recommended and accepted after a sketch).
+
+- Eyebrow "What's next", headline "Let's build something together", one
+  inviting sentence aimed at both recruiters and business owners (draft text,
+  kept as is — the user can supply their own wording). EN + HE wired through
+  i18n (`contact.*`).
+- Buttons: **Get in touch** (primary, dark — opens an email), **Download
+  resume** (secondary, white — downloads `Omer_Mandalaoui_CV.pdf`), **Book a
+  call** (secondary — the user's Google Calendar appointment page,
+  `https://calendar.app.google/BzQ4bsv9qHKrsKKb7`, new tab). Booking page set
+  up by the user; advised: Google Meet instead of phone, a short description,
+  a required "What would you like to talk about?" question, phone optional.
+- Contact items: email (mailto), **WhatsApp** (wa.me link — replaces the
+  displayed phone number), location. GitHub + LinkedIn round buttons.
+- **Reserved, hidden slots:** Instagram and TikTok are in the markup with the
+  `hidden` attribute and `href="#"`; to enable one, set the real link and
+  remove `hidden`.
+- Nav: "Resume" removed; "Contact" is the single item.
+- Removed: the old download-button animation (progress ring + check mark),
+  `resume.js`, and the old Resume/Contact styles. The new button is a plain
+  download link (the animation can be brought back if wanted).
+
 ## Remaining layers (not started)
 
 - **Layer 5 — AI Hub** *(deferred by the user until there is real content)*:
@@ -456,12 +485,10 @@ sketched and the user chose **3D**.
   Slides / Canva / a free-hosted PDF) rather than an embedded viewer, to keep
   the reel light and swipeable. Before merging to `main`, decide whether to
   hide the "AI" title card + "Coming soon" placeholder until then.
-- **Layer 7 — Resume & Contact**: light-theme polish to match the rest of the
-  site; add (currently hidden/placeholder) slots for Instagram, TikTok, and a
-  "book a call" action, to be enabled once there's real content/need for them.
-- **Layer 8 — Full translation**: currently only the nav, Hero, and About
-  sections are wired through i18n. Projects, Skills, Resume, Contact, and the
-  footer are still English-only and need the same `data-i18n` treatment.
+- **Layer 8 — Full translation**: wired through i18n so far: nav, Hero,
+  About, the scroll scenes/title cards, the "More projects" heading and the
+  Contact section. Still English-only: the project card texts (data in
+  `projectsData.js`), Technical Stack, and the footer.
 - **Layer 9 — Polish & QA pass**: mobile responsiveness sweep, accessibility
   (respect `prefers-reduced-motion` for the pipeline pulse/ring animations),
   performance check, and a final cross-browser look.
@@ -475,7 +502,8 @@ sketched and the user chose **3D**.
   link/chip. Wiring it to an actual LLM (e.g. Groq's free tier) is future
   work, not started.
 - **Resume content/PDF update** — left open since the role/timeline changed;
-  not yet revisited.
+  not yet confirmed whether `Omer_Mandalaoui_CV.pdf` reflects the AI
+  Solutions Engineer role.
 - **Placeholder scenes behind the zoom transitions** — the AI Avatar scene
   (`#avatar`) and AI Hub (`#ai-hub`) are temporary; replace them when the
   real avatar scene and Layer 5 are designed (transition code stays as is).
