@@ -16,8 +16,10 @@
         const travel = rect.height - window.innerHeight;
         const maxScroll = projectsContainer.scrollWidth - window.innerWidth;
 
-        // Mobile layout stacks the cards vertically: no sideways scroll.
-        if (travel <= 0 || maxScroll <= 0) {
+        // Mobile layout is a native swipe row (the container scrolls itself,
+        // see styles.css): no scroll-driven sideways movement there.
+        const swipeRow = getComputedStyle(projectsContainer).overflowX !== 'visible';
+        if (swipeRow || travel <= 0 || maxScroll <= 0) {
             projectsContainer.style.transform = '';
             return;
         }

@@ -11,8 +11,10 @@
 // distance); the incoming one is held with position: fixed for the same range
 // and lands exactly in its normal place when the range ends.
 //
-// Disabled (plain scroll, existing fade-ups in animations.js) on narrow
-// screens and when the user prefers reduced motion.
+// Runs on desktop and mobile. On touch devices GSAP's ignoreMobileResize
+// keeps the pinned ranges stable when the mobile address bar shows/hides.
+// Disabled (plain scroll, existing fade-ups in animations.js) only when the
+// user prefers reduced motion.
 //
 // Usage:
 //   ZoomTransition.create({ outgoing: '#projectsTitle', incoming: '#projects' });
@@ -20,9 +22,28 @@
 //   ZoomTransition.scrollTargetFor(el);  // scroll position to land on el, or null
 
 (function () {
-    // 37.5rem is the breakpoint where the Projects sideways scroll is already
-    // turned off; keep the two in step.
-    const ENABLE_QUERY = '(min-width: 37.5625rem) and (prefers-reduced-motion: no-preference)';
+    const ENABLE_QUERY = '(prefers-reduced-motion: no-preference)';
+
+    let touchSetupDone = false;
+
+    // Mobile stabilizers, applied once (only when transitions are enabled).
+    function setupTouch() {
+        if (touchSetupDone) return;
+        touchSetupDone = true;
+        // Don't re-measure everything when the address bar shows/hides.
+        ScrollTrigger.config({ ignoreMobileResize: true });
+        // Deliberately NOT using ScrollTrigger.normalizeScroll(true): it was
+        // tried and it clamped scrolling short of the real page bottom on
+        // mobile, so the footer could not be reached.
+    }
+
+    // How much of the outgoing section is on screen when its pin starts:
+    // its full height, capped at one screen (taller sections, e.g. the Hero
+    // on a phone, are pinned once their bottom reaches the bottom of the
+    // screen, so all their content is seen before the zoom).
+    function visiblePart(outgoing) {
+        return Math.min(outgoing.offsetHeight, window.innerHeight);
+    }
 
     const registry = [];
 
@@ -56,16 +77,22 @@
         const mm = gsap.matchMedia();
 
         mm.add(ENABLE_QUERY, () => {
+            setupTouch();
+
             const pinDistance = () => window.innerHeight * length;
             const viewportCenter = () => `50% ${window.innerHeight / 2}px`;
+            // Screen center in the outgoing section's own coordinates (its top
+            // is above the screen when it is taller than the screen).
+            const outgoingCenter = () =>
+                `50% ${outgoing.offsetHeight - visiblePart(outgoing) + window.innerHeight / 2}px`;
             const range = () => `+=${pinDistance()}`;
 
             // The outgoing pin adds `length` screens of scroll after the
-            // outgoing section; pulling the incoming one up by the outgoing
-            // section's height puts its top at the viewport top exactly when
-            // the range ends, so normal scrolling continues from there.
+            // outgoing section; pulling the incoming one up by the part of the
+            // outgoing section that is on screen puts its top at the viewport
+            // top exactly when the range ends, so normal scrolling continues.
             const overlay = () => {
-                incoming.style.marginTop = `-${outgoing.offsetHeight}px`;
+                incoming.style.marginTop = `-${visiblePart(outgoing)}px`;
             };
 
             // During the range the incoming section is held at the top of the
@@ -85,7 +112,7 @@
                 // Measure the box from the placeholder (same flow slot), since the
                 // incoming section itself is scaled mid-transition.
                 const height = incoming.offsetHeight;
-                holder.style.cssText = `display:block;height:${height}px;margin-top:-${outgoing.offsetHeight}px;`;
+                holder.style.cssText = `display:block;height:${height}px;margin-top:-${visiblePart(outgoing)}px;`;
                 Object.assign(incoming.style, {
                     position: 'fixed', top: '0px',
                     left: `${holder.getBoundingClientRect().left}px`,
@@ -116,7 +143,7 @@
                 defaults: { ease: 'none' },
                 scrollTrigger: {
                     trigger: outgoing,
-                    start: 'top top',
+                    start: () => (outgoing.offsetHeight > window.innerHeight ? 'bottom bottom' : 'top top'),
                     end: range,
                     pin: true,
                     pinSpacing: true,
@@ -129,7 +156,7 @@
             });
 
             tl.fromTo(outgoing,
-                { scale: 1, autoAlpha: 1, transformOrigin: viewportCenter },
+                { scale: 1, autoAlpha: 1, transformOrigin: outgoingCenter },
                 { scale: scaleOut, autoAlpha: 0, ease: 'power1.in', duration: split },
                 0);
 
@@ -160,7 +187,9 @@
     function scrollTargetFor(el) {
         for (const { outgoing, incoming, trigger } of registry) {
             if (!trigger) continue;
-            if (el === outgoing) return trigger.start;
+            // Land on the top of the outgoing section (above its pin start
+            // when it is taller than the screen).
+            if (el === outgoing) return Math.max(0, trigger.start - (outgoing.offsetHeight - visiblePart(outgoing)));
             if (el === incoming) return trigger.end;
         }
         return null;
