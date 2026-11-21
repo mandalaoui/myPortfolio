@@ -3,7 +3,8 @@
     '.timeline-item',
     '.contact-item',
     '.project-card',
-    '.skill-card',
+    // .skill-card is excluded: the 3D ring (skillsRing.js) drives its
+    // transform/opacity every frame.
     '.about-text',
     '.hero-content'
   ].join(',');

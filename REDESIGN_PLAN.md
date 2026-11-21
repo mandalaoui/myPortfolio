@@ -1,11 +1,12 @@
 # Portfolio Redesign Plan (branch `v2-redesign`)
 
 Status snapshot as of 2026-11-21. Working branch is `v2-redesign`. Everything up
-to `976d149` is pushed to `origin/v2-redesign`; the Layer 4 commit on top of it
-is not pushed yet:
+to `976d149` is pushed to `origin/v2-redesign`; the Layer 4 and Layer 6 commits
+on top of it are not pushed yet:
 
 ```
-(next)  Redesign v2: Layer 4 Projects — featured cards and More projects index
+(next)  Redesign v2: Layer 6 Technical Stack — 3D logo ring
+41a2b1e Redesign v2: Layer 4 Projects — featured cards and More projects index
 976d149 Redesign v2: zoom transitions on mobile, Projects swipe row
 fa078a1 Redesign v2: zoom-forward scroll transitions
 7f3624e Redesign v2: fix About/Projects contrast and polish colors
@@ -92,8 +93,8 @@ The sequence, top to bottom:
 7. **↓ zoom transition** → **AI Hub** (`#ai-hub`). *(Transition built. Hub
    is a TEMPORARY "Coming soon" placeholder until Layer 5 is designed —
    reels / grid / hybrid is still an open decision.)*
-8. **↓ normal scroll** → **Technical Stack** (bowl-shaped carousel still to
-   do — Layer 6).
+8. **↓ normal scroll** → **Technical Stack** — a 3D ring of logo cards
+   *(built — Layer 6)*.
 9. **↓ normal scroll** → **Resume** and **Contact**, unchanged.
 
 **Why the zoom-forward technique was chosen:** early in the background
@@ -406,16 +407,55 @@ description is short — can be strengthened if the user adds details.
 Earlier polish from commit `7f3624e` (softer card background, visible card
 numbers, tags vs buttons styling) still applies.
 
+## Layer 6 — Technical Stack (done, approved)
+
+The plan said "bowl-shaped carousel"; a curved 2D line and a 3D ring were
+sketched and the user chose **3D**.
+
+- **3D ring** (`assets/js/skillsRing.js`, replaces the old straight
+  `carousel.js`, deleted): cards on a cylinder (`rotateY` + `translateZ`,
+  radius computed from card width so cards don't overlap), tilted slightly
+  from above. Turns on its own (7°/s — slowed from 10 on request), can be
+  dragged with mouse or finger and keeps turning in the last drag direction.
+  Cards toward the back fade and go grey; the front card is in full color.
+  Pauses while off screen; no auto-rotation with `prefers-reduced-motion`;
+  without JS the cards wrap as a plain grid. Mobile: smaller cards/stage,
+  `touch-action: pan-y` so vertical swipes still scroll the page.
+- **One ring, not per-category groups** (recommended and accepted): each card
+  shows a small category label (Frontend / Backend / Data / Infrastructure /
+  AI) instead of the old 5 separate groups.
+- **Colored logos** (recommended and accepted) from Devicon, already on the
+  site; Angular uses `angularjs-plain` (the `angular-plain` variant renders
+  white). OpenAI, Groq and OpenRouter have no Devicon logo → Font Awesome icons
+  in brand colors.
+- **Final list — 25 cards**, reviewed against the projects:
+  Frontend: React, Next.js, TypeScript, JavaScript, Angular, Tailwind CSS ·
+  Backend: Node.js, Express, Python, Java (both kept by the user's choice) ·
+  Data: PostgreSQL, MySQL, MongoDB, Supabase · Infrastructure: Git, Docker,
+  GitHub Actions, Vercel, Netlify · AI: OpenAI API, Groq / Llama, OpenRouter,
+  LLM Integration, Prompt Engineering, Workflow Automation (the last three are
+  concepts, with Font Awesome icons in the AI-badge violet).
+  Added because the projects use them: Angular, Tailwind CSS, Supabase, Groq,
+  OpenRouter, Netlify. Dropped as implied by the tools: REST APIs, SQL,
+  JWT Auth, CI/CD (a row of concept tags under the ring was tried and removed
+  at the user's request).
+- Only tools the user has actually used are listed. Suggested to learn next
+  (free, relevant to the AI Solutions Engineer role), not on the site:
+  n8n, RAG with pgvector on Supabase/PostgreSQL, Vercel AI SDK, a second LLM
+  provider's API, MCP. A small project combining them could become a featured
+  project and the first AI Hub content.
+- `animations.js` no longer fades `.skill-card` (its transitions fought the
+  ring's per-frame transforms).
+
 ## Remaining layers (not started)
 
-- **Layer 5 — AI Hub**: a new section for AI-focused content (videos,
-  presentations, articles), reels-style per earlier approved concept.
-  Presentations should show their cover slide + an "Open deck ↗" link to an
-  externally-hosted deck (Google Slides / Canva / a free-hosted PDF) rather
-  than an embedded viewer, to keep the reel light and swipeable.
-- **Layer 6 — Technical Stack**: redesign the current skills carousel into an
-  arc/"bowl" shaped auto-scrolling carousel (earlier attempt didn't read as a
-  real arc, needs a proper fix).
+- **Layer 5 — AI Hub** *(deferred by the user until there is real content)*:
+  a new section for AI-focused content (videos, presentations, articles),
+  reels-style per earlier approved concept. Presentations should show their
+  cover slide + an "Open deck ↗" link to an externally-hosted deck (Google
+  Slides / Canva / a free-hosted PDF) rather than an embedded viewer, to keep
+  the reel light and swipeable. Before merging to `main`, decide whether to
+  hide the "AI" title card + "Coming soon" placeholder until then.
 - **Layer 7 — Resume & Contact**: light-theme polish to match the rest of the
   site; add (currently hidden/placeholder) slots for Instagram, TikTok, and a
   "book a call" action, to be enabled once there's real content/need for them.
