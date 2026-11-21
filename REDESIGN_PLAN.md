@@ -1,11 +1,11 @@
 # Portfolio Redesign Plan (branch `v2-redesign`)
 
-Status snapshot as of 2026-11-21. Working branch is `v2-redesign`. Everything up
-to `976d149` is pushed to `origin/v2-redesign`; the Layer 4, 6 and 7 commits
-on top of it are not pushed yet:
+Status snapshot as of 2026-11-21. Working branch is `v2-redesign`, pushed to
+`origin/v2-redesign` (in sync). Not merged to `main`.
 
 ```
-(next)  Redesign v2: Layer 7 — merge Resume into one Contact section
+(next)  Redesign v2: section reorder, zoom from Technical Stack into Contact
+0b67511 Redesign v2: Layer 7 — merge Resume into one Contact section
 a47a1ef Redesign v2: Layer 6 Technical Stack — 3D logo ring
 41a2b1e Redesign v2: Layer 4 Projects — featured cards and More projects index
 976d149 Redesign v2: zoom transitions on mobile, Projects swipe row
@@ -75,29 +75,52 @@ designs later without touching the transition code. The Projects sideways
 scroll (`assets/js/projects.js`) is the pre-existing vanilla-JS mechanism
 from before the redesign, now adjusted (see Step 2 below).
 
-The sequence, top to bottom:
+The sequence, top to bottom (**reordered** after a review of the section
+order — see "Section order" below):
 
 1. **Hero** (full screen) — eyebrow, headline, description. *(Built.)*
 2. **↓ zoom transition** → **AI Avatar scene** (`#avatar`). *(Transition
    built. Scene is a TEMPORARY placeholder: the real photo + AI-core rings,
    an "Online now" chip, a "Chat with AI Omer" heading and the placeholder
    chat chip. The real avatar + chat scene is still deferred to the end.)*
-3. **↓ normal scroll** → **About Me**. *(Built.)*
-4. **↓ normal scroll** → giant full-screen **"Projects" title** card
+3. **↓ normal scroll** → giant full-screen **"Projects" title** card
    (`#projects-title`). *(Built, EN/HE. It is now the section's only heading;
    the old in-section `<h2 class="section-title">Projects</h2>` was removed.)*
-5. **↓ zoom transition** → **Projects**, where sideways scroll moves between
-   project cards. *(Built. Desktop: scrolling down drives the cards sideways.
-   Mobile: a native swipe row instead — see "Mobile" below.)*
+4. **↓ zoom transition** → **Projects**, where sideways scroll moves between
+   the featured cards. *(Built. Desktop: scrolling down drives the cards
+   sideways. Mobile: a native swipe row instead — see "Mobile" below.)*
+5. **↓ normal scroll** → **More projects** index *(built — Layer 4)*.
 6. **↓ normal scroll** → giant full-screen **"AI" title** card (`#ai-title`).
    *(Built.)*
 7. **↓ zoom transition** → **AI Hub** (`#ai-hub`). *(Transition built. Hub
    is a TEMPORARY "Coming soon" placeholder until Layer 5 is designed —
    reels / grid / hybrid is still an open decision.)*
-8. **↓ normal scroll** → **Technical Stack** — a 3D ring of logo cards
+8. **↓ normal scroll** → **About Me**. *(Built.)*
+9. **↓ normal scroll** → **Technical Stack** — a 3D ring of logo cards
    *(built — Layer 6)*.
-9. **↓ normal scroll** → **Contact** — one closing call-to-action section
-   with Resume merged in *(built — Layer 7)*.
+10. **↓ zoom transition** → **Contact** ("What's next") — one closing
+    call-to-action section with Resume merged in *(built — Layer 7)*. Added
+    at the user's request after the reorder; Technical Stack and Contact are
+    both full-screen (`100svh`) with centered content for it. The skills ring
+    keeps turning while the section zooms out (accepted).
+
+**Section order (reviewed, approved).** Reviewed assuming every section is
+filled with real content (placeholders ignored). Previous order was Hero →
+Avatar → About → Projects → More projects → AI Hub → Stack → Contact.
+Changes and why:
+- **Projects moved up, About moved down.** Visitors (recruiters, clients)
+  want proof first; About with its timeline reads better once they're
+  convinced. The Avatar scene already introduces Omer personally, so About
+  right after it repeated "meet me" twice. The Hero CTA "Explore My Work"
+  now leads straight to the work.
+- **About and Technical Stack are adjacent** — both answer "who are you and
+  what do you work with".
+- Rhythm: the first half holds three zoom transitions and the most
+  impressive content (Avatar, Projects, AI Hub); the second half is calmer
+  and informational (About, Stack), closing with a fourth zoom into Contact.
+- Kept: Hero → Avatar (an AI chat as screen two is itself a live demo for the
+  AI Solutions Engineer role), AI Hub right after the projects, Contact last.
+- Nav order follows: Home, Projects, About, Skills, Contact.
 
 **Why the zoom-forward technique was chosen:** early in the background
 discussion, a reference site (superplay.co) was looked at for a scroll style

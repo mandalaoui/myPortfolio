@@ -842,6 +842,13 @@ header.site-header nav {
     padding: 8rem 4rem;
     position: relative;
     overflow: hidden;
+    /* Full screen, content centered: it is the outgoing scene of the zoom
+       into Contact ("What's next"). */
+    min-height: 100vh;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 /* Technical Stack: 3D ring (skillsRing.js). Without .is-3d (no JS) the
@@ -1777,6 +1784,14 @@ button.project-link {
 .contact-section {
     padding: 8rem 4rem;
     text-align: center;
+    /* Full screen, content centered: the final scene, reached by the zoom
+       from Technical Stack. */
+    min-height: 100vh;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .contact-eyebrow {
@@ -2964,7 +2979,11 @@ footer {
 
   /* Contact on mobile */
   .contact-section {
-    padding: 3.5rem 5vw;
+    padding: 5.5rem 5vw 3rem; /* top clears the fixed header */
+  }
+  .contact-actions,
+  .contact-info {
+    align-self: stretch;
   }
   .contact-title {
     font-size: 2.1rem;

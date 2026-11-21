@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Omer Mandalaoui | Fullstack Developer</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="assets/css/styles.css?v=c1">
+    <link rel="stylesheet" href="assets/css/styles.css?v=o2">
     <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
@@ -35,8 +35,8 @@
                 <div class="logo" data-i18n="logo">Omer Mandalaoui</div>
                 <ul class="nav-links">
                     <li><a href="#home" data-i18n="nav.home">Home</a></li>
-                    <li><a href="#about" data-i18n="nav.about">About</a></li>
                     <li><a href="#projects" data-i18n="nav.projects">Projects</a></li>
+                    <li><a href="#about" data-i18n="nav.about">About</a></li>
                     <li><a href="#skills" data-i18n="nav.skills">Skills</a></li>
                     <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
                 </ul>
@@ -119,6 +119,49 @@
                 <a href="#contact" class="hero-chip scene-chip" data-i18n="hero.chipChat">💬 Chat with AI Omer</a>
             </section>
 
+            <!-- Giant "Projects" title card; zooms into the Projects section.
+                 This is the section's only heading (no title inside #projects). -->
+            <section id="projects-title" class="scene scene-title">
+                <h2 class="scene-title-text" id="projectsHeading" data-i18n="scenes.projectsTitle">Projects</h2>
+            </section>
+
+            <!-- Projects (University / Independent) -->
+            <section id="projects" class="projects-section" aria-labelledby="projectsHeading">
+                <div class="projects-sticky">
+                    <div class="projects-container" id="projectsContainer"></div>
+                </div>
+            </section>
+
+            <!-- More projects: index list of the non-featured projects beside a
+                 large sticky preview (desktop); expandable rows on mobile.
+                 Rendered by moreProjects.js. Plain scroll. -->
+            <section id="more-projects" class="more-projects-section" aria-labelledby="moreProjectsHeading">
+                <h2 class="more-projects-title" id="moreProjectsHeading" data-i18n="projects.more">More projects</h2>
+                <div class="more-index">
+                    <ol class="more-list" id="moreProjectsList"></ol>
+                    <div class="more-preview" id="moreProjectsPreview" aria-live="polite">
+                        <div class="more-preview-frame">
+                            <img class="more-preview-img" src="" alt="">
+                            <button type="button" class="more-play" aria-label="Play video" hidden><i class="fas fa-play"></i></button>
+                            <span class="more-preview-title"></span>
+                        </div>
+                        <p class="more-preview-summary"></p>
+                        <div class="more-preview-links"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Giant "AI" title card; zooms into the AI Hub. -->
+            <section id="ai-title" class="scene scene-title" aria-hidden="true">
+                <h2 class="scene-title-text" data-i18n="scenes.aiTitle">AI</h2>
+            </section>
+
+            <!-- AI Hub (TEMPORARY placeholder until Layer 5 is designed). -->
+            <section id="ai-hub" class="scene scene-hub">
+                <h2 class="scene-heading" data-i18n="scenes.hubTitle">AI Hub</h2>
+                <p class="scene-sub" data-i18n="scenes.hubSoon">Videos, talks and articles on applied AI. Coming soon.</p>
+            </section>
+
             <!-- About -->
             <section id="about" class="about-section">
                 <h2 class="section-title">About Me</h2>
@@ -178,49 +221,6 @@
                 </div>
             </section>
 
-            <!-- Giant "Projects" title card; zooms into the Projects section.
-                 This is the section's only heading (no title inside #projects). -->
-            <section id="projects-title" class="scene scene-title">
-                <h2 class="scene-title-text" id="projectsHeading" data-i18n="scenes.projectsTitle">Projects</h2>
-            </section>
-
-            <!-- Projects (University / Independent) -->
-            <section id="projects" class="projects-section" aria-labelledby="projectsHeading">
-                <div class="projects-sticky">
-                    <div class="projects-container" id="projectsContainer"></div>
-                </div>
-            </section>
-
-            <!-- More projects: index list of the non-featured projects beside a
-                 large sticky preview (desktop); expandable rows on mobile.
-                 Rendered by moreProjects.js. Plain scroll. -->
-            <section id="more-projects" class="more-projects-section" aria-labelledby="moreProjectsHeading">
-                <h2 class="more-projects-title" id="moreProjectsHeading" data-i18n="projects.more">More projects</h2>
-                <div class="more-index">
-                    <ol class="more-list" id="moreProjectsList"></ol>
-                    <div class="more-preview" id="moreProjectsPreview" aria-live="polite">
-                        <div class="more-preview-frame">
-                            <img class="more-preview-img" src="" alt="">
-                            <button type="button" class="more-play" aria-label="Play video" hidden><i class="fas fa-play"></i></button>
-                            <span class="more-preview-title"></span>
-                        </div>
-                        <p class="more-preview-summary"></p>
-                        <div class="more-preview-links"></div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Giant "AI" title card; zooms into the AI Hub. -->
-            <section id="ai-title" class="scene scene-title" aria-hidden="true">
-                <h2 class="scene-title-text" data-i18n="scenes.aiTitle">AI</h2>
-            </section>
-
-            <!-- AI Hub (TEMPORARY placeholder until Layer 5 is designed). -->
-            <section id="ai-hub" class="scene scene-hub">
-                <h2 class="scene-heading" data-i18n="scenes.hubTitle">AI Hub</h2>
-                <p class="scene-sub" data-i18n="scenes.hubSoon">Videos, talks and articles on applied AI. Coming soon.</p>
-            </section>
-
             <!-- Skills -->
             <section id="skills" class="skills-section">
                 <h2 class="section-title">Technical Stack</h2>
@@ -262,7 +262,6 @@
                     </ul>
                 </div>
             </section>
-
 
             <!-- Contact (Resume merged in): one closing call-to-action section.
                  Reserved slots (Book a call, Instagram, TikTok) are in the markup
@@ -375,6 +374,7 @@
         ZoomTransition.create({ outgoing: '#home', incoming: '#avatar' });
         ZoomTransition.create({ outgoing: '#projects-title', incoming: '#projects' });
         ZoomTransition.create({ outgoing: '#ai-title', incoming: '#ai-hub' });
+        ZoomTransition.create({ outgoing: '#skills', incoming: '#contact' });
     </script>
 
 </body>
