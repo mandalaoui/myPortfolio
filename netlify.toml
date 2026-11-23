@@ -1,0 +1,6 @@
+# Archive: portfolio version 1 (from github.com/mandalaoui/mandalaoui.github.io).
+# Static files served as-is, no build step. Branch deploy URL:
+# https://archive-v1--omer-mandalaoui.netlify.app
+[build]
+  command = "echo archive"
+  publish = "."
