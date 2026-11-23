@@ -10,7 +10,7 @@
          When upgrading a version, recompute its sha384 hash. -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
         integrity="sha384-iw3OoTErCYJJB9mCa8LNS2hbsQ7M3C0EpIsO/H5+EGAkPGc6rk+V8i04oW/K5xq0" crossorigin="anonymous">
-    <link rel="stylesheet" href="assets/css/styles.css?v=s1">
+    <link rel="stylesheet" href="assets/css/styles.css?v=s5">
     <script type="module" src="https://unpkg.com/@google/model-viewer@4.4.0/dist/model-viewer.min.js"
         integrity="sha384-wjsPzEO+lXOf7d9csIDfAQpPt2OKuUU3m0K9qsdKIuzX4N8czSF6hdh23eAbZa3p" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"
@@ -40,22 +40,47 @@
         <!-- Header / Navigation -->
         <header class="site-header" id="mainNavbar">
             <nav>
-                <div class="logo" data-i18n="logo">Omer Mandalaoui</div>
+                <a class="logo" href="#home" data-i18n="logo">Omer Mandalaoui</a>
                 <ul class="nav-links">
                     <li><a href="#home" data-i18n="nav.home">Home</a></li>
-                    <li><a href="#projects" data-i18n="nav.projects">Projects</a></li>
+                    <li><a href="#avatar" data-i18n="nav.chat">AI Omer</a></li>
+                    <li><a href="#projects-title" data-i18n="nav.projects">Projects</a></li>
+                    <li><a href="#ai-title" data-i18n="nav.ai">AI</a></li>
                     <li><a href="#about" data-i18n="nav.about">About</a></li>
-                    <li><a href="#skills" data-i18n="nav.skills">Skills</a></li>
+                    <li><a href="#skills" data-i18n="nav.skills">Stack</a></li>
                     <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
                 </ul>
                 <button class="lang-toggle" id="langToggle" type="button" aria-label="Switch language">
                     <i class="fas fa-globe"></i> <span id="langToggleLabel">EN</span>
                 </button>
-                <button class="hamburger">
-                    <i class="fas fa-bars"></i>
+                <button class="hamburger" type="button" aria-controls="navDrawer" aria-expanded="false" aria-label="Open menu">
+                    <i class="fas fa-bars" aria-hidden="true"></i>
                 </button>
             </nav>
         </header>
+
+        <!-- Mobile menu: side drawer (links cloned from .nav-links by mobileNav.js).
+             Slides in from the hamburger's side: right in English, left in Hebrew. -->
+        <div class="nav-drawer" id="navDrawer" inert>
+            <div class="nav-drawer-backdrop" data-drawer-close></div>
+            <aside class="nav-drawer-panel" role="dialog" aria-modal="true" aria-labelledby="navDrawerTitle">
+                <div class="nav-drawer-head">
+                    <span class="nav-drawer-title" id="navDrawerTitle" data-i18n="logo">Omer Mandalaoui</span>
+                    <button class="nav-drawer-close" type="button" data-drawer-close aria-label="Close menu">
+                        <i class="fas fa-xmark" aria-hidden="true"></i>
+                    </button>
+                </div>
+                <ul class="nav-drawer-links"></ul>
+                <div class="nav-drawer-foot">
+                    <a class="nav-drawer-cta" href="https://calendar.app.google/BzQ4bsv9qHKrsKKb7" target="_blank" rel="noopener">
+                        <i class="fas fa-calendar-check" aria-hidden="true"></i><span data-i18n="contact.call">Book a call</span>
+                    </a>
+                    <a class="nav-drawer-wa" href="https://wa.me/972538228882" target="_blank" rel="noopener" aria-label="WhatsApp">
+                        <i class="fab fa-whatsapp" aria-hidden="true"></i>
+                    </a>
+                </div>
+            </aside>
+        </div>
 
         <!-- Main Content -->
         <main class="smooth-scroll-container" id="mainContent">
@@ -426,14 +451,14 @@
     <!-- JavaScript (modular) -->
     <script src="assets/js/laptopController.js"></script>
     <script src="assets/js/opener.js?v=l0"></script>
-    <script src="assets/js/i18n.js?v=lg1"></script>
+    <script src="assets/js/i18n.js?v=lg3"></script>
     <script src="assets/js/heroCycle.js"></script>
     <script src="assets/js/skillsRing.js?v=s2"></script>
     <script src="assets/js/videoModal.js"></script>
-    <script src="assets/js/mobileNav.js"></script>
+    <script src="assets/js/mobileNav.js?v=d1"></script>
     <script type="module" src="assets/js/projectsRenderer.js?v=p5"></script>
     <script src="assets/js/theme.js"></script>
-    <script src="assets/js/navigation.js"></script>
+    <script src="assets/js/navigation.js?v=n2"></script>
     <script src="assets/js/cursor.js"></script>
     <script src="assets/js/projects.js?v=zt11"></script>
     <script src="assets/js/scroll.js"></script>
@@ -443,8 +468,8 @@
     <script src="assets/js/forms.js"></script>
     <script src="assets/js/avatarChat.js?v=s2"></script>
     <script src="assets/js/aiHub.js?v=h3"></script>
-    <script src="assets/js/zoomTransition.js?v=zt10"></script>
-    <script src="assets/js/transitions.js?v=1"></script>
+    <script src="assets/js/zoomTransition.js?v=zt11"></script>
+    <script src="assets/js/transitions.js?v=2"></script>
     <script src="assets/js/titleArt.js?v=ta4"></script>
 
 </body>

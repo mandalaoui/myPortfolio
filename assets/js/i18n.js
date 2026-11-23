@@ -9,7 +9,7 @@
         en: {
             dir: 'ltr',
             logo: 'Omer Mandalaoui',
-            nav: { home: 'Home', about: 'About', projects: 'Projects', skills: 'Skills', resume: 'Resume', contact: 'Contact' },
+            nav: { home: 'Home', chat: 'AI Omer', projects: 'Projects', ai: 'AI', about: 'About', skills: 'Stack', contact: 'Contact' },
             hero: {
                 titlePre: 'Turning',
                 titlePost: 'into intelligent systems',
@@ -54,7 +54,7 @@
         he: {
             dir: 'rtl',
             logo: 'עומר מנדלאוי',
-            nav: { home: 'בית', about: 'אודות', projects: 'פרויקטים', skills: 'מיומנויות', resume: 'רזומה', contact: 'צור קשר' },
+            nav: { home: 'בית', chat: 'AI Omer', projects: 'פרויקטים', ai: 'AI', about: 'אודות', skills: 'טכנולוגיות', contact: 'צור קשר' },
             hero: {
                 titlePre: 'הופך',
                 titlePost: 'למערכות חכמות',

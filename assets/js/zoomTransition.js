@@ -60,7 +60,11 @@
             overlap = 0.1,  // how much the two halves overlap (crossfade)
             scaleOut = 1.35,
             scaleIn = 0.75,
-            outEase = 'power1.in' // how the outgoing section fades (later = steeper ease)
+            outEase = 'power1.in', // how the outgoing section fades (later = steeper ease)
+            inFade = 1,     // share of the incoming zoom over which it fades in
+                            // (< 1: fully opaque before it stops moving)
+            settle = 0      // extra still scroll at the end of the range, as a share
+                            // of it: the incoming section stays put and sharp there
         } = options || {};
 
         const outgoing = resolve(outgoingTarget);
@@ -80,7 +84,7 @@
         mm.add(ENABLE_QUERY, () => {
             setupTouch();
 
-            const pinDistance = () => window.innerHeight * length;
+            const pinDistance = () => window.innerHeight * length * (1 + settle);
             const viewportCenter = () => `50% ${window.innerHeight / 2}px`;
             // Screen center in the outgoing section's own coordinates (its top
             // is above the screen when it is taller than the screen).
@@ -161,10 +165,24 @@
                 { scale: scaleOut, autoAlpha: 0, ease: outEase, duration: split },
                 0);
 
-            tl.fromTo(incoming,
-                { scale: scaleIn, autoAlpha: 0, transformOrigin: viewportCenter },
-                { scale: 1, autoAlpha: 1, ease: 'power2.out', duration: 1 - split + overlap },
-                split - overlap);
+            const inDuration = 1 - split + overlap;
+            if (inFade >= 1) {
+                tl.fromTo(incoming,
+                    { scale: scaleIn, autoAlpha: 0, transformOrigin: viewportCenter },
+                    { scale: 1, autoAlpha: 1, ease: 'power2.out', duration: inDuration },
+                    split - overlap);
+            } else {
+                tl.fromTo(incoming,
+                    { scale: scaleIn, transformOrigin: viewportCenter },
+                    { scale: 1, ease: 'power2.out', duration: inDuration },
+                    split - overlap);
+                tl.fromTo(incoming,
+                    { autoAlpha: 0 },
+                    { autoAlpha: 1, ease: 'power1.out', duration: inDuration * inFade },
+                    split - overlap);
+            }
+            // Still stretch at the end (the timeline runs 0..1, then 1..1+settle).
+            if (settle > 0) tl.to({}, { duration: settle }, 1);
 
             entry.trigger = tl.scrollTrigger;
 
