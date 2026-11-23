@@ -3,7 +3,10 @@ const video = document.getElementById("videoPlayer");
 const closeBtn = document.querySelector(".modal .close");
 const source = document.getElementById("videoSource");
 
-function openVideoModal(videoUrl) {
+// opts.vertical: 9:16 video (AI Hub shorts) -> upright player instead of 16:9.
+function openVideoModal(videoUrl, opts) {
+    const content = modal.querySelector(".modal-content");
+    if (content) content.classList.toggle("is-vertical", !!(opts && opts.vertical));
     source.src = videoUrl;
     video.load();
 

@@ -5,3 +5,6 @@ videos/*.mp4
 node_modules
 logs/
 dist/
+
+# Original (uncompressed) videos, kept locally only; the site uses videos/hub/ etc.
+videos/src/

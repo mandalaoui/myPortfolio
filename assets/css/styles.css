@@ -815,6 +815,9 @@ header.site-header nav {
 /* ── AI Hub (aiHub.js): filter chips, featured card, horizontal row ── */
 .scene-hub {
     gap: 1rem;
+    /* Dark navy text on the sky and the glass cards (more contrast than white). */
+    --hub-ink: #0b2545;
+    --hub-ink-soft: #17375e;
 }
 
 .hub-content {
@@ -836,30 +839,34 @@ header.site-header nav {
 
 .hub-chip {
     font: inherit;
-    font-size: 0.95rem;
-    color: var(--on-sky);
-    background: rgba(255, 255, 255, 0.18);
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--hub-ink);
+    background: rgba(255, 255, 255, 0.2);
     border: 1px solid rgba(255, 255, 255, 0.6);
     border-radius: 999px;
-    padding: 0.4rem 1.1rem;
+    padding: 0.45rem 1.25rem;
     cursor: pointer;
-    text-shadow: var(--on-sky-shadow);
     transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .hub-chip:hover {
-    background: rgba(255, 255, 255, 0.32);
+    background: rgba(255, 255, 255, 0.36);
 }
 
 .hub-chip[aria-pressed="true"] {
     background: #fff;
+    border-color: #fff;
     color: #0c5a8a;
-    text-shadow: none;
 }
 
-.hub-chip:focus-visible,
+.hub-chip:focus-visible {
+    outline: 2px solid var(--hub-ink);
+    outline-offset: 3px;
+}
+
 .hub-action:focus-visible {
-    outline: 2px solid #fff;
+    outline: 2px solid var(--hub-ink);
     outline-offset: 3px;
 }
 
@@ -868,7 +875,7 @@ header.site-header nav {
     background: rgba(255, 255, 255, 0.2);
     border: 1px solid rgba(255, 255, 255, 0.6);
     border-radius: 1.1rem;
-    color: var(--on-sky);
+    color: var(--hub-ink);
     overflow: hidden;
     -webkit-backdrop-filter: blur(6px);
     backdrop-filter: blur(6px);
@@ -901,29 +908,27 @@ header.site-header nav {
 
 .hub-feat-title {
     font-family: 'Space Grotesk', 'Inter', sans-serif;
-    font-size: clamp(1.4rem, 2.2vw, 2rem);
+    font-size: clamp(1.6rem, 2.6vw, 2.3rem);
     font-weight: 700;
-    line-height: 1.25;
+    line-height: 1.2;
     margin: 0;
-    color: var(--on-sky);
-    text-shadow: var(--on-sky-shadow);
+    color: var(--hub-ink);
 }
 
 .hub-feat-desc {
-    font-size: 1rem;
+    font-size: 1.15rem;
     line-height: 1.55;
     margin: 0;
-    color: var(--on-sky);
-    text-shadow: var(--on-sky-shadow);
+    color: var(--hub-ink-soft);
 }
 
 .hub-kind {
     display: inline-flex;
     align-items: center;
     gap: 0.45rem;
-    font-size: 0.85rem;
-    color: var(--on-sky);
-    text-shadow: var(--on-sky-shadow);
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--hub-ink-soft);
 }
 
 .hub-kind-dot {
@@ -933,20 +938,19 @@ header.site-header nav {
     background: #fff;
 }
 
-.hub-kind-video { background: #ffd166; }
-.hub-kind-deck { background: #b8f2c8; }
-.hub-kind-article { background: #ffc2d6; }
+.hub-kind-video { background: #f59e0b; }
+.hub-kind-deck { background: #22c55e; }
+.hub-kind-article { background: #ec4899; }
 
 .hub-action {
     display: inline-flex;
     align-items: center;
     gap: 0.35rem;
     align-self: flex-start;
-    font-size: 0.95rem;
+    font-size: 1.05rem;
     font-weight: 600;
-    color: var(--on-sky);
+    color: var(--hub-ink);
     text-decoration: none;
-    text-shadow: var(--on-sky-shadow);
 }
 
 a.hub-action:hover {
@@ -959,9 +963,9 @@ a.hub-action:hover {
 
 .hub-more-label {
     margin: 0.4rem 0 -0.4rem;
-    font-size: 0.9rem;
-    color: var(--on-sky);
-    text-shadow: var(--on-sky-shadow);
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--hub-ink);
 }
 
 .hub-row {
@@ -1049,19 +1053,17 @@ a.hub-action:hover {
 }
 
 .hub-card-title {
-    font-size: 1rem;
+    font-size: 1.1rem;
     font-weight: 600;
     line-height: 1.35;
     margin: 0;
-    color: var(--on-sky);
-    text-shadow: var(--on-sky-shadow);
+    color: var(--hub-ink);
 }
 
 .hub-card-src {
     margin: 0;
-    font-size: 0.85rem;
-    color: var(--on-sky);
-    text-shadow: var(--on-sky-shadow);
+    font-size: 0.95rem;
+    color: var(--hub-ink-soft);
 }
 
 .hub-thumb {
@@ -1078,9 +1080,10 @@ a.hub-action:hover {
     position: absolute;
     inset-inline-end: 0.5rem;
     bottom: 0.5rem;
-    font-size: 0.78rem;
+    font-size: 0.85rem;
+    font-weight: 600;
     color: #fff;
-    background: rgba(10, 50, 90, 0.72);
+    background: rgba(10, 50, 90, 0.78);
     border-radius: 0.3rem;
     padding: 0.15rem 0.45rem;
 }
@@ -1159,6 +1162,97 @@ a.hub-action:hover {
 @media (prefers-reduced-motion: reduce) {
     .hub-card { transition: none; }
     .hub-card:hover { transform: none; }
+}
+
+/* Real cover images (item.poster in aiHub.js). */
+.hub-poster {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 45%;
+}
+
+.hub-thumb.has-poster .hub-play {
+    position: relative;
+    box-shadow: 0 0.3rem 1rem rgba(8, 30, 70, 0.25);
+}
+
+/* 9:16 covers (shorts/reels): the featured card shows the whole cover upright,
+   with the play button in the empty lower part so it doesn't hide the title. */
+.hub-feat .hub-thumb-vertical {
+    flex: 0 0 auto;
+    width: 13.5rem;
+    min-height: 0;
+    aspect-ratio: 9 / 16;
+}
+
+.hub-feat .hub-thumb-vertical .hub-play {
+    position: absolute;
+    top: 76%;
+    left: 50%;
+    width: 3.6rem;
+    height: 3.6rem;
+    padding: 0.9rem;
+    transform: translate(-50%, -50%);
+}
+
+.hub-thumb.is-playable {
+    cursor: pointer;
+}
+
+button.hub-action {
+    background: none;
+    border: 0;
+    padding: 0;
+    font: inherit;
+    font-size: 1.05rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+button.hub-action:hover {
+    text-decoration: underline;
+}
+
+/* Upright player for 9:16 videos (openVideoModal(url, { vertical: true })).
+   Two classes, so it wins over the mobile .modal-content overrides. */
+.modal-content.is-vertical {
+    --vv: min(80vh, 44rem);
+    box-sizing: border-box;
+    width: calc(var(--vv) * 9 / 16 + 1.5rem);
+    max-width: 94vw;
+    height: calc(var(--vv) + 3.75rem);
+    padding: 3rem 0.75rem 0.75rem;
+}
+
+.modal-content.is-vertical video {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.modal-content.is-vertical .close {
+    top: 0.45rem;
+    right: 0.6rem;
+}
+
+@media (max-width: 700px) {
+    .hub-chips {
+        gap: 0.4rem;
+    }
+
+    .hub-chip {
+        padding: 0.4rem 0.85rem;
+    }
+
+    .hub-feat .hub-thumb-vertical {
+        width: min(14rem, 62%);
+        min-height: 0;
+        align-self: center;
+        margin: 1rem auto 0.4rem;
+    }
 }
 
 /* ── Title cards with a 3D illustration (titleArt.js): Projects, AI ──

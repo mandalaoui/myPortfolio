@@ -124,6 +124,25 @@ GitHub: (קישור, אם יש)
 המערך `ITEMS` בראש [`assets/js/aiHub.js`](assets/js/aiHub.js).
 **החדש ביותר ראשון:** הפריט הראשון במערך מוצג ככרטיס הגדול ("חדש"), והשאר בשורה שמתחתיו.
 
+**קבצים של AI Hub** (תיקיות ייעודיות, נפרדות מהפרויקטים):
+
+| מה | איפה |
+|---|---|
+| סרטון (MP4, מכווץ לאתר) | `videos/hub/<name>.mp4` |
+| מקור הסרטון (לא עולה לאתר) | `videos/src/hub/<name>.mp4` |
+| תמונה מקדימה (WebP, עד 540×960 לאנכי) | `images/hub/<name>.webp` |
+| מקור התמונה (PNG/JPG, לא עולה לאתר) | `images/src/hub/` |
+
+שם קובץ: אותיות לטיניות קטנות, מקפים, בלי רווחים (`claude-vs-claude-code.mp4`).
+בפריט: `poster: 'images/hub/<name>.webp'`, ולסרטון אנכי (9:16) גם `vertical: true`.
+
+**סרטון שמתנגן באתר** (במקום קישור חיצוני): `video: 'videos/hub/<name>.mp4'` במקום `url`. הוא נפתח בנגן הסרטונים של האתר.
+כיווץ לפני שמכניסים (המקור נשמר ב-`videos/src/hub/`). לסרטון אנכי `scale=720:1280`, לרוחבי `scale=1280:720`:
+
+```bash
+ffmpeg -i videos/src/hub/NAME.mp4 -vf "scale=720:1280:flags=lanczos" -c:v libx264 -preset slow -crf 26 -pix_fmt yuv420p -c:a aac -b:a 96k -movflags +faststart videos/hub/NAME.mp4
+```
+
 ### 2.3 מבנה הפריט
 
 ```js

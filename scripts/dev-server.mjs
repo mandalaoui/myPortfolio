@@ -123,6 +123,25 @@ http.createServer(async (req, res) => {
         if (!fs.existsSync(file)) { res.writeHead(404); return res.end("Not found"); }
         const headers = { "Content-Type": TYPES[path.extname(file).toLowerCase()] || "application/octet-stream" };
         for (const [k, v] of siteHeaders(url.pathname)) headers[k] = v;
+        // Byte ranges (like Netlify): browsers need them to seek in <video>.
+        const size = fs.statSync(file).size;
+        headers["Accept-Ranges"] = "bytes";
+        const range = /^bytes=(\d*)-(\d*)$/.exec(req.headers.range || "");
+        if (range && (range[1] || range[2])) {
+            let start = range[1] ? Number(range[1]) : size - Number(range[2]);
+            let end = range[1] && range[2] ? Number(range[2]) : size - 1;
+            start = Math.max(0, start);
+            end = Math.min(end, size - 1);
+            if (start > end) {
+                res.writeHead(416, { "Content-Range": `bytes */${size}` });
+                return res.end();
+            }
+            headers["Content-Range"] = `bytes ${start}-${end}/${size}`;
+            headers["Content-Length"] = end - start + 1;
+            res.writeHead(206, headers);
+            return fs.createReadStream(file, { start, end }).pipe(res);
+        }
+        headers["Content-Length"] = size;
         res.writeHead(200, headers);
         fs.createReadStream(file).pipe(res);
     } catch (err) {

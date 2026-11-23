@@ -3,15 +3,32 @@
 // While ITEMS is empty the section shows a "Coming soon" state: the same
 // layout as ghost placeholders (no made-up titles). The demo content that
 // showed the full layout is kept in the git branch `ai-hub-demo`.
-// To publish, add real items to ITEMS (newest first, each with a `url`);
-// see CONTENT_GUIDE.md.
+// To publish, add real items to ITEMS (newest first, each with a `url` or
+// `video`); see CONTENT_GUIDE.md.
 //
 //   type:   'video' | 'deck' | 'article'
 //   meta:   video -> duration text ('4:12'); deck -> slide count; article -> minutes
 //   source: shown on videos (e.g. 'YouTube')
 //   url:    external link (video page, hosted deck, article)
+//   video:  a video file on this site (videos/hub/...); plays in the site's
+//           video modal instead of opening a link
+//   poster: optional cover image path (shown instead of the generic icon)
+//   vertical: true for 9:16 videos (shorts/reels): upright cover + upright player
 (function () {
-    const ITEMS = [];
+    const ITEMS = [
+        {
+            type: 'video',
+            meta: '0:48',
+            poster: 'images/hub/claude-vs-claude-code.webp',
+            vertical: true,
+            video: 'videos/hub/claude-vs-claude-code.mp4',
+            title: { en: 'Claude vs Claude Code', he: 'Claude מול Claude Code' },
+            desc: {
+                en: 'Claude or Claude Code? A quick look at which one fits you.',
+                he: 'Claude או Claude Code? מבט קצר על מה שמתאים לכם.'
+            }
+        }
+    ];
 
     const STR = {
         en: {
@@ -68,11 +85,29 @@
         } else {
             art = '<span class="hub-lines" aria-hidden="true"><i class="w55 strong"></i><i></i><i class="w88"></i><i class="w60"></i></span>';
         }
-        return '<div class="hub-thumb">' + art + '<span class="hub-badge">' + esc(badge(item, s)) + '</span></div>';
+        const img = item.poster
+            ? '<img class="hub-poster" src="' + esc(item.poster) + '" alt="" loading="lazy" decoding="async">'
+            : '';
+        if (item.poster && item.type !== 'video') art = '';
+        const cls = 'hub-thumb' + (item.poster ? ' has-poster' : '') + (item.vertical ? ' hub-thumb-vertical' : '') +
+            (item.video ? ' is-playable' : '');
+        // On-site videos: the cover is a mouse/touch shortcut to the player;
+        // keyboard and screen-reader users get the "Watch video" button.
+        return '<div class="' + cls + '"' + videoAttrs(item) + '>' + img + art +
+            '<span class="hub-badge">' + esc(badge(item, s)) + '</span></div>';
+    }
+
+    function videoAttrs(item) {
+        if (!item.video) return '';
+        return ' data-video="' + esc(item.video) + '"' + (item.vertical ? ' data-vertical="1"' : '');
     }
 
     function action(item, s) {
         const label = esc(s.action[item.type]);
+        if (item.video) {
+            const play = '<svg class="hub-play-ico" viewBox="0 0 24 24" width="1em" height="1em" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg>';
+            return '<button type="button" class="hub-action"' + videoAttrs(item) + '>' + label + play + '</button>';
+        }
         const icon = '<svg class="hub-ext" viewBox="0 0 24 24" width="1em" height="1em" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
         if (item.url) {
             return '<a class="hub-action" href="' + esc(item.url) + '" target="_blank" rel="noopener noreferrer">' + label + icon + '</a>';
@@ -200,6 +235,13 @@
         const again = root.querySelector('.hub-chip[data-filter="' + filter + '"]');
         if (again) again.focus({ preventScroll: true });
         if (window.ZoomTransition && ZoomTransition.refresh) ZoomTransition.refresh();
+    });
+
+    // On-site videos play in the shared video modal (videoModal.js).
+    root.addEventListener('click', (e) => {
+        const el = e.target.closest('[data-video]');
+        if (!el || typeof window.openVideoModal !== 'function') return;
+        window.openVideoModal(el.getAttribute('data-video'), { vertical: el.getAttribute('data-vertical') === '1' });
     });
 
     document.addEventListener('langchange', render);
