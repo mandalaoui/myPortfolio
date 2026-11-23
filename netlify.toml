@@ -1,0 +1,6 @@
+# Archive: portfolio version 3 (the site as it was before the v2 redesign).
+# Served as-is from the repository root, no build step. Branch deploy URL:
+# https://archive-v3--omer-mandalaoui.netlify.app
+[build]
+  command = "echo archive"
+  publish = "."
