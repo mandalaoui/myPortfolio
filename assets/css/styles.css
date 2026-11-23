@@ -4248,3 +4248,43 @@ html.nav-drawer-open body {
     background: linear-gradient(90deg, var(--accent), var(--accent2));
 }
 
+
+/* AI Hub "Coming soon" (aiHub.js, while there are no items): the same layout
+   with empty ghost cards, so the section keeps its shape without made-up content. */
+.hub-soon .hub-thumb {
+    background: rgba(10, 70, 120, 0.22);
+}
+
+.hub-soon-icon {
+    color: #0c5a8a;
+}
+
+.hub-ghost-row {
+    overflow: hidden;
+    pointer-events: none;
+    -webkit-mask-image: linear-gradient(to right, #000 55%, transparent);
+    mask-image: linear-gradient(to right, #000 55%, transparent);
+}
+
+[dir="rtl"] .hub-ghost-row {
+    -webkit-mask-image: linear-gradient(to left, #000 55%, transparent);
+    mask-image: linear-gradient(to left, #000 55%, transparent);
+}
+
+.hub-ghost {
+    opacity: 0.55;
+}
+
+.hub-ghost .hub-card-body {
+    gap: 0.5rem;
+}
+
+.hub-bar {
+    display: block;
+    height: 0.6rem;
+    border-radius: 0.3rem;
+    background: rgba(255, 255, 255, 0.55);
+}
+
+.hub-bar.w75 { width: 75%; }
+.hub-bar.w50 { width: 50%; }

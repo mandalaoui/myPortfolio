@@ -1,66 +1,17 @@
 // AI Hub (Layer 5): a featured card + a horizontal row of cards, with type filters.
 //
-// Content is DEMO data until real items exist. To add a real item, add an
-// object to ITEMS (newest first) and give it a `url`; delete the demo ones.
-// Items without a `url` render their action label as plain text (not a link).
+// While ITEMS is empty the section shows a "Coming soon" state: the same
+// layout as ghost placeholders (no made-up titles). The demo content that
+// showed the full layout is kept in the git branch `ai-hub-demo`.
+// To publish, add real items to ITEMS (newest first, each with a `url`);
+// see CONTENT_GUIDE.md.
 //
 //   type:   'video' | 'deck' | 'article'
 //   meta:   video -> duration text ('4:12'); deck -> slide count; article -> minutes
 //   source: shown on videos (e.g. 'YouTube')
 //   url:    external link (video page, hosted deck, article)
 (function () {
-    const ITEMS = [
-        {
-            type: 'video', meta: '4:12', source: 'YouTube', demo: true,
-            title: { en: 'Building a RAG chatbot from scratch', he: 'בניית צ׳אטבוט RAG מאפס' },
-            desc: { en: 'From documents to embeddings to answers with sources: a walkthrough of the pieces and the mistakes worth avoiding.', he: 'ממסמכים ל-embeddings ועד תשובות עם מקורות: סקירה של החלקים ושל הטעויות שכדאי להימנע מהן.' }
-        },
-        {
-            type: 'deck', meta: 14, demo: true,
-            title: { en: 'AI agents in the enterprise', he: 'סוכני AI בארגון' },
-            desc: { en: 'Where agents actually help in business workflows, and where a plain automation is enough.', he: 'איפה סוכנים באמת עוזרים בתהליכים עסקיים, ואיפה אוטומציה פשוטה מספיקה.' }
-        },
-        {
-            type: 'article', meta: 6, demo: true,
-            title: { en: 'What MCP changes for integrations', he: 'מה MCP משנה באינטגרציות' },
-            desc: { en: 'One protocol instead of a custom connector per tool.', he: 'פרוטוקול אחד במקום מחבר מותאם לכל כלי.' }
-        },
-        {
-            type: 'video', meta: '1:30', source: 'YouTube', demo: true,
-            title: { en: 'n8n workflow in 90 seconds', he: 'תהליך n8n ב-90 שניות' },
-            desc: { en: '', he: '' }
-        },
-        {
-            type: 'deck', meta: 22, demo: true,
-            title: { en: 'Prompting vs fine-tuning', he: 'Prompting מול fine-tuning' },
-            desc: { en: '', he: '' }
-        },
-        {
-            type: 'article', meta: 9, demo: true,
-            title: { en: 'Vector search with pgvector', he: 'חיפוש וקטורי עם pgvector' },
-            desc: { en: '', he: '' }
-        },
-        {
-            type: 'video', meta: '7:45', source: 'YouTube', demo: true,
-            title: { en: 'Streaming AI answers with the Vercel AI SDK', he: 'הזרמת תשובות AI עם Vercel AI SDK' },
-            desc: { en: '', he: '' }
-        },
-        {
-            type: 'article', meta: 5, demo: true,
-            title: { en: 'Evaluating LLM answers without guessing', he: 'הערכת תשובות LLM בלי לנחש' },
-            desc: { en: '', he: '' }
-        },
-        {
-            type: 'deck', meta: 18, demo: true,
-            title: { en: 'From prototype to production AI', he: 'מאב טיפוס ל-AI בפרודקשן' },
-            desc: { en: '', he: '' }
-        },
-        {
-            type: 'video', meta: '3:05', source: 'YouTube', demo: true,
-            title: { en: 'Tool calling explained', he: 'Tool calling בקצרה' },
-            desc: { en: '', he: '' }
-        }
-    ];
+    const ITEMS = [];
 
     const STR = {
         en: {
@@ -69,7 +20,10 @@
             action: { video: 'Watch video', deck: 'Open deck', article: 'Read article' },
             latest: 'Latest', more: 'More',
             slides: (n) => n + ' slides', minutes: (n) => n + ' min read',
-            filters: 'Filter by type', prev: 'Previous items', next: 'Next items'
+            filters: 'Filter by type', prev: 'Previous items', next: 'Next items',
+            soonKind: 'Coming soon',
+            soonTitle: 'New content on the way',
+            soonDesc: 'Videos, talks and articles on applied AI, from real projects and trainings.'
         },
         he: {
             all: 'הכול', video: 'סרטונים', deck: 'הרצאות', article: 'מאמרים',
@@ -77,7 +31,10 @@
             action: { video: 'צפייה בסרטון', deck: 'פתיחת המצגת', article: 'קריאת המאמר' },
             latest: 'חדש', more: 'עוד',
             slides: (n) => n + ' שקפים', minutes: (n) => n + ' דק׳ קריאה',
-            filters: 'סינון לפי סוג', prev: 'הפריטים הקודמים', next: 'הפריטים הבאים'
+            filters: 'סינון לפי סוג', prev: 'הפריטים הקודמים', next: 'הפריטים הבאים',
+            soonKind: 'בקרוב',
+            soonTitle: 'תוכן חדש בדרך',
+            soonDesc: 'סרטונים, הרצאות ומאמרים על AI יישומי, מתוך פרויקטים והדרכות אמיתיים.'
         }
     };
 
@@ -152,9 +109,31 @@
             '</div></article>';
     }
 
+    // "Coming soon": the hub layout with empty ghost cards (decorative).
+    function soon(s) {
+        const lines = '<span class="hub-lines" aria-hidden="true"><i class="w55 strong"></i><i></i><i class="w75"></i></span>';
+        const ghost = '<div class="hub-card hub-ghost" aria-hidden="true"><div class="hub-thumb">' + lines + '</div>' +
+            '<div class="hub-card-body"><i class="hub-bar w75"></i><i class="hub-bar w50"></i></div></div>';
+        const clock = '<span class="hub-play hub-soon-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="100%" height="100%">' +
+            '<circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="2"/>' +
+            '<path d="M12 7.5V12l3 2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>';
+        return '<article class="hub-feat hub-soon">' +
+            '<div class="hub-thumb">' + clock + '</div>' +
+            '<div class="hub-feat-body">' +
+            '<span class="hub-kind"><span class="hub-kind-dot hub-kind-video" aria-hidden="true"></span>' + esc(s.soonKind) + '</span>' +
+            '<h3 class="hub-feat-title">' + esc(s.soonTitle) + '</h3>' +
+            '<p class="hub-feat-desc">' + esc(s.soonDesc) + '</p>' +
+            '</div></article>' +
+            '<div class="hub-row hub-ghost-row" aria-hidden="true">' + ghost + ghost + ghost + ghost + ghost + '</div>';
+    }
+
     function render() {
         const l = lang();
         const s = STR[l];
+        if (!ITEMS.length) {
+            root.innerHTML = soon(s);
+            return;
+        }
         const list = ITEMS.filter((it) => filter === 'all' || it.type === filter);
 
         const chips = ['all', 'video', 'deck', 'article'].map((f) =>
@@ -187,6 +166,7 @@
         const pos = Math.abs(row.scrollLeft);
         const prev = root.querySelector('.hub-arrow-prev');
         const next = root.querySelector('.hub-arrow-next');
+        if (!prev || !next) return; // "Coming soon" row has no arrows
         prev.hidden = pos <= 2;
         next.hidden = pos >= max - 2;
     }
