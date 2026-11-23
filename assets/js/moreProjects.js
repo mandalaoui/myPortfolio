@@ -6,7 +6,7 @@
 // Mobile (<= 37.5rem): rows with thumbnails; tapping a row expands it in place
 // (screenshot, full sentence, buttons). One row open at a time.
 
-import { badges, links, wireVideo } from "./projectCard.js?v=p4";
+import { badges, links, wireVideo } from "./projectCard.js?v=p5";
 
 const MOBILE = window.matchMedia("(max-width: 37.5rem)");
 
@@ -21,8 +21,7 @@ export function renderMoreProjects(list, preview, projects, firstNumber) {
     li.innerHTML = `
       <button type="button" class="more-row-head" aria-expanded="false">
         <span class="more-row-num">${num}</span>
-        <span class="more-row-thumb"><img src="${project.image}" alt="" loading="lazy"
-          onerror="this.style.visibility='hidden'"></span>
+        <span class="more-row-thumb"><img src="${project.image}" alt="" loading="lazy"></span>
         <span class="more-row-text">
           <span class="more-row-title">${project.title}</span>
           <span class="more-row-short">${project.short || ""}</span>
@@ -39,6 +38,8 @@ export function renderMoreProjects(list, preview, projects, firstNumber) {
         ${links(project)}
       </div>`;
     wireVideo(li.querySelector(".more-row-body"));
+    const thumb = li.querySelector(".more-row-thumb img");
+    thumb.addEventListener("error", () => { thumb.style.visibility = "hidden"; }, { once: true });
     list.appendChild(li);
     return li;
   });

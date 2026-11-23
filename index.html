@@ -5,15 +5,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Omer Mandalaoui | Fullstack Developer</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="assets/css/styles.css?v=lg1">
-    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <!-- External libraries: exact versions + Subresource Integrity (SRI) hashes,
+         so a changed or compromised CDN file is refused by the browser.
+         When upgrading a version, recompute its sha384 hash. -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha384-iw3OoTErCYJJB9mCa8LNS2hbsQ7M3C0EpIsO/H5+EGAkPGc6rk+V8i04oW/K5xq0" crossorigin="anonymous">
+    <link rel="stylesheet" href="assets/css/styles.css?v=s1">
+    <script type="module" src="https://unpkg.com/@google/model-viewer@4.4.0/dist/model-viewer.min.js"
+        integrity="sha384-wjsPzEO+lXOf7d9csIDfAQpPt2OKuUU3m0K9qsdKIuzX4N8czSF6hdh23eAbZa3p" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"
+        integrity="sha384-g4NTh/Iv5PPU4xPyhEWqPcwtNXOvdaDI8LLnyYfyNZOjKJeYQyjzQ9X5275eBjpt" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"
+        integrity="sha384-Z3REaz79l2IaAZqJsSABtTbhjgOUYyV3p90XNnAPCSHg3EMTz1fouunq9WZRtj3d" crossorigin="anonymous"></script>
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&family=Space+Mono:wght@400;700&family=Bebas+Neue&family=Syne:wght@400;700;800&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/devicon.min.css"
+        integrity="sha384-DjehTlU5SubGD1zUGe78SkwLgw+q2y9DXnmy3EaDbXA9nvFMPW3LP5verNrWr9rW" crossorigin="anonymous">
 
 </head>
 
@@ -57,8 +65,7 @@
                     <div class="hero-image-container">
                         <div class="ai-ring ring1" aria-hidden="true"><span class="ring-node"></span></div>
                         <div class="ai-ring ring2" aria-hidden="true"></div>
-                        <img src="images/profile.png" alt="Omer Mandalaoui" class="hero-image"
-                            onerror="this.onerror=null;this.src='https://via.placeholder.com/400'">
+                        <img src="images/profile.png" alt="Omer Mandalaoui" class="hero-image">
                         <div class="hero-chip chip-online" aria-hidden="true"><span class="chip-dot"></span><span data-i18n="hero.chipOnline">Online now</span></div>
                         <a href="#avatar" class="hero-chip chip-chat" data-i18n="hero.chipChat">💬 Chat with AI Omer</a>
                     </div>
@@ -120,6 +127,7 @@
                             <img class="avatar-pose" data-pose="explain" src="images/avatar/explain.webp?v=2" alt="" width="820" height="738">
                             <img class="avatar-pose" data-pose="explain-open" src="images/avatar/explain-open.webp?v=2" alt="" width="820" height="738">
                             <img class="avatar-pose" data-pose="wave" src="images/avatar/wave.webp?v=2" alt="" width="820" height="738">
+                            <img class="avatar-pose" data-pose="suspicious" src="images/avatar/suspicious.webp" alt="" width="820" height="738">
                         </div>
                         <div class="hero-chip chip-online avatar-online"><span class="chip-dot"></span><span data-i18n="hero.chipOnline">Online now</span></div>
                     </div>
@@ -135,8 +143,18 @@
                             <a class="contact-btn contact-btn-primary" href="https://calendar.app.google/BzQ4bsv9qHKrsKKb7" target="_blank" rel="noopener"><i class="fas fa-calendar-check" aria-hidden="true"></i><span data-chat="book"></span></a>
                             <a class="contact-btn contact-btn-secondary" href="https://wa.me/972538228882" target="_blank" rel="noopener"><i class="fab fa-whatsapp" aria-hidden="true"></i><span>WhatsApp</span></a>
                         </div>
+                        <!-- Chat state card (quota / busy / blocked / disabled / error),
+                             filled by avatarChat.js from /api/chat/status. -->
+                        <div class="chat-status" id="chatStatus" role="status" aria-live="polite" hidden>
+                            <p class="chat-status-title"></p>
+                            <p class="chat-status-text"></p>
+                            <div class="chat-status-actions"></div>
+                        </div>
+                        <p class="chat-near" id="chatNear" role="status" hidden></p>
                         <form class="chat-form" id="chatForm" autocomplete="off">
-                            <input type="text" id="chatInput" maxlength="500" required>
+                            <!-- Honeypot: invisible to people; bots that fill it are ignored. -->
+                            <input type="text" name="website" id="chatHp" class="chat-hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+                            <input type="text" id="chatInput" maxlength="500" required aria-describedby="chatStatus">
                             <button type="submit" id="chatSend"><i class="fas fa-paper-plane" aria-hidden="true"></i></button>
                         </form>
                         <details class="chat-how">
@@ -152,17 +170,16 @@
                  This is the section's only heading (no title inside #projects). -->
             <section id="projects-title" class="scene scene-title title-art-scene">
                 <!-- Illustration behind the title; motion in assets/js/titleArt.js.
-                     English: the art has "PROJECTS" built in (-en image), so the
-                     HTML title is hidden visually. Hebrew: the plain art (-he
-                     image) with the live title "פרויקטים" on top. -->
+                     The title is built into the art in each language ("PROJECTS"
+                     / "פרויקטים"), so the HTML title is hidden visually. -->
                 <div class="title-art" aria-hidden="true">
                     <div class="title-art-glow"></div>
                     <div class="title-art-float">
                         <img class="title-art-img title-art-img-en" src="images/projects-intro-en.webp" alt="" width="1400" height="758" decoding="async">
-                        <img class="title-art-img title-art-img-he" src="images/projects-intro.webp?v=2" alt="" width="1400" height="703" decoding="async">
+                        <img class="title-art-img title-art-img-he" src="images/projects-intro-he.webp" alt="" width="1400" height="787" decoding="async">
                     </div>
                 </div>
-                <h2 class="scene-title-text title-baked-en" id="projectsHeading" data-i18n="scenes.projectsTitle">Projects</h2>
+                <h2 class="scene-title-text title-baked" id="projectsHeading" data-i18n="scenes.projectsTitle">Projects</h2>
             </section>
 
             <!-- Projects (University / Independent) -->
@@ -206,10 +223,11 @@
                 <h2 class="scene-title-text title-baked" data-i18n="scenes.aiTitle">AI</h2>
             </section>
 
-            <!-- AI Hub (TEMPORARY placeholder until Layer 5 is designed). -->
+            <!-- AI Hub: featured card + row, rendered by assets/js/aiHub.js (DEMO content for now). -->
             <section id="ai-hub" class="scene scene-hub">
                 <h2 class="scene-heading" data-i18n="scenes.hubTitle">AI Hub</h2>
-                <p class="scene-sub" data-i18n="scenes.hubSoon">Videos, talks and articles on applied AI. Coming soon.</p>
+                <p class="scene-sub" data-i18n="scenes.hubSub">Videos, talks and articles on applied AI.</p>
+                <div id="aiHubContent" class="hub-content"></div>
             </section>
 
             <!-- About -->
@@ -413,7 +431,7 @@
     <script src="assets/js/skillsRing.js?v=s2"></script>
     <script src="assets/js/videoModal.js"></script>
     <script src="assets/js/mobileNav.js"></script>
-    <script type="module" src="assets/js/projectsRenderer.js?v=p4"></script>
+    <script type="module" src="assets/js/projectsRenderer.js?v=p5"></script>
     <script src="assets/js/theme.js"></script>
     <script src="assets/js/navigation.js"></script>
     <script src="assets/js/cursor.js"></script>
@@ -423,15 +441,10 @@
     <script src="assets/js/modal.js"></script>
     <script src="assets/js/toast.js"></script>
     <script src="assets/js/forms.js"></script>
-    <script src="assets/js/avatarChat.js?v=a9"></script>
+    <script src="assets/js/avatarChat.js?v=s2"></script>
+    <script src="assets/js/aiHub.js?v=h3"></script>
     <script src="assets/js/zoomTransition.js?v=zt10"></script>
-    <script>
-        // Zoom-forward scroll transitions (REDESIGN_PLAN.md, "Planned scroll choreography").
-        ZoomTransition.create({ outgoing: '#home', incoming: '#avatar' });
-        ZoomTransition.create({ outgoing: '#projects-title', incoming: '#projects', scaleOut: 1, split: 0.9, overlap: 0.5, outEase: 'power4.in' });
-        ZoomTransition.create({ outgoing: '#ai-title', incoming: '#ai-hub', scaleOut: 1, split: 0.9, overlap: 0.5, outEase: 'power4.in' });
-        ZoomTransition.create({ outgoing: '#skills', incoming: '#contact' });
-    </script>
+    <script src="assets/js/transitions.js?v=1"></script>
     <script src="assets/js/titleArt.js?v=ta4"></script>
 
 </body>

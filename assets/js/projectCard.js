@@ -33,7 +33,7 @@ function image(project) {
     <div class="project-image">
       <img src="${project.image}" alt="${project.title}" loading="lazy"
         ${project.video ? `data-video="${project.video}" style="cursor:pointer"` : ""}
-        onerror="this.onerror=null;this.parentElement.innerHTML='<i class=\\'fas ${fallback}\\'></i>'">
+        data-fallback="${fallback}">
     </div>`;
 }
 
@@ -56,6 +56,18 @@ export function links(project) {
     items.push(`<button type="button" class="project-link" data-video="${project.video}"><i class="fas fa-play"></i> Video</button>`);
   }
   return `<div class="project-links">${items.join("")}</div>`;
+}
+
+// Missing screenshot -> type icon (a listener instead of an inline onerror,
+// so the Content-Security-Policy can forbid inline scripts).
+export function wireImageFallback(root) {
+  root.querySelectorAll("img[data-fallback]").forEach((img) => {
+    img.addEventListener("error", () => {
+      const icon = document.createElement("i");
+      icon.className = `fas ${img.dataset.fallback}`;
+      img.replaceWith(icon);
+    }, { once: true });
+  });
 }
 
 export function wireVideo(card) {
@@ -88,5 +100,6 @@ export function createProjectCard(project, index) {
     </div>
   `.trim();
   wireVideo(card);
+  wireImageFallback(card);
   return card;
 }

@@ -1,6 +1,6 @@
-import { projectsData } from "./projectsData.js?v=p4";
-import { createProjectCard } from "./projectCard.js?v=p4";
-import { renderMoreProjects } from "./moreProjects.js?v=p4";
+import { projectsData } from "./projectsData.js?v=p5";
+import { createProjectCard } from "./projectCard.js?v=p5";
+import { renderMoreProjects } from "./moreProjects.js?v=p5";
 
 // Featured projects -> large cards in the sideways track (#projectsContainer).
 // The rest -> the "More projects" index (list + preview, moreProjects.js).

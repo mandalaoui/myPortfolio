@@ -31,7 +31,7 @@
                 projectsTitle: 'Projects',
                 aiTitle: 'AI',
                 hubTitle: 'AI Hub',
-                hubSoon: 'Videos, talks and articles on applied AI. Coming soon.'
+                hubSub: 'Videos, talks and articles on applied AI.'
             },
             projects: { more: 'More projects' },
             contact: {
@@ -76,7 +76,7 @@
                 projectsTitle: 'פרויקטים',
                 aiTitle: 'AI',
                 hubTitle: 'מרכז ה-AI',
-                hubSoon: 'סרטונים, הרצאות ומאמרים על AI יישומי. בקרוב.'
+                hubSub: 'סרטונים, הרצאות ומאמרים על AI יישומי.'
             },
             projects: { more: 'פרויקטים נוספים' },
             contact: {

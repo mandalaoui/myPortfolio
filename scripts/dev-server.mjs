@@ -1,8 +1,18 @@
-// Local dev server: serves the static site and runs the chat function at
-// /api/chat, like Netlify does in production. No dependencies.
+// Local dev server: serves the static site and runs the chat functions like
+// Netlify does in production. No dependencies.
 //   node scripts/dev-server.mjs   (or: npm run dev)   -> http://localhost:5174
-// Reads the Groq key from .env.local (avatarApiKey=...). Chat logs go to
-// logs/chat-log.jsonl (git-ignored) instead of Netlify Blobs.
+//
+// - Reads secrets from .env.local (avatarApiKey, CHAT_SECRET).
+// - /api/chat and /api/chat/status run netlify/functions/*.mjs.
+// - Storage is in memory (netlify/chat/store.mjs); chat logs go to
+//   logs/chat-log.jsonl (git-ignored).
+// - Applies the "/*" headers from _headers, like Netlify (to test the CSP).
+// - Dev-only helpers for testing states (never deployed):
+//     GET  /__dev/state?store=chat-usage            -> all keys/values of a store
+//     POST /__dev/state  {store, key, value}         -> set a value (value null deletes)
+//     POST /__dev/reset                              -> clear all stores
+//     GET  /__dev/client-key?client=<id>             -> storage key of a browser id
+//   A request header `x-dev-ip` overrides the client IP (simulate another network).
 
 import http from "node:http";
 import fs from "node:fs";
@@ -13,43 +23,102 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const PORT = Number(process.env.PORT || 5174);
 
 for (const file of [".env.local", ".env"]) {
-  const p = path.join(root, file);
-  if (!fs.existsSync(p)) continue;
-  for (const line of fs.readFileSync(p, "utf8").split(/\r?\n/)) {
-    const m = line.match(/^\s*([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(.*)\s*$/);
-    if (m && !(m[1] in process.env)) process.env[m[1]] = m[2].replace(/^['"]|['"]$/g, "");
-  }
+    const p = path.join(root, file);
+    if (!fs.existsSync(p)) continue;
+    for (const line of fs.readFileSync(p, "utf8").split(/\r?\n/)) {
+        const m = line.match(/^\s*([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(.*)\s*$/);
+        if (m && !(m[1] in process.env)) process.env[m[1]] = m[2].replace(/^['"]|['"]$/g, "");
+    }
 }
 
+globalThis.__chatDev = true;
 fs.mkdirSync(path.join(root, "logs"), { recursive: true });
 globalThis.__chatLog = (entry) =>
-  fs.appendFileSync(path.join(root, "logs", "chat-log.jsonl"), JSON.stringify(entry) + "\n");
+    fs.appendFileSync(path.join(root, "logs", "chat-log.jsonl"), JSON.stringify(entry) + "\n");
 
-const { default: chat } = await import(pathToFileURL(path.join(root, "netlify/functions/chat.mjs")).href);
+const fn = async (name) => (await import(pathToFileURL(path.join(root, "netlify/functions", name)).href)).default;
+const chat = await fn("chat.mjs");
+const chatStatus = await fn("chat-status.mjs");
+
+// "/*" block of _headers -> header list applied to every response.
+function siteHeaders() {
+    const p = path.join(root, "_headers");
+    if (!fs.existsSync(p)) return [];
+    const out = [];
+    let inAll = false;
+    for (const line of fs.readFileSync(p, "utf8").split(/\r?\n/)) {
+        if (!line.trim() || line.trim().startsWith("#")) continue;
+        if (!/^\s/.test(line)) { inAll = line.trim() === "/*"; continue; }
+        const m = line.trim().match(/^([A-Za-z-]+):\s*(.*)$/);
+        if (inAll && m) out.push([m[1], m[2]]);
+    }
+    return out;
+}
 
 const TYPES = {
-  ".html": "text/html; charset=utf-8", ".css": "text/css", ".js": "text/javascript", ".mjs": "text/javascript",
-  ".json": "application/json", ".png": "image/png", ".jpg": "image/jpeg", ".jpeg": "image/jpeg",
-  ".webp": "image/webp", ".svg": "image/svg+xml", ".pdf": "application/pdf", ".mp4": "video/mp4", ".glb": "model/gltf-binary"
+    ".html": "text/html; charset=utf-8", ".css": "text/css", ".js": "text/javascript", ".mjs": "text/javascript",
+    ".json": "application/json", ".png": "image/png", ".jpg": "image/jpeg", ".jpeg": "image/jpeg",
+    ".webp": "image/webp", ".svg": "image/svg+xml", ".pdf": "application/pdf", ".mp4": "video/mp4", ".glb": "model/gltf-binary"
 };
 
-http.createServer(async (req, res) => {
-  const url = new URL(req.url, `http://localhost:${PORT}`);
-
-  if (url.pathname === "/api/chat") {
+async function readBody(req) {
     const chunks = [];
     for await (const c of req) chunks.push(c);
-    const request = new Request(url, { method: req.method, headers: req.headers, body: req.method === "POST" ? Buffer.concat(chunks) : undefined });
-    const response = await chat(request, { ip: req.socket.remoteAddress });
+    return Buffer.concat(chunks);
+}
+
+async function runFunction(handler, req, res, url) {
+    const body = req.method === "POST" ? await readBody(req) : undefined;
+    const request = new Request(url, { method: req.method, headers: req.headers, body });
+    const ip = req.headers["x-dev-ip"] || req.socket.remoteAddress;
+    const response = await handler(request, { ip });
     res.writeHead(response.status, Object.fromEntries(response.headers));
     if (response.body) for await (const c of response.body) res.write(c);
-    return res.end();
-  }
+    res.end();
+}
 
-  let file = path.normalize(path.join(root, decodeURIComponent(url.pathname)));
-  if (!file.startsWith(root)) { res.writeHead(403); return res.end(); }
-  if (fs.existsSync(file) && fs.statSync(file).isDirectory()) file = path.join(file, "index.html");
-  if (!fs.existsSync(file)) { res.writeHead(404); return res.end("Not found"); }
-  res.writeHead(200, { "Content-Type": TYPES[path.extname(file).toLowerCase()] || "application/octet-stream" });
-  fs.createReadStream(file).pipe(res);
+http.createServer(async (req, res) => {
+    const url = new URL(req.url, `http://localhost:${PORT}`);
+    try {
+        if (url.pathname === "/api/chat") return await runFunction(chat, req, res, url);
+        if (url.pathname === "/api/chat/status") return await runFunction(chatStatus, req, res, url);
+
+        if (url.pathname.startsWith("/__dev/")) {
+            const stores = globalThis.__chatDevStores || new Map();
+            res.setHeader("Content-Type", "application/json");
+            if (url.pathname === "/__dev/reset" && req.method === "POST") {
+                stores.forEach((m) => m.clear());
+                return res.end('{"ok":true}');
+            }
+            if (url.pathname === "/__dev/client-key" && req.method === "GET") {
+                const { hashId } = await import(pathToFileURL(path.join(root, "netlify/chat/security.mjs")).href);
+                return res.end(JSON.stringify({ key: `c/${hashId("c", url.searchParams.get("client") || "")}` }));
+            }
+            if (url.pathname === "/__dev/state" && req.method === "GET") {
+                const m = stores.get(url.searchParams.get("store")) || new Map();
+                return res.end(JSON.stringify(Object.fromEntries([...m].map(([k, v]) => [k, JSON.parse(v)]))));
+            }
+            if (url.pathname === "/__dev/state" && req.method === "POST") {
+                const { store: name, key, value } = JSON.parse((await readBody(req)).toString() || "{}");
+                if (!stores.has(name)) stores.set(name, new Map());
+                if (value === null) stores.get(name).delete(key); else stores.get(name).set(key, JSON.stringify(value));
+                return res.end('{"ok":true}');
+            }
+            res.writeHead(404);
+            return res.end("{}");
+        }
+
+        let file = path.normalize(path.join(root, decodeURIComponent(url.pathname)));
+        if (!file.startsWith(root)) { res.writeHead(403); return res.end(); }
+        if (fs.existsSync(file) && fs.statSync(file).isDirectory()) file = path.join(file, "index.html");
+        if (!fs.existsSync(file)) { res.writeHead(404); return res.end("Not found"); }
+        const headers = { "Content-Type": TYPES[path.extname(file).toLowerCase()] || "application/octet-stream" };
+        for (const [k, v] of siteHeaders()) headers[k] = v;
+        res.writeHead(200, headers);
+        fs.createReadStream(file).pipe(res);
+    } catch (err) {
+        console.error(err);
+        if (!res.headersSent) res.writeHead(500);
+        res.end("Server error");
+    }
 }).listen(PORT, () => console.log(`Dev server: http://localhost:${PORT}`));

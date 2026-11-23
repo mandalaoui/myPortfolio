@@ -810,6 +810,355 @@ header.site-header nav {
     margin: 0;
 }
 
+/* ── AI Hub (aiHub.js): filter chips, featured card, horizontal row ── */
+.scene-hub {
+    gap: 1rem;
+}
+
+.hub-content {
+    width: 100%;
+    max-width: 66rem;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1.1rem;
+    text-align: start;
+}
+
+.hub-chips {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.6rem;
+}
+
+.hub-chip {
+    font: inherit;
+    font-size: 0.95rem;
+    color: var(--on-sky);
+    background: rgba(255, 255, 255, 0.18);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 999px;
+    padding: 0.4rem 1.1rem;
+    cursor: pointer;
+    text-shadow: var(--on-sky-shadow);
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.hub-chip:hover {
+    background: rgba(255, 255, 255, 0.32);
+}
+
+.hub-chip[aria-pressed="true"] {
+    background: #fff;
+    color: #0c5a8a;
+    text-shadow: none;
+}
+
+.hub-chip:focus-visible,
+.hub-action:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 3px;
+}
+
+.hub-feat,
+.hub-card {
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 1.1rem;
+    color: var(--on-sky);
+    overflow: hidden;
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+}
+
+.hub-feat {
+    display: flex;
+    align-items: stretch;
+    gap: 0.5rem;
+}
+
+.hub-feat .hub-thumb {
+    flex: 1.3;
+    min-height: 14rem;
+    margin: 0.7rem;
+}
+
+.hub-feat-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.6rem;
+    padding: 1.2rem 1.6rem 1.2rem 0.6rem;
+}
+
+[dir="rtl"] .hub-feat-body {
+    padding: 1.2rem 0.6rem 1.2rem 1.6rem;
+}
+
+.hub-feat-title {
+    font-family: 'Space Grotesk', 'Inter', sans-serif;
+    font-size: clamp(1.4rem, 2.2vw, 2rem);
+    font-weight: 700;
+    line-height: 1.25;
+    margin: 0;
+    color: var(--on-sky);
+    text-shadow: var(--on-sky-shadow);
+}
+
+.hub-feat-desc {
+    font-size: 1rem;
+    line-height: 1.55;
+    margin: 0;
+    color: var(--on-sky);
+    text-shadow: var(--on-sky-shadow);
+}
+
+.hub-kind {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: 0.85rem;
+    color: var(--on-sky);
+    text-shadow: var(--on-sky-shadow);
+}
+
+.hub-kind-dot {
+    width: 0.55rem;
+    height: 0.55rem;
+    border-radius: 50%;
+    background: #fff;
+}
+
+.hub-kind-video { background: #ffd166; }
+.hub-kind-deck { background: #b8f2c8; }
+.hub-kind-article { background: #ffc2d6; }
+
+.hub-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    align-self: flex-start;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--on-sky);
+    text-decoration: none;
+    text-shadow: var(--on-sky-shadow);
+}
+
+a.hub-action:hover {
+    text-decoration: underline;
+}
+
+[dir="rtl"] .hub-ext {
+    transform: scaleX(-1);
+}
+
+.hub-more-label {
+    margin: 0.4rem 0 -0.4rem;
+    font-size: 0.9rem;
+    color: var(--on-sky);
+    text-shadow: var(--on-sky-shadow);
+}
+
+.hub-row {
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    padding: 0.2rem 0.1rem 0.6rem;
+    scrollbar-width: none;
+}
+
+.hub-row::-webkit-scrollbar {
+    display: none;
+}
+
+.hub-row-wrap {
+    position: relative;
+}
+
+/* Desktop-only arrows (touch devices just swipe). */
+.hub-arrow {
+    display: none;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 2.8rem;
+    height: 2.8rem;
+    padding: 0.7rem;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    background: rgba(255, 255, 255, 0.92);
+    color: #0c5a8a;
+    cursor: pointer;
+    z-index: 2;
+    box-shadow: 0 0.3rem 1rem rgba(8, 30, 70, 0.25);
+    transition: background-color 0.2s ease;
+}
+
+.hub-arrow:hover {
+    background: #fff;
+}
+
+.hub-arrow:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 3px;
+}
+
+.hub-arrow-prev { inset-inline-start: -0.6rem; }
+.hub-arrow-next { inset-inline-end: -0.6rem; }
+
+/* The chevron points left; flip the one that points "forward" in LTR, or
+   the one that points "back" in RTL. */
+.hub-arrow-next svg { transform: scaleX(-1); }
+[dir="rtl"] .hub-arrow-prev svg { transform: scaleX(-1); }
+[dir="rtl"] .hub-arrow-next svg { transform: none; }
+
+@media (hover: hover) and (pointer: fine) {
+    .hub-arrow:not([hidden]) {
+        display: block;
+    }
+}
+
+.hub-card {
+    flex: 0 0 13rem;
+    display: flex;
+    flex-direction: column;
+    scroll-snap-align: start;
+    transition: transform 0.25s ease;
+}
+
+.hub-card:hover {
+    transform: translateY(-0.25rem);
+}
+
+.hub-card .hub-thumb {
+    height: 8rem;
+    margin: 0.6rem 0.6rem 0;
+}
+
+.hub-card-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    padding: 0.8rem 0.9rem 1rem;
+}
+
+.hub-card-title {
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.35;
+    margin: 0;
+    color: var(--on-sky);
+    text-shadow: var(--on-sky-shadow);
+}
+
+.hub-card-src {
+    margin: 0;
+    font-size: 0.85rem;
+    color: var(--on-sky);
+    text-shadow: var(--on-sky-shadow);
+}
+
+.hub-thumb {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(10, 70, 120, 0.3);
+    border-radius: 0.8rem;
+    overflow: hidden;
+}
+
+.hub-badge {
+    position: absolute;
+    inset-inline-end: 0.5rem;
+    bottom: 0.5rem;
+    font-size: 0.78rem;
+    color: #fff;
+    background: rgba(10, 50, 90, 0.72);
+    border-radius: 0.3rem;
+    padding: 0.15rem 0.45rem;
+}
+
+.hub-play {
+    width: 3.2rem;
+    height: 3.2rem;
+    padding: 0.8rem;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.92);
+    color: #0c5a8a;
+}
+
+.hub-feat .hub-play {
+    width: 4.4rem;
+    height: 4.4rem;
+    padding: 1.1rem;
+}
+
+.hub-slide {
+    width: 66%;
+    aspect-ratio: 16 / 10;
+    background: #fff;
+    border-radius: 0.3rem;
+    padding: 0.6rem;
+}
+
+.hub-lines {
+    width: 66%;
+}
+
+.hub-slide i,
+.hub-lines i {
+    display: block;
+    height: 0.35rem;
+    margin-bottom: 0.4rem;
+    border-radius: 0.2rem;
+    background: #9ecbe6;
+}
+
+.hub-lines i {
+    background: rgba(255, 255, 255, 0.75);
+}
+
+.hub-slide i.strong {
+    background: #2a8fc7;
+    height: 0.5rem;
+}
+
+.hub-lines i.strong {
+    background: #fff;
+    height: 0.5rem;
+}
+
+.hub-slide i.w50, .hub-lines i.w50 { width: 50%; }
+.hub-slide i.w55, .hub-lines i.w55 { width: 55%; }
+.hub-slide i.w60, .hub-lines i.w60 { width: 60%; }
+.hub-slide i.w75, .hub-lines i.w75 { width: 75%; }
+.hub-slide i.w88, .hub-lines i.w88 { width: 88%; }
+
+@media (max-width: 700px) {
+    .hub-feat {
+        flex-direction: column;
+    }
+
+    .hub-feat .hub-thumb {
+        min-height: 11rem;
+    }
+
+    .hub-feat-body,
+    [dir="rtl"] .hub-feat-body {
+        padding: 0.4rem 1.1rem 1.2rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hub-card { transition: none; }
+    .hub-card:hover { transform: none; }
+}
+
 /* ── Title cards with a 3D illustration (titleArt.js): Projects, AI ──
    The image sits behind the giant title; titleArt.js drives its scroll motion
    (entrance -> moving into it -> hand-off to the next section). */
@@ -864,7 +1213,7 @@ header.site-header nav {
         0 0 4.5rem rgba(8, 30, 70, 0.35);
 }
 
-/* Title text already drawn inside the illustration (AI card): keep the
+/* Title text already drawn inside the illustration (Projects, AI): keep the
    element for structure and the scroll code, but don't show it. */
 .title-art-scene .scene-title-text.title-baked {
     position: absolute;
@@ -875,25 +1224,15 @@ header.site-header nav {
     white-space: nowrap;
 }
 
-/* English-only baked title (Projects card): the English art has the word
-   built in; Hebrew shows the plain art and the live title instead. */
-html:not([dir="rtl"]) .title-art-scene .scene-title-text.title-baked-en {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip: rect(0 0 0 0);
-    white-space: nowrap;
-}
-
+/* Cards whose art exists per language (Projects): show the one that
+   matches the page direction. */
 html:not([dir="rtl"]) .title-art-img-he,
 [dir="rtl"] .title-art-img-en {
     display: none;
 }
 
 /* Larger art when it carries the title itself. */
-.title-art-scene:has(.title-baked) .title-art-float,
-html:not([dir="rtl"]) .title-art-scene:has(.title-baked-en) .title-art-float {
+.title-art-scene:has(.title-baked) .title-art-float {
     width: min(58rem, 80vw);
 }
 
@@ -1123,6 +1462,87 @@ html:not([dir="rtl"]) .title-art-scene:has(.title-baked-en) .title-art-float {
 .chat-cta .contact-btn {
     padding: 0.55rem 1.1rem;
     font-size: 0.9rem;
+}
+
+/* Chat state card (avatarChat.js): quota / busy / blocked / disabled / error */
+.chat-status {
+    border-radius: 1rem;
+    padding: 0.9rem 1rem;
+    background: #eef2ff;
+    border: 0.0625rem solid rgba(99, 102, 241, 0.3);
+}
+
+.chat-status[hidden] {
+    display: none;
+}
+
+.chat-status[data-state="blocked"] {
+    background: #fff7ed;
+    border-color: rgba(234, 88, 12, 0.35);
+}
+
+.chat-status[data-state="error"] {
+    background: #fef2f2;
+    border-color: rgba(220, 38, 38, 0.3);
+}
+
+.chat-status-title {
+    margin: 0 0 0.25rem;
+    font-weight: 700;
+    color: var(--ink);
+}
+
+.chat-status-text {
+    margin: 0 0 0.7rem;
+    font-size: 0.92rem;
+    color: #334155;
+    line-height: 1.5;
+}
+
+.chat-status-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.chat-status-actions .contact-btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.88rem;
+    border: 0;
+    cursor: pointer;
+}
+
+.chat-near {
+    margin: 0;
+    font-size: 0.82rem;
+    color: #92400e;
+    background: #fffbeb;
+    border-radius: 0.6rem;
+    padding: 0.4rem 0.7rem;
+}
+
+.chat-near[hidden] {
+    display: none;
+}
+
+/* Warning (2nd unusual request): the bubble stands out */
+.chat-msg-warning .chat-bubble {
+    background: #fff7ed;
+    border: 0.0625rem solid rgba(234, 88, 12, 0.45);
+}
+
+/* Honeypot: off-screen, never shown to people */
+.chat-hp {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+}
+
+.chat-form input:disabled {
+    cursor: not-allowed;
+    opacity: 0.7;
 }
 
 .chat-form {

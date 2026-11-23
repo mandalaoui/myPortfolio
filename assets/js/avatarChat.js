@@ -4,7 +4,8 @@
 //   idle (breathing via CSS), blink every few seconds, wave when the section
 //   first appears, thinking while waiting for an answer, explain + talking
 //   (idle <-> talk mouth frames) while the answer streams in, and a
-//   "suspicious" look (thinking pose + shake) for manipulative requests.
+//   "suspicious" look (raised eyebrow, crossed arms + shake) for manipulative
+//   requests.
 // Chat: suggested questions, streamed answers, source chips that scroll to the
 //   matching section, call-to-action buttons for potential clients/employers.
 // Language: English / Hebrew, follows the site's language toggle.
@@ -34,7 +35,27 @@
             // [text before, link text (-> #contact), text after]
             privacy: ['Answers are AI-generated and may contain errors. They are not a binding commitment or professional advice; please ', 'confirm anything important with me directly', ". Conversations are saved to improve the answers, so please don't share sensitive information."],
             error: "Sorry, I can't answer right now. You can reach me directly through the contact options at the bottom of the site.",
-            suggestions: ['What have you built with AI?', 'Are you available for projects?', 'Do you run AI trainings?', 'How do I start using AI in my business?']
+            suggestions: ['What have you built with AI?', 'Are you available for projects?', 'Do you run AI trainings?', 'How do I start using AI in my business?'],
+            // Chat states (fixed texts, no AI call)
+            unavailable: 'The chat is unavailable right now',
+            nearQuota: 'The chat is busy today, so it may only be available for a little longer.',
+            quotaTitle: "The chat has reached today's limit",
+            quotaText: "It will be back {when}. Meanwhile, I'd love to hear from you directly:",
+            busyTitle: 'Lots of questions right now',
+            busyText: 'The chat will be available again in {time}.',
+            blockedTitle: 'The chat is locked for 24 hours',
+            blockedText: 'This happens after repeated unusual requests. It reopens {when}. You can still reach me directly:',
+            disabledTitle: "The chat isn't available right now",
+            disabledText: "I'd love to hear from you directly:",
+            errorTitle: 'Something went wrong',
+            errorText: "The chat couldn't connect. Please try again.",
+            retry: 'Try again',
+            email: 'Email',
+            seconds: 'seconds',
+            oneSecond: '1 second',
+            today: 'today at {t}',
+            tomorrow: 'tomorrow at {t}',
+            on: 'on {d} at {t}'
         },
         he: {
             title: 'שיחה עם AI Omer',
@@ -47,7 +68,26 @@
             howText: 'זו מערכת RAG קטנה: השאלה שלכם מנוסחת מחדש למילות חיפוש, המידע הרלוונטי עליי נשלף ממאגר ידע, ומודל שפה (ב-Groq) עונה רק מתוך המידע הזה. מודל נוסף בודק כל הודעה מפני ניסיונות prompt injection.',
             privacy: ['התשובות נוצרות באמצעות בינה מלאכותית ועשויות לכלול טעויות. הן אינן מהוות התחייבות או ייעוץ מקצועי, ולכל עניין מהותי מומלץ ', 'לאמת מולי ישירות', '. השיחות נשמרות לצורך שיפור התשובות, ולכן אין לשתף מידע רגיש.'],
             error: 'סליחה, אני לא יכול לענות כרגע. אפשר לפנות אליי ישירות דרך פרטי הקשר בתחתית האתר.',
-            suggestions: ['מה בנית עם AI?', 'אתה פנוי לפרויקטים?', 'אתה מעביר הדרכות AI?', 'איך מתחילים לעבוד עם AI בעסק?']
+            suggestions: ['מה בנית עם AI?', 'אתה פנוי לפרויקטים?', 'אתה מעביר הדרכות AI?', 'איך מתחילים לעבוד עם AI בעסק?'],
+            unavailable: 'הצ\'אט לא זמין כרגע',
+            nearQuota: 'הצ\'אט עמוס היום, ולכן ייתכן שיהיה זמין רק לזמן קצר.',
+            quotaTitle: 'הצ\'אט הגיע למכסה היומית',
+            quotaText: 'הוא יחזור {when}. בינתיים אשמח לשמוע ממך ישירות:',
+            busyTitle: 'יש הרבה פניות כרגע',
+            busyText: 'הצ\'אט יחזור לפעול בעוד {time}.',
+            blockedTitle: 'הצ\'אט ננעל ל-24 שעות',
+            blockedText: 'זה קורה אחרי בקשות חריגות חוזרות. הוא ייפתח {when}. עדיין אפשר לפנות אליי ישירות:',
+            disabledTitle: 'הצ\'אט לא זמין כרגע',
+            disabledText: 'אשמח לשמוע ממך ישירות:',
+            errorTitle: 'משהו השתבש',
+            errorText: 'לא הצלחנו להתחבר לצ\'אט. נסו שוב.',
+            retry: 'נסו שוב',
+            email: 'מייל',
+            seconds: 'שניות',
+            oneSecond: 'שנייה',
+            today: 'היום ב-{t}',
+            tomorrow: 'מחר ב-{t}',
+            on: 'ב-{d} בשעה {t}'
         }
     };
 
@@ -89,7 +129,8 @@
         figure.classList.toggle('is-suspicious', next === 'suspicious');
         figure.classList.toggle('is-thinking', next === 'thinking');
         if (next === 'idle') show('idle');
-        if (next === 'thinking' || next === 'suspicious') show('thinking');
+        if (next === 'thinking') show('thinking');
+        if (next === 'suspicious') show(poses.suspicious ? 'suspicious' : 'thinking');
         if (next === 'wave') {
             show('wave');
             if (!hold) modeTimer = setTimeout(() => setMode('idle'), 1800);
@@ -215,8 +256,40 @@
     });
 
     // ── Chat ─────────────────────────────────────────────────────
+    // Chat states (see SECURITY_PLAN.md 2.5). The page asks /api/chat/status
+    // before the visitor types, so every limitation is shown up front with a
+    // fixed message (no AI call): available (+ "near quota" note), busy (with
+    // countdown), quota, blocked, disabled, error (with retry).
+    const statusBox = document.getElementById('chatStatus');
+    const nearNote = document.getElementById('chatNear');
+    const honeypot = document.getElementById('chatHp');
+    const CONTACT = {
+        book: 'https://calendar.app.google/BzQ4bsv9qHKrsKKb7',
+        whatsapp: 'https://wa.me/972538228882',
+        email: 'mailto:mandalaoui.omer@gmail.com'
+    };
+    const TOKEN_REFRESH_MS = 50 * 60 * 1000;   // tokens are valid for 1 hour
     const history = [];
     let busy = false;
+    let chatState = 'available';
+    let stateInfo = {};
+    let token = null;
+    let lastStatusAt = 0;
+    let countdownTimer = 0;
+
+    // Anonymous browser id (random; no personal data), used for usage limits.
+    const clientId = (() => {
+        const KEY = 'chat-client';
+        const fresh = () => (window.crypto && crypto.randomUUID ? crypto.randomUUID()
+            : `c${Date.now().toString(36)}${Math.random().toString(36).slice(2, 12)}`);
+        try {
+            let id = localStorage.getItem(KEY);
+            if (!/^[A-Za-z0-9-]{8,64}$/.test(id || '')) { id = fresh(); localStorage.setItem(KEY, id); }
+            return id;
+        } catch (e) {
+            return fresh();
+        }
+    })();
 
     function addMessage(role, text) {
         const el = document.createElement('div');
@@ -260,7 +333,7 @@
 
     function renderSuggestions() {
         suggestionsBox.innerHTML = '';
-        if (history.length) return;          // only before the first question
+        if (history.length || chatState !== 'available') return;   // only before the first question
         t('suggestions').forEach((q) => {
             const b = document.createElement('button');
             b.type = 'button';
@@ -270,9 +343,112 @@
         });
     }
 
+    // ── Status card ──────────────────────────────────────────────
+    function formatWhen(ts) {
+        const locale = lang() === 'he' ? 'he-IL' : 'en-GB';
+        const d = new Date(ts);
+        const time = d.toLocaleTimeString(locale, { hour: '2-digit', minute: '2-digit' });
+        const today = new Date();
+        const tomorrow = new Date(); tomorrow.setDate(today.getDate() + 1);
+        const same = (a, b) => a.toDateString() === b.toDateString();
+        if (same(d, today)) return t('today').replace('{t}', time);
+        if (same(d, tomorrow)) return t('tomorrow').replace('{t}', time);
+        return t('on').replace('{d}', d.toLocaleDateString(locale, { day: 'numeric', month: 'long' })).replace('{t}', time);
+    }
+
+    function formatCountdown(ms) {
+        const total = Math.max(0, Math.ceil(ms / 1000));
+        const m = Math.floor(total / 60);
+        const s = String(total % 60).padStart(2, '0');
+        if (m) return `${m}:${s}`;
+        return total === 1 ? t('oneSecond') : `${total} ${t('seconds')}`;
+    }
+
+    function statusButton(kind) {
+        if (kind === 'retry') {
+            const b = document.createElement('button');
+            b.type = 'button';
+            b.className = 'contact-btn contact-btn-primary';
+            b.innerHTML = '<i class="fas fa-rotate-right" aria-hidden="true"></i>';
+            b.append(` ${t('retry')}`);
+            b.addEventListener('click', () => refreshStatus());
+            return b;
+        }
+        const a = document.createElement('a');
+        a.className = `contact-btn ${kind === 'book' ? 'contact-btn-primary' : 'contact-btn-secondary'}`;
+        a.href = CONTACT[kind];
+        if (kind !== 'email') { a.target = '_blank'; a.rel = 'noopener'; }
+        const icon = { book: 'fas fa-calendar-check', whatsapp: 'fab fa-whatsapp', email: 'fas fa-envelope' }[kind];
+        a.innerHTML = `<i class="${icon}" aria-hidden="true"></i>`;
+        a.append(` ${kind === 'book' ? t('book') : kind === 'whatsapp' ? 'WhatsApp' : t('email')}`);
+        return a;
+    }
+
+    function renderStatus(state, info) {
+        const title = statusBox.querySelector('.chat-status-title');
+        const text = statusBox.querySelector('.chat-status-text');
+        const actions = statusBox.querySelector('.chat-status-actions');
+        const contacts = ['book', 'whatsapp', 'email'];
+        const map = {
+            quota: [t('quotaTitle'), t('quotaText').replace('{when}', formatWhen(info.resetAt)), contacts],
+            blocked: [t('blockedTitle'), t('blockedText').replace('{when}', formatWhen(info.until)), contacts],
+            disabled: [t('disabledTitle'), t('disabledText'), contacts],
+            busy: [t('busyTitle'), t('busyText').replace('{time}', formatCountdown((info.retryAt || 0) - Date.now())), ['book', 'whatsapp']],
+            error: [t('errorTitle'), t('errorText'), ['retry', 'book']]
+        }[state];
+        if (!map) return;
+        statusBox.dataset.state = state;
+        title.textContent = map[0];
+        text.textContent = map[1];
+        actions.replaceChildren(...map[2].map(statusButton));
+        statusBox.hidden = false;
+    }
+
+    function applyState(state, info = {}) {
+        chatState = state;
+        stateInfo = info;
+        clearInterval(countdownTimer);
+        // Typing stays possible on "error" (sending retries the connection).
+        const locked = !(state === 'available' || state === 'error');
+        input.disabled = locked;
+        sendBtn.disabled = locked || busy;
+        input.placeholder = locked ? t('unavailable') : t('placeholder');
+        nearNote.textContent = t('nearQuota');
+        nearNote.hidden = !(state === 'available' && info.near);
+        if (state === 'available') {
+            statusBox.hidden = true;
+        } else {
+            renderStatus(state, info);
+        }
+        renderSuggestions();
+        try {
+            if (state === 'blocked') localStorage.setItem('chat-blocked-until', String(info.until));
+            else localStorage.removeItem('chat-blocked-until');
+        } catch (e) { /* ignore */ }
+        if (state === 'busy') {
+            countdownTimer = setInterval(() => {
+                if (Date.now() >= (info.retryAt || 0)) { clearInterval(countdownTimer); refreshStatus(); }
+                else renderStatus('busy', info);
+            }, 1000);
+        }
+    }
+
+    async function refreshStatus() {
+        try {
+            const res = await fetch(`/api/chat/status?client=${encodeURIComponent(clientId)}`, { cache: 'no-store' });
+            if (!res.ok) throw new Error(String(res.status));
+            const s = await res.json();
+            lastStatusAt = Date.now();
+            token = s.token || null;
+            applyState(s.state, s);
+        } catch (e) {
+            token = null;
+            applyState('error');
+        }
+    }
+
     function applyLanguage() {
         section.querySelector('.chat-title').textContent = t('title');
-        input.placeholder = t('placeholder');
         sendBtn.setAttribute('aria-label', t('send'));
         section.querySelectorAll('[data-chat]').forEach((el) => {
             const value = t(el.dataset.chat);
@@ -286,19 +462,50 @@
         });
         const greeting = list.querySelector('.chat-msg-greeting .chat-bubble');
         if (greeting) greeting.textContent = t('greeting');
-        renderSuggestions();
+        applyState(chatState, stateInfo);   // re-render the status card / placeholder in the new language
+    }
+
+    // Reads the streamed answer. Returns { meta, answer } or throws.
+    async function post(message, retried = false) {
+        if (!token || Date.now() - lastStatusAt > TOKEN_REFRESH_MS) await refreshStatus();
+        if (chatState !== 'available') return { meta: null, answer: '', stopped: true };
+        const res = await fetch('/api/chat', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                message, history: history.slice(-6), client: clientId, token,
+                hp: honeypot ? honeypot.value : ''
+            })
+        });
+        if (res.status === 401 && !retried) {      // token expired or missing: renew once
+            token = null;
+            return post(message, true);
+        }
+        if (!res.ok || !res.body) throw new Error(String(res.status));
+        return { res };
     }
 
     async function ask(text) {
         const message = text.trim().slice(0, 500);
-        if (!message || busy) return;
+        if (!message || busy || !(chatState === 'available' || chatState === 'error')) return;
         busy = true;
         sendBtn.disabled = true;
+
+        let result;
+        try {
+            result = await post(message);
+        } catch (e) {
+            result = { error: true };
+        }
+        if (result.stopped) {          // the status check showed a limitation: card is already shown
+            busy = false;
+            return;
+        }
+
         input.value = '';
         addMessage('user', message);
         suggestionsBox.innerHTML = '';
         setMode('thinking');
-
         const botEl = addMessage('bot', '');
         const bubble = botEl.querySelector('.chat-bubble');
         bubble.classList.add('is-typing');
@@ -306,13 +513,8 @@
         let meta = null;
 
         try {
-            const res = await fetch('/api/chat', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ message, history: history.slice(-6) })
-            });
-            if (!res.ok || !res.body) throw new Error(String(res.status));
-            const reader = res.body.getReader();
+            if (result.error) throw new Error('send');
+            const reader = result.res.body.getReader();
             const decoder = new TextDecoder();
             let buffer = '';
             for (;;) {
@@ -326,13 +528,17 @@
                     const ev = JSON.parse(line);
                     if (ev.t === 'meta') {
                         meta = ev;
-                        if (ev.state === 'suspicious') setMode('suspicious');
+                        if (ev.state === 'suspicious' || ev.state === 'blocked') setMode('suspicious');
+                        if (ev.warning) botEl.classList.add('chat-msg-warning');
                     } else if (ev.t === 'd') {
                         if (!answer && mode !== 'suspicious') setMode('talking');
                         bubble.classList.remove('is-typing');
                         answer += ev.v;
                         bubble.textContent = answer;
                         list.scrollTop = list.scrollHeight;
+                    } else if (ev.t === 'reset') {      // output filter replaced the answer
+                        answer = ev.v;
+                        bubble.textContent = answer;
                     }
                 }
             }
@@ -340,12 +546,18 @@
             answer = t('error');
             bubble.textContent = answer;
             meta = { cta: true, sources: [] };
+            applyState('error');
         }
 
         bubble.classList.remove('is-typing');
         if (meta) {
             addSources(botEl, meta.sources);
             if (meta.cta) cta.hidden = false;
+            if (['blocked', 'quota', 'busy', 'disabled'].includes(meta.state)) {
+                applyState(meta.state, meta);   // the limitation applies from now on
+            } else if (chatState === 'available' && meta.near) {
+                nearNote.hidden = false;
+            }
         }
         history.push({ role: 'user', content: message }, { role: 'assistant', content: answer });
 
@@ -353,7 +565,7 @@
         clearTimeout(modeTimer);
         modeTimer = setTimeout(() => setMode('idle'), mode === 'suspicious' ? 2600 : 700);
         busy = false;
-        sendBtn.disabled = false;
+        sendBtn.disabled = !(chatState === 'available' || chatState === 'error');
     }
 
     form.addEventListener('submit', (e) => {
@@ -361,8 +573,19 @@
         ask(input.value);
     });
 
+    // Re-check when the visitor comes back to the tab after a while.
+    document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible' && Date.now() - lastStatusAt > 2 * 60 * 1000) refreshStatus();
+    });
+
     const greeting = addMessage('bot', '');
     greeting.classList.add('chat-msg-greeting');
+    // Show a known block immediately (before the status answer arrives).
+    try {
+        const until = Number(localStorage.getItem('chat-blocked-until'));
+        if (until > Date.now()) chatState = 'blocked', stateInfo = { until };
+    } catch (e) { /* ignore */ }
     applyLanguage();
     document.addEventListener('langchange', applyLanguage);
+    refreshStatus();
 })();

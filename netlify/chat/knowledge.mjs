@@ -13,6 +13,7 @@ const TYPE = { client: "client project", academic: "academic project", independe
 
 const projectChunks = projectsData.map((p) => ({
   id: `project-${p.id}`,
+  featured: !!p.featured,
   title: p.title,
   href: p.featured ? "#projects" : "#more-projects",
   text: [
@@ -98,6 +99,20 @@ const profileChunks = [
     href: "#projects",
     text: "I've used AI in many of my projects (LLM integrations, AI-generated insights, structured AI output, AI content pipelines) and worked with different business owners on applying AI to their work. Six of my featured projects are AI-powered: AIControlCenter, AI Automation Marketplace, WanderWise, TeacherAssistantAI, Mortgage AI and the Real Estate Platform.",
     keywords: "ai artificial intelligence llm experience gpt openai groq automation"
+  },
+  {
+    id: "featured",
+    title: "My top projects",
+    href: "#projects",
+    text: "The projects I'm proudest of are my six featured ones, all AI-powered: AIControlCenter, AI Automation Marketplace, WanderWise, TeacherAssistantAI, Mortgage AI and the Real Estate Platform. The others (Family Vehicle Manager, Netfilm, Coupon Marketplace, Argentina Travel Companion, Mika Coffee, Pilates Studio, Guess The Country, Brick-Breaker) are listed under More projects; most of those are not AI projects.",
+    keywords: "best top favorite favourite proudest main featured highlight strongest recommended project projects portfolio"
+  },
+  {
+    id: "code",
+    title: "Code and implementation details",
+    href: "#projects",
+    text: "The code for most of my projects is on GitHub, linked from each project card (the Code button). I don't go into internal implementation details in this chat; I'm happy to walk through the architecture of any project in a short call.",
+    keywords: "code source github repository repo how built architecture structure implementation internals design folders stack details technical"
   },
   {
     id: "skills",
