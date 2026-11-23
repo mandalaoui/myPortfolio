@@ -5,23 +5,49 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Omer Mandalaoui | Fullstack Developer</title>
+    <meta name="description" content="Omer Mandalaoui, AI and full-stack developer from Israel. Smart web systems, AI-powered automations and full-stack products. See the projects, or ask my AI avatar anything about my work.">
+    <link rel="canonical" href="https://omer-mandalaoui.netlify.app/">
+    <meta name="theme-color" content="#2980b9">
+
+    <!-- Icons -->
+    <link rel="icon" href="favicon.ico" sizes="48x48">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/icons/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/icons/favicon-16.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="images/icons/icon-192.png">
+    <link rel="apple-touch-icon" href="images/icons/apple-touch-icon.png">
+
+    <!-- Link previews (WhatsApp, LinkedIn, Facebook, X) -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://omer-mandalaoui.netlify.app/">
+    <meta property="og:site_name" content="Omer Mandalaoui">
+    <meta property="og:title" content="Omer Mandalaoui | AI & Full-Stack Developer">
+    <meta property="og:description" content="Smart web systems, AI-powered automations and full-stack products. See the projects, or chat with my AI avatar.">
+    <meta property="og:image" content="https://omer-mandalaoui.netlify.app/images/og-image.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Omer Mandalaoui, AI and Full-Stack Developer">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" as="image" href="images/profile.webp?v=2" fetchpriority="high">
     <!-- External libraries: exact versions + Subresource Integrity (SRI) hashes,
          so a changed or compromised CDN file is refused by the browser.
          When upgrading a version, recompute its sha384 hash. -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
         integrity="sha384-iw3OoTErCYJJB9mCa8LNS2hbsQ7M3C0EpIsO/H5+EGAkPGc6rk+V8i04oW/K5xq0" crossorigin="anonymous">
-    <link rel="stylesheet" href="assets/css/styles.css?v=s5">
-    <script type="module" src="https://unpkg.com/@google/model-viewer@4.4.0/dist/model-viewer.min.js"
-        integrity="sha384-wjsPzEO+lXOf7d9csIDfAQpPt2OKuUU3m0K9qsdKIuzX4N8czSF6hdh23eAbZa3p" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"
-        integrity="sha384-g4NTh/Iv5PPU4xPyhEWqPcwtNXOvdaDI8LLnyYfyNZOjKJeYQyjzQ9X5275eBjpt" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"
-        integrity="sha384-Z3REaz79l2IaAZqJsSABtTbhjgOUYyV3p90XNnAPCSHg3EMTz1fouunq9WZRtj3d" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="assets/css/styles.css?v=s9">
+    <!-- model-viewer (the floating 3D laptop, ~730KB with laptop.glb) is loaded by
+         assets/js/lazy3d.js after the page has loaded, so it doesn't delay the first paint. -->
+    <script src="assets/js/lazy3d.js?v=1" defer></script>
+    <!-- Font Awesome icon fonts: fetched early (see the font-display override in styles.css). -->
+    <link rel="preload" as="font" type="font/woff2" crossorigin
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-solid-900.woff2">
+    <link rel="preload" as="font" type="font/woff2" crossorigin
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-brands-400.woff2">
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&family=Space+Mono:wght@400;700&family=Bebas+Neue&family=Syne:wght@400;700;800&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@700&family=Space+Mono&family=Syne:wght@700&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/devicon.min.css"
-        integrity="sha384-DjehTlU5SubGD1zUGe78SkwLgw+q2y9DXnmy3EaDbXA9nvFMPW3LP5verNrWr9rW" crossorigin="anonymous">
 
 </head>
 
@@ -90,7 +116,7 @@
                     <div class="hero-image-container">
                         <div class="ai-ring ring1" aria-hidden="true"><span class="ring-node"></span></div>
                         <div class="ai-ring ring2" aria-hidden="true"></div>
-                        <img src="images/profile.png" alt="Omer Mandalaoui" class="hero-image">
+                        <img src="images/profile.webp?v=2" alt="Omer Mandalaoui" class="hero-image" width="584" height="525" fetchpriority="high">
                         <div class="hero-chip chip-online" aria-hidden="true"><span class="chip-dot"></span><span data-i18n="hero.chipOnline">Online now</span></div>
                         <a href="#avatar" class="hero-chip chip-chat" data-i18n="hero.chipChat">💬 Chat with AI Omer</a>
                     </div>
@@ -145,14 +171,14 @@
                 <div class="avatar-layout">
                     <div class="avatar-stage" id="avatarStage">
                         <div class="avatar-figure" id="avatarFigure" aria-hidden="true">
-                            <img class="avatar-pose on" data-pose="idle" src="images/avatar/idle.webp?v=2" alt="" width="820" height="738">
-                            <img class="avatar-pose" data-pose="blink" src="images/avatar/blink.webp?v=2" alt="" width="820" height="738">
-                            <img class="avatar-pose" data-pose="talk" src="images/avatar/talk.webp?v=2" alt="" width="820" height="738">
-                            <img class="avatar-pose" data-pose="thinking" src="images/avatar/thinking.webp?v=2" alt="" width="820" height="738">
-                            <img class="avatar-pose" data-pose="explain" src="images/avatar/explain.webp?v=2" alt="" width="820" height="738">
-                            <img class="avatar-pose" data-pose="explain-open" src="images/avatar/explain-open.webp?v=2" alt="" width="820" height="738">
-                            <img class="avatar-pose" data-pose="wave" src="images/avatar/wave.webp?v=2" alt="" width="820" height="738">
-                            <img class="avatar-pose" data-pose="suspicious" src="images/avatar/suspicious.webp" alt="" width="820" height="738">
+                            <img class="avatar-pose on" data-pose="idle" src="images/avatar/idle.webp?v=3" alt="" width="704" height="634">
+                            <img class="avatar-pose" data-pose="blink" src="images/avatar/blink.webp?v=3" alt="" width="704" height="634">
+                            <img class="avatar-pose" data-pose="talk" src="images/avatar/talk.webp?v=3" alt="" width="704" height="634">
+                            <img class="avatar-pose" data-pose="thinking" src="images/avatar/thinking.webp?v=3" alt="" width="704" height="634">
+                            <img class="avatar-pose" data-pose="explain" src="images/avatar/explain.webp?v=3" alt="" width="704" height="634">
+                            <img class="avatar-pose" data-pose="explain-open" src="images/avatar/explain-open.webp?v=3" alt="" width="704" height="634">
+                            <img class="avatar-pose" data-pose="wave" src="images/avatar/wave.webp?v=3" alt="" width="704" height="634">
+                            <img class="avatar-pose" data-pose="suspicious" src="images/avatar/suspicious.webp?v=3" alt="" width="704" height="634">
                         </div>
                         <div class="hero-chip chip-online avatar-online"><span class="chip-dot"></span><span data-i18n="hero.chipOnline">Online now</span></div>
                     </div>
@@ -200,8 +226,8 @@
                 <div class="title-art" aria-hidden="true">
                     <div class="title-art-glow"></div>
                     <div class="title-art-float">
-                        <img class="title-art-img title-art-img-en" src="images/projects-intro-en.webp" alt="" width="1400" height="758" decoding="async">
-                        <img class="title-art-img title-art-img-he" src="images/projects-intro-he.webp" alt="" width="1400" height="787" decoding="async">
+                        <img class="title-art-img title-art-img-en" src="images/projects-intro-en.webp?v=2" alt="" width="1000" height="541" decoding="async">
+                        <img class="title-art-img title-art-img-he" src="images/projects-intro-he.webp?v=2" alt="" width="1000" height="562" decoding="async">
                     </div>
                 </div>
                 <h2 class="scene-title-text title-baked" id="projectsHeading" data-i18n="scenes.projectsTitle">Projects</h2>
@@ -242,7 +268,7 @@
                 <div class="title-art" aria-hidden="true">
                     <div class="title-art-glow"></div>
                     <div class="title-art-float">
-                        <img class="title-art-img" src="images/ai-intro.webp?v=2" alt="" width="1400" height="912" decoding="async">
+                        <img class="title-art-img" src="images/ai-intro.webp?v=3" alt="" width="1000" height="651" decoding="async">
                     </div>
                 </div>
                 <h2 class="scene-title-text title-baked" data-i18n="scenes.aiTitle">AI</h2>
@@ -327,25 +353,25 @@
                      by the tools (Express, PostgreSQL/MySQL, GitHub Actions). -->
                 <div class="skills-ring-stage" id="skillsStage">
                     <ul class="skills-ring" id="skillsRing">
-                    <li class="skill-card"><i class="devicon-react-original colored" aria-hidden="true"></i><span class="skill-name">React</span><span class="skill-cat">Frontend</span></li>
-                    <li class="skill-card"><i class="devicon-nextjs-plain" aria-hidden="true"></i><span class="skill-name">Next.js</span><span class="skill-cat">Frontend</span></li>
-                    <li class="skill-card"><i class="devicon-typescript-plain colored" aria-hidden="true"></i><span class="skill-name">TypeScript</span><span class="skill-cat">Frontend</span></li>
-                    <li class="skill-card"><i class="devicon-javascript-plain colored" aria-hidden="true"></i><span class="skill-name">JavaScript</span><span class="skill-cat">Frontend</span></li>
-                    <li class="skill-card"><i class="devicon-angularjs-plain colored" aria-hidden="true"></i><span class="skill-name">Angular</span><span class="skill-cat">Frontend</span></li>
-                    <li class="skill-card"><i class="devicon-tailwindcss-original colored" aria-hidden="true"></i><span class="skill-name">Tailwind CSS</span><span class="skill-cat">Frontend</span></li>
-                    <li class="skill-card"><i class="devicon-nodejs-plain colored" aria-hidden="true"></i><span class="skill-name">Node.js</span><span class="skill-cat">Backend</span></li>
-                    <li class="skill-card"><i class="devicon-express-original" aria-hidden="true"></i><span class="skill-name">Express</span><span class="skill-cat">Backend</span></li>
-                    <li class="skill-card"><i class="devicon-python-plain colored" aria-hidden="true"></i><span class="skill-name">Python</span><span class="skill-cat">Backend</span></li>
-                    <li class="skill-card"><i class="devicon-java-plain colored" aria-hidden="true"></i><span class="skill-name">Java</span><span class="skill-cat">Backend</span></li>
-                    <li class="skill-card"><i class="devicon-postgresql-plain colored" aria-hidden="true"></i><span class="skill-name">PostgreSQL</span><span class="skill-cat">Data</span></li>
-                    <li class="skill-card"><i class="devicon-mysql-original colored" aria-hidden="true"></i><span class="skill-name">MySQL</span><span class="skill-cat">Data</span></li>
-                    <li class="skill-card"><i class="devicon-mongodb-plain colored" aria-hidden="true"></i><span class="skill-name">MongoDB</span><span class="skill-cat">Data</span></li>
-                    <li class="skill-card"><i class="devicon-supabase-plain colored" aria-hidden="true"></i><span class="skill-name">Supabase</span><span class="skill-cat">Data</span></li>
-                    <li class="skill-card"><i class="devicon-git-plain colored" aria-hidden="true"></i><span class="skill-name">Git</span><span class="skill-cat">Infrastructure</span></li>
-                    <li class="skill-card"><i class="devicon-docker-plain colored" aria-hidden="true"></i><span class="skill-name">Docker</span><span class="skill-cat">Infrastructure</span></li>
-                    <li class="skill-card"><i class="devicon-githubactions-plain colored" aria-hidden="true"></i><span class="skill-name">GitHub Actions</span><span class="skill-cat">Infrastructure</span></li>
-                    <li class="skill-card"><i class="devicon-vercel-original" aria-hidden="true"></i><span class="skill-name">Vercel</span><span class="skill-cat">Infrastructure</span></li>
-                    <li class="skill-card"><i class="devicon-netlify-plain colored" aria-hidden="true"></i><span class="skill-name">Netlify</span><span class="skill-cat">Infrastructure</span></li>
+                    <li class="skill-card"><img class="skill-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/react/react-original.svg" alt="" width="58" height="58" loading="lazy" decoding="async"><span class="skill-name">React</span><span class="skill-cat">Frontend</span></li>
+                    <li class="skill-card"><img class="skill-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/nextjs/nextjs-plain.svg" alt="" width="58" height="58" loading="lazy" decoding="async"><span class="skill-name">Next.js</span><span class="skill-cat">Frontend</span></li>
+                    <li class="skill-card"><img class="skill-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/typescript/typescript-plain.svg" alt="" width="58" height="58" loading="lazy" decoding="async"><span class="skill-name">TypeScript</span><span class="skill-cat">Frontend</span></li>
+                    <li class="skill-card"><img class="skill-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/javascript/javascript-plain.svg" alt="" width="58" height="58" loading="lazy" decoding="async"><span class="skill-name">JavaScript</span><span class="skill-cat">Frontend</span></li>
+                    <li class="skill-card"><img class="skill-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/angularjs/angularjs-plain.svg" alt="" width="58" height="58" loading="lazy" decoding="async"><span class="skill-name">Angular</span><span class="skill-cat">Frontend</span></li>
+                    <li class="skill-card"><img class="skill-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/tailwindcss/tailwindcss-original.svg" alt="" width="58" height="58" loading="lazy" decoding="async"><span class="skill-name">Tailwind CSS</span><span class="skill-cat">Frontend</span></li>
+                    <li class="skill-card"><img class="skill-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/nodejs/nodejs-plain.svg" alt="" width="58" height="58" loading="lazy" decoding="async"><span class="skill-name">Node.js</span><span class="skill-cat">Backend</span></li>
+                    <li class="skill-card"><img class="skill-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/express/express-original.svg" alt="" width="58" height="58" loading="lazy" decoding="async"><span class="skill-name">Express</span><span class="skill-cat">Backend</span></li>
+                    <li class="skill-card"><img class="skill-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/python/python-original.svg" alt="" width="58" height="58" loading="lazy" decoding="async"><span class="skill-name">Python</span><span class="skill-cat">Backend</span></li>
+                    <li class="skill-card"><img class="skill-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/java/java-plain.svg" alt="" width="58" height="58" loading="lazy" decoding="async"><span class="skill-name">Java</span><span class="skill-cat">Backend</span></li>
+                    <li class="skill-card"><img class="skill-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/postgresql/postgresql-plain.svg" alt="" width="58" height="58" loading="lazy" decoding="async"><span class="skill-name">PostgreSQL</span><span class="skill-cat">Data</span></li>
+                    <li class="skill-card"><img class="skill-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/mysql/mysql-original.svg" alt="" width="58" height="58" loading="lazy" decoding="async"><span class="skill-name">MySQL</span><span class="skill-cat">Data</span></li>
+                    <li class="skill-card"><img class="skill-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/mongodb/mongodb-plain.svg" alt="" width="58" height="58" loading="lazy" decoding="async"><span class="skill-name">MongoDB</span><span class="skill-cat">Data</span></li>
+                    <li class="skill-card"><img class="skill-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/supabase/supabase-original.svg" alt="" width="58" height="58" loading="lazy" decoding="async"><span class="skill-name">Supabase</span><span class="skill-cat">Data</span></li>
+                    <li class="skill-card"><img class="skill-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/git/git-plain.svg" alt="" width="58" height="58" loading="lazy" decoding="async"><span class="skill-name">Git</span><span class="skill-cat">Infrastructure</span></li>
+                    <li class="skill-card"><img class="skill-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/docker/docker-plain.svg" alt="" width="58" height="58" loading="lazy" decoding="async"><span class="skill-name">Docker</span><span class="skill-cat">Infrastructure</span></li>
+                    <li class="skill-card"><img class="skill-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/githubactions/githubactions-plain.svg" alt="" width="58" height="58" loading="lazy" decoding="async"><span class="skill-name">GitHub Actions</span><span class="skill-cat">Infrastructure</span></li>
+                    <li class="skill-card"><img class="skill-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/vercel/vercel-original.svg" alt="" width="58" height="58" loading="lazy" decoding="async"><span class="skill-name">Vercel</span><span class="skill-cat">Infrastructure</span></li>
+                    <li class="skill-card"><img class="skill-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/netlify/netlify-original.svg" alt="" width="58" height="58" loading="lazy" decoding="async"><span class="skill-name">Netlify</span><span class="skill-cat">Infrastructure</span></li>
                     <li class="skill-card"><i class="fas fa-brain skill-icon-openai" aria-hidden="true"></i><span class="skill-name">OpenAI API</span><span class="skill-cat">AI</span></li>
                     <li class="skill-card"><i class="fas fa-bolt skill-icon-groq" aria-hidden="true"></i><span class="skill-name">Groq / Llama</span><span class="skill-cat">AI</span></li>
                     <li class="skill-card"><i class="fas fa-route skill-icon-openrouter" aria-hidden="true"></i><span class="skill-name">OpenRouter</span><span class="skill-cat">AI</span></li>
@@ -449,23 +475,29 @@
     <div id="toastContainer" class="toast-container" aria-live="polite" aria-atomic="true"></div>
 
     <!-- JavaScript (modular) -->
-    <script src="assets/js/laptopController.js"></script>
+    <!-- GSAP + ScrollTrigger: here rather than in <head>, so they don't block the
+         first paint; still before every script that uses them. -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"
+        integrity="sha384-g4NTh/Iv5PPU4xPyhEWqPcwtNXOvdaDI8LLnyYfyNZOjKJeYQyjzQ9X5275eBjpt" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"
+        integrity="sha384-Z3REaz79l2IaAZqJsSABtTbhjgOUYyV3p90XNnAPCSHg3EMTz1fouunq9WZRtj3d" crossorigin="anonymous"></script>
+    <script src="assets/js/laptopController.js?v=1"></script>
     <script src="assets/js/opener.js?v=l0"></script>
     <script src="assets/js/i18n.js?v=lg3"></script>
-    <script src="assets/js/heroCycle.js"></script>
-    <script src="assets/js/skillsRing.js?v=s2"></script>
-    <script src="assets/js/videoModal.js"></script>
+    <script src="assets/js/heroCycle.js?v=1"></script>
+    <script src="assets/js/skillsRing.js?v=s3"></script>
+    <script src="assets/js/videoModal.js?v=1"></script>
     <script src="assets/js/mobileNav.js?v=d1"></script>
     <script type="module" src="assets/js/projectsRenderer.js?v=p5"></script>
-    <script src="assets/js/theme.js"></script>
+    <script src="assets/js/theme.js?v=1"></script>
     <script src="assets/js/navigation.js?v=n2"></script>
-    <script src="assets/js/cursor.js"></script>
+    <script src="assets/js/cursor.js?v=1"></script>
     <script src="assets/js/projects.js?v=zt11"></script>
-    <script src="assets/js/scroll.js"></script>
+    <script src="assets/js/scroll.js?v=1"></script>
     <script src="assets/js/animations.js?v=s1"></script>
-    <script src="assets/js/modal.js"></script>
-    <script src="assets/js/toast.js"></script>
-    <script src="assets/js/forms.js"></script>
+    <script src="assets/js/modal.js?v=1"></script>
+    <script src="assets/js/toast.js?v=1"></script>
+    <script src="assets/js/forms.js?v=1"></script>
     <script src="assets/js/avatarChat.js?v=s2"></script>
     <script src="assets/js/aiHub.js?v=h3"></script>
     <script src="assets/js/zoomTransition.js?v=zt11"></script>

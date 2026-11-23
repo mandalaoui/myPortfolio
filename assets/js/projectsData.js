@@ -19,7 +19,7 @@ export const projectsData = [
     title: "AIControlCenter",
     type: "independent",
     ai: true,
-    image: "images/AIControlCenter.png",
+    image: "images/AIControlCenter.webp",
     summary:
       "An AI usage intelligence platform that shows teams where their AI spend really goes.",
     highlights: [
@@ -37,7 +37,7 @@ export const projectsData = [
     title: "AI Automation Marketplace",
     type: "academic",
     ai: true,
-    image: "images/AI_Marketplace.png",
+    image: "images/AI_Marketplace.webp",
     video: "videos/AI_Marketplace.mp4",
     summary:
       "A marketplace where creators build AI automations and sell them as products.",
@@ -55,7 +55,7 @@ export const projectsData = [
     title: "WanderWise",
     type: "independent",
     ai: true,
-    image: "images/wanderwise.png",
+    image: "images/wanderwise.webp",
     video: "https://res.cloudinary.com/dpwwlrcvz/video/upload/v1771521863/wanderwise_bq3gbz.mp4",
     summary:
       "An AI-assisted trip planner that builds personalized multi-day itineraries.",
@@ -73,7 +73,7 @@ export const projectsData = [
     title: "TeacherAssistantAI",
     type: "academic",
     ai: true,
-    image: "images/TeacherAssistantAI.png",
+    image: "images/TeacherAssistantAI.webp",
     video: "https://res.cloudinary.com/dpwwlrcvz/video/upload/v1771521854/TeacherAssistantAI_nhtibi.mp4",
     summary:
       "A research analytics platform that makes large-scale scholarly data explorable.",
@@ -91,7 +91,7 @@ export const projectsData = [
     title: "Mortgage AI",
     type: "client",
     ai: true,
-    image: "images/mortgAI.png",
+    image: "images/mortgAI.webp",
     summary: "An AI-assisted mortgage platform built for a client.",
     highlights: [
       "Processes structured financial data",
@@ -107,7 +107,7 @@ export const projectsData = [
     title: "Real Estate Platform",
     type: "client",
     ai: true,
-    image: "images/rannadlan.png",
+    image: "images/rannadlan.webp",
     summary:
       "A production full-stack platform built for a real-estate business.",
     highlights: [
@@ -126,7 +126,7 @@ export const projectsData = [
     title: "Family Vehicle Manager",
     short: "Household vehicle renewals, Hebrew app",
     type: "independent",
-    image: "images/family-vehicle-manager.png",
+    image: "images/family-vehicle-manager.webp",
     summary:
       "Keeps a household's vehicle renewals on track in a secure, multi-user Hebrew app.",
     tags: ["Next.js", "TypeScript", "Supabase", "Google OAuth"],
@@ -139,7 +139,7 @@ export const projectsData = [
     title: "Netfilm",
     short: "Streaming, web and Android clients",
     type: "academic",
-    image: "images/netfilm.png",
+    image: "images/netfilm.webp",
     video: "https://res.cloudinary.com/dpwwlrcvz/video/upload/v1771521858/Netfilm_rkigdk.mp4",
     summary:
       "A movie streaming system with web and Android clients sharing one secure REST backend.",
@@ -152,7 +152,7 @@ export const projectsData = [
     title: "Coupon Marketplace",
     short: "Coupon store with atomic purchases",
     type: "independent",
-    image: "images/couponMarketplace.png",
+    image: "images/couponMarketplace.webp",
     video: "videos/couponMarketplace.mp4",
     summary:
       "A digital coupon store with customer, admin and reseller flows, and atomic purchases that prevent duplicate sales.",
@@ -165,7 +165,7 @@ export const projectsData = [
     title: "Argentina Travel Companion",
     short: "The whole trip in one app",
     type: "independent",
-    image: "images/Argentina.png",
+    image: "images/Argentina.webp",
     summary:
       "One app for the whole trip: itinerary, maps, live data, saved documents, translation and a location-based travel journal.",
     tags: ["Full-Stack", "External APIs", "Database", "Vercel"],
@@ -178,7 +178,7 @@ export const projectsData = [
     title: "Mika Coffee",
     short: "Fast, accessible coffee-shop site",
     type: "client",
-    image: "images/mika.png",
+    image: "images/mika.webp",
     summary:
       "A fast, accessible, responsive website built and deployed for a coffee business.",
     tags: ["React", "JavaScript", "WCAG Accessibility", "Netlify"],
@@ -190,7 +190,7 @@ export const projectsData = [
     title: "Pilates Studio",
     short: "Conversion-focused landing page",
     type: "client",
-    image: "images/Pilates.png",
+    image: "images/Pilates.webp",
     summary: "A conversion-focused landing page built and deployed for a Pilates studio.",
     tags: ["Responsive Design", "Landing Page", "Netlify"],
     live: "https://lightfitstudio.netlify.app/"
@@ -201,7 +201,7 @@ export const projectsData = [
     title: "Guess The Country",
     short: "Country game with a Node.js API",
     type: "independent",
-    image: "images/GuessTheCountry.png",
+    image: "images/GuessTheCountry.webp",
     summary:
       "A country-guessing game with a separate Node.js/Express API and persistent data in MongoDB Atlas.",
     tags: ["Node.js", "Express", "MongoDB Atlas", "Render"],
@@ -214,7 +214,7 @@ export const projectsData = [
     title: "Brick-Breaker",
     short: "Arkanoid-style game in Java",
     type: "academic",
-    image: "images/brick_breaker.png",
+    image: "images/brick_breaker.webp",
     video: "https://res.cloudinary.com/dpwwlrcvz/video/upload/v1771521846/brick_breaker_msnwwz.mp4",
     summary:
       "An Arkanoid-style game in Java with a modular object-oriented design, animations, scoring and collision detection.",

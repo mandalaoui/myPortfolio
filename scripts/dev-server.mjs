@@ -6,7 +6,7 @@
 // - /api/chat and /api/chat/status run netlify/functions/*.mjs.
 // - Storage is in memory (netlify/chat/store.mjs); chat logs go to
 //   logs/chat-log.jsonl (git-ignored).
-// - Applies the "/*" headers from _headers, like Netlify (to test the CSP).
+// - Applies the headers from _headers, like Netlify (to test the CSP).
 // - Dev-only helpers for testing states (never deployed):
 //     GET  /__dev/state?store=chat-usage            -> all keys/values of a store
 //     POST /__dev/state  {store, key, value}         -> set a value (value null deletes)
@@ -20,6 +20,8 @@ import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+// `npm run dev -- --dist` serves the production build (dist/, from `npm run build`).
+const siteRoot = process.argv.includes("--dist") ? path.join(root, "dist") : root;
 const PORT = Number(process.env.PORT || 5174);
 
 for (const file of [".env.local", ".env"]) {
@@ -40,25 +42,32 @@ const fn = async (name) => (await import(pathToFileURL(path.join(root, "netlify/
 const chat = await fn("chat.mjs");
 const chatStatus = await fn("chat-status.mjs");
 
-// "/*" block of _headers -> header list applied to every response.
-function siteHeaders() {
-    const p = path.join(root, "_headers");
+// _headers -> headers for a path, like Netlify: every block whose path
+// pattern matches (* = any characters) adds its headers. Cache-Control is
+// skipped locally (no-cache instead), so edits show up on reload.
+function siteHeaders(pathname) {
+    const p = path.join(siteRoot, "_headers");
     if (!fs.existsSync(p)) return [];
     const out = [];
-    let inAll = false;
+    let matches = false;
     for (const line of fs.readFileSync(p, "utf8").split(/\r?\n/)) {
         if (!line.trim() || line.trim().startsWith("#")) continue;
-        if (!/^\s/.test(line)) { inAll = line.trim() === "/*"; continue; }
+        if (!/^\s/.test(line)) {
+            const pattern = line.trim().replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, ".*");
+            matches = new RegExp(`^${pattern}$`).test(pathname);
+            continue;
+        }
         const m = line.trim().match(/^([A-Za-z-]+):\s*(.*)$/);
-        if (inAll && m) out.push([m[1], m[2]]);
+        if (matches && m && m[1].toLowerCase() !== "cache-control") out.push([m[1], m[2]]);
     }
+    out.push(["Cache-Control", "no-cache"]);
     return out;
 }
 
 const TYPES = {
     ".html": "text/html; charset=utf-8", ".css": "text/css", ".js": "text/javascript", ".mjs": "text/javascript",
     ".json": "application/json", ".png": "image/png", ".jpg": "image/jpeg", ".jpeg": "image/jpeg",
-    ".webp": "image/webp", ".svg": "image/svg+xml", ".pdf": "application/pdf", ".mp4": "video/mp4", ".glb": "model/gltf-binary"
+    ".webp": "image/webp", ".ico": "image/x-icon", ".svg": "image/svg+xml", ".pdf": "application/pdf", ".mp4": "video/mp4", ".glb": "model/gltf-binary"
 };
 
 async function readBody(req) {
@@ -108,12 +117,12 @@ http.createServer(async (req, res) => {
             return res.end("{}");
         }
 
-        let file = path.normalize(path.join(root, decodeURIComponent(url.pathname)));
-        if (!file.startsWith(root)) { res.writeHead(403); return res.end(); }
+        let file = path.normalize(path.join(siteRoot, decodeURIComponent(url.pathname)));
+        if (!file.startsWith(siteRoot)) { res.writeHead(403); return res.end(); }
         if (fs.existsSync(file) && fs.statSync(file).isDirectory()) file = path.join(file, "index.html");
         if (!fs.existsSync(file)) { res.writeHead(404); return res.end("Not found"); }
         const headers = { "Content-Type": TYPES[path.extname(file).toLowerCase()] || "application/octet-stream" };
-        for (const [k, v] of siteHeaders()) headers[k] = v;
+        for (const [k, v] of siteHeaders(url.pathname)) headers[k] = v;
         res.writeHead(200, headers);
         fs.createReadStream(file).pipe(res);
     } catch (err) {
@@ -121,4 +130,4 @@ http.createServer(async (req, res) => {
         if (!res.headersSent) res.writeHead(500);
         res.end("Server error");
     }
-}).listen(PORT, () => console.log(`Dev server: http://localhost:${PORT}`));
+}).listen(PORT, () => console.log(`Dev server: http://localhost:${PORT}${siteRoot === root ? "" : "  (serving dist/)"}`));

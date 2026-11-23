@@ -4,3 +4,4 @@ videos/*.mp4
 .env.local
 node_modules
 logs/
+dist/

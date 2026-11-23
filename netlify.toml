@@ -1,0 +1,9 @@
+# Netlify: build the minified site into dist/ and publish that
+# (scripts/build.mjs). The chat functions in netlify/functions are bundled by
+# Netlify as before and are not part of dist/.
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[functions]
+  directory = "netlify/functions"

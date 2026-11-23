@@ -4,14 +4,29 @@
     {
       "name": "myPortfolio-static",
       "runtimeExecutable": "python",
-      "runtimeArgs": ["-m", "http.server", "5173"],
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "5173"
+      ],
       "port": 5173
     },
     {
       "name": "myPortfolio-dev",
       "runtimeExecutable": "node",
-      "runtimeArgs": ["scripts/dev-server.mjs"],
+      "runtimeArgs": [
+        "scripts/dev-server.mjs"
+      ],
       "port": 5174
+    },
+    {
+      "name": "myPortfolio-dist",
+      "runtimeExecutable": "node",
+      "runtimeArgs": [
+        "scripts/dev-server.mjs",
+        "--dist"
+      ],
+      "port": 5176
     }
   ]
 }

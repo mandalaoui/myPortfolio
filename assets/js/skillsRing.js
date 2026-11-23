@@ -44,10 +44,14 @@
         cards.forEach((card, i) => {
             const angle = i * step + rotation;
             const depth = Math.cos((angle * Math.PI) / 180);   // 1 front, -1 back
-            const near = Math.max(0, (depth + 0.3) / 1.3);
             const color = Math.max(0, (depth - 0.55) / 0.45);  // only the front gets color
             card.style.transform = `rotateY(${angle}deg) translateZ(${radius}px)`;
-            card.style.opacity = (0.3 + 0.7 * near).toFixed(3);
+            // Cards turned away are already invisible (backface-visibility:
+            // hidden); hiding them also keeps their text out of contrast checks.
+            // Cards facing the viewer never drop below 70% opacity, so their
+            // text stays readable (WCAG AA); depth is shown by the grayscale.
+            card.style.visibility = depth < 0 ? 'hidden' : '';
+            card.style.opacity = (0.7 + 0.3 * Math.max(0, depth)).toFixed(3);
             card.style.filter = `grayscale(${(1 - color).toFixed(3)})`;
             card.style.zIndex = String(Math.round((depth + 1) * 100));
         });

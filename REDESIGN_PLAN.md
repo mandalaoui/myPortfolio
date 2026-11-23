@@ -608,6 +608,35 @@ unblock, limits, where data lives) in `SECURITY_PLAN.md` (Hebrew), §8.
 - Tests (scratchpad, not in the repo): 22 server scenarios + browser checks
   of every UI state, unit tests for the leak filter, report and cleanup.
 
+## Performance, SEO and the production build (Lighthouse pass)
+
+Lighthouse on localhost went from 78 / 96 / 96 / 91 to 94 / 96+ / 100 / 100
+(Performance / Accessibility / Best Practices / SEO); re-check on the live site.
+
+- **Head:** meta description, canonical, Open Graph + Twitter card
+  (`images/og-image.jpg`, 1200x630: avatar on the sky), favicon set from the
+  user's OM icon (`favicon.ico`, `images/icons/*`; source in `images/src/`).
+- **Images:** project screenshots PNG -> WebP <= 1200px (7.6MB -> 0.5MB),
+  title art 1000px, avatar poses 704px (2x their display size), profile 584px
+  with `fetchpriority="high"`. Originals in `images/src/` (not published).
+- **Loading:** Devicon icon font (565KB) replaced by per-tool SVG logos from the
+  same pinned Devicon version; model-viewer + laptop.glb loaded after page load
+  (`assets/js/lazy3d.js`); GSAP moved to the end of `<body>`; unused fonts and
+  weights dropped; Font Awesome fonts preloaded and re-declared with
+  `font-display: swap`.
+- **Caching (`_headers`):** images / icons / glb 30 days, CSS/JS 1 day. Every
+  CSS/JS reference has a `?v=` version: bump it whenever the file changes.
+- **Contrast:** section titles over the light sky are deep navy with a white
+  halo; darker grays in More projects and the Stack cards; footer on a
+  translucent dark-blue band; Stack ring cards never fade below 70% (cards
+  turned away are hidden).
+- **Production build:** `npm run build` (`scripts/build.mjs`) copies the public
+  site to `dist/` with comments removed and HTML/CSS/JS minified (esbuild +
+  html-minifier-terser, dev dependencies); `netlify.toml` makes Netlify run it
+  and publish `dist/`. Server code, scripts, docs and image originals are not
+  published. Source files keep their comments. Check a build locally with
+  `npm run build` then `npm run dev -- --dist`.
+
 ## Title cards with illustrations (Projects, AI)
 
 - Generic mechanism `assets/js/titleArt.js` for every `.title-art-scene`:

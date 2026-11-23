@@ -1648,7 +1648,7 @@ html:not([dir="rtl"]) .title-art-img-he,
     margin-bottom: 4rem;
     position: relative;
     color: var(--on-sky);
-    text-shadow: 0 0.25rem 1.25rem rgba(20, 50, 90, 0.16);
+    text-shadow: var(--on-sky-shadow);
 }
 
 .section-title::after {
@@ -1746,6 +1746,13 @@ html:not([dir="rtl"]) .title-art-img-he,
     line-height: 1;
 }
 
+/* Tool logos: Devicon SVG files (one small file each, instead of the 565KB icon font). */
+.skill-card .skill-logo {
+    width: 3.6rem;
+    height: 3.6rem;
+    object-fit: contain;
+}
+
 .skill-icon-openai { color: #10a37f; }
 .skill-icon-groq { color: #f55036; }
 .skill-icon-openrouter { color: #6366f1; }
@@ -1762,7 +1769,7 @@ html:not([dir="rtl"]) .title-art-img-he,
     font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: #64748b;
+    color: #334155;
 }
 
 
@@ -1902,7 +1909,7 @@ html:not([dir="rtl"]) .title-art-img-he,
 
 .project-type.client {
     background: rgba(22, 163, 74, 0.12);
-    color: #15803d;
+    color: #166534;
     border: 0.0625rem solid rgba(22, 163, 74, 0.35);
 }
 
@@ -1910,7 +1917,7 @@ html:not([dir="rtl"]) .title-art-img-he,
 
 .project-type.independent {
     background: rgba(217, 119, 6, 0.12);
-    color: #b45309;
+    color: #92400e;
     border: 0.0625rem solid rgba(217, 119, 6, 0.35);
 }
 
@@ -2193,7 +2200,7 @@ button.project-link {
     font-family: 'Space Grotesk', 'Inter', sans-serif;
     font-size: 1.1rem;
     font-weight: 700;
-    color: #94a3b8;
+    color: #64748b;
     transition: color 0.25s ease, font-size 0.25s ease;
 }
 
@@ -2211,7 +2218,7 @@ button.project-link {
 
 .more-row-short {
     font-size: 0.92rem;
-    color: #64748b;
+    color: #475569;
 }
 
 .more-row-head .project-badges {
@@ -2228,12 +2235,12 @@ button.project-link {
 }
 
 .more-row.active .more-row-num {
-    color: var(--primary);
+    color: #4338ca; /* darker indigo: readable on the tinted active row */
     font-size: 1.5rem;
 }
 
 .more-row.active .more-row-title {
-    color: var(--primary);
+    color: #4338ca;
 }
 
 /* Desktop: thumbnail, chevron and expandable body are mobile-only */
@@ -2820,6 +2827,10 @@ footer {
     padding: 3rem 4rem;
     text-align: center;
     border-top: 0.0625rem solid rgba(255, 255, 255, 0.45);
+    background: rgba(10, 45, 90, 0.62); /* white text needs a darker base than the light sky (contrast) */
+    /* Same color below the footer: the pinned Stack section can leave a few px
+       of page under it at the very bottom. */
+    box-shadow: 0 4rem 0 0 rgba(10, 45, 90, 0.62);
     color: #fff;
     font-size: 1.05rem;
 }
@@ -3457,6 +3468,10 @@ footer p {
   .skill-card i {
     font-size: 2.5rem;
   }
+  .skill-card .skill-logo {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
   .skill-name {
     font-size: 0.9rem;
   }
@@ -3639,7 +3654,7 @@ footer p {
     background: none;
   }
   .more-row.active .more-row-num {
-    color: #94a3b8;
+    color: #64748b;
     font-size: 1.1rem;
   }
   .more-row.active .more-row-title {
@@ -4182,4 +4197,53 @@ html.nav-drawer-open body {
     .nav-drawer-panel {
         transition: none;
     }
+}
+
+/* Font Awesome declares its icon fonts with font-display: block (icons stay
+   invisible, and block text rendering checks, until the font arrives). The same
+   faces declared again here (this file loads after all.min.css, so these win)
+   with swap; index.html preloads both files so the swap is near-instant. */
+@font-face {
+    font-family: "Font Awesome 6 Free";
+    font-style: normal;
+    font-weight: 900;
+    font-display: swap;
+    src: url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-solid-900.woff2) format("woff2");
+}
+@font-face {
+    font-family: "Font Awesome 6 Brands";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-brands-400.woff2) format("woff2");
+}
+
+/* ── Section titles over the light part of the sky ──────────────────────
+   White on the light sky fails contrast (about 1.7:1), so these titles are a
+   deep navy (about 8:1 on the sky, still above 3:1 on its darkest blue) with a
+   soft white halo that lifts them off the background, and the gradient accent
+   bar under each. Declared last so it wins over the shared on-sky shadow. */
+.section-title,
+.more-projects-title {
+    --title-ink: #0c2d57;
+    color: var(--title-ink);
+    text-shadow:
+        0 0.06rem 0 rgba(255, 255, 255, 0.6),
+        0 0.35rem 1.6rem rgba(255, 255, 255, 0.55);
+    letter-spacing: -0.01em;
+}
+.more-projects-title {
+    position: relative;
+    margin-bottom: 3rem;
+}
+.more-projects-title::after {
+    content: '';
+    position: absolute;
+    bottom: -0.9rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 3.75rem;
+    height: 0.25rem;
+    border-radius: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
 }
