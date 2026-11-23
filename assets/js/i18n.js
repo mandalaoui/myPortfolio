@@ -13,14 +13,21 @@
             hero: {
                 titlePre: 'Turning',
                 titlePost: 'into intelligent systems',
-                desc: 'Smart web systems. AI-powered automations. Full-stack products that ship. I build the engine that runs your business — not just the small stuff around it.',
+                badge: 'AI & FULL-STACK ENGINEER · AI TRAINING',
+                desc: 'Smart web systems, AI automations and full-stack products that run every day inside real businesses. I build them, launch them, and train your team to use them.',
                 cta: 'Explore My Work',
                 stage1: 'Business', stage2: 'Software', stage3: 'AI', stage4: 'Guidance', stage5: 'Impact',
-                stage1sub: 'process, as-is', stage2sub: 'built & shipped', stage3sub: 'automated', stage4sub: 'team enabled', stage5sub: 'measured',
-                cycle: ['ideas', 'workflows', 'spreadsheets', 'bottlenecks', 'businesses'],
+                stage1sub: "today's process", stage2sub: 'built & shipped', stage3sub: 'automated', stage4sub: 'team trained', stage5sub: 'results tracked',
+                cycle: ['ideas', 'workflows', 'spreadsheets', 'bottlenecks', 'manual work'],
                 chipOnline: 'Online now', chipChat: '💬 Chat with AI Omer'
             },
             about: {
+                title: 'About Me',
+                who: 'Who I Am',
+                timeline: 'Education & Experience',
+                headline: 'I build AI systems that run inside real businesses, and teach teams to use them.',
+                bio1: "I'm an AI and full-stack engineer with a B.Sc. in Computer Science from Bar-Ilan University. I work forward-deployed style: directly with the business, from the first conversation to software running in production.",
+                bio2: "My work covers the whole path: understanding how a business actually operates, designing the solution, building the frontend, backend and AI integrations, deploying it, and teaching the team to use it. Before tech, I served nearly four years as an HR officer in the IDF, leading people and delivering trainings and talks to groups of 5 to 200. That's still how I run projects and trainings today.",
                 role0year: '11.2026 — Present',
                 role0title: 'AI Solutions Engineer',
                 role0desc: 'Designing and implementing applied AI solutions for real business workflows — from automation to AI-integrated systems in production.',
@@ -34,10 +41,11 @@
                 hubSub: 'Videos, talks and articles on applied AI.'
             },
             projects: { more: 'More projects' },
+            skills: { title: 'Technical Stack' },
             contact: {
                 eyebrow: "What's next",
                 title: "Let's build something together",
-                lead: "Hiring for an AI or full-stack role, or have a business process that should run itself? I'd like to hear about it.",
+                lead: "Hiring, building something, or want your team to work with AI? I'd like to hear about it.",
                 cta: 'Get in touch',
                 resume: 'Download resume',
                 call: 'Book a call',
@@ -48,7 +56,7 @@
                 privacy: 'Privacy Policy',
                 accessibility: 'Accessibility Statement',
                 copy: '© 2026 Omer Mandalaoui. All Rights Reserved.',
-                built: 'Built with focus and precision'
+                built: 'Designed and built by Omer, AI avatar included.'
             }
         },
         he: {
@@ -58,31 +66,39 @@
             hero: {
                 titlePre: 'הופך',
                 titlePost: 'למערכות חכמות',
-                desc: 'מערכות WEB חכמות. אוטומציות מבוססות AI. מוצרים פול-סטאק שבאמת יוצאים לאוויר. אני בונה את המנוע שמריץ את העסק - לא רק את הדברים הקטנים סביבו.',
+                badge: 'מפתח AI ופול-סטאק · הדרכות AI',
+                desc: 'מערכות ווב חכמות, אוטומציות AI ומוצרי פול-סטאק שרצים כל יום בתוך עסקים אמיתיים. אני בונה אותם, מעלה אותם לאוויר ומדריך את הצוות שלכם לעבוד איתם.',
                 cta: 'לתיק העבודות',
                 stage1: 'עסק', stage2: 'תוכנה', stage3: 'AI', stage4: 'הדרכה', stage5: 'השפעה',
-                stage1sub: 'תהליך קיים', stage2sub: 'נבנה ושוחרר', stage3sub: 'אוטומציה', stage4sub: 'הצוות מוכן', stage5sub: 'נמדד',
-                cycle: ['רעיונות', 'תהליכים', 'גיליונות אקסל', 'צווארי בקבוק', 'עסקים'],
-                chipOnline: 'זמין עכשיו', chipChat: '💬 שוחח עם AI Omer'
+                stage1sub: 'התהליך היום', stage2sub: 'נבנה ושוחרר', stage3sub: 'אוטומציה', stage4sub: 'הצוות מודרך', stage5sub: 'תוצאות נמדדות',
+                cycle: ['רעיונות', 'תהליכים', 'גיליונות אקסל', 'צווארי בקבוק', 'עבודה ידנית'],
+                chipOnline: 'זמין עכשיו', chipChat: '💬 שוחחו עם AI Omer'
             },
             about: {
+                title: 'אודות',
+                who: 'מי אני',
+                timeline: 'השכלה וניסיון',
+                headline: 'אני בונה מערכות AI שרצות בתוך עסקים אמיתיים, ומלמד צוותים לעבוד איתן.',
+                bio1: 'אני מפתח AI ופול-סטאק, בוגר מדעי המחשב באוניברסיטת בר-אילן. אני עובד צמוד לעסק עצמו: מהשיחה הראשונה ועד מערכת שרצה בפרודקשן.',
+                bio2: 'העבודה שלי מכסה את כל הדרך: להבין איך העסק באמת עובד, לתכנן את הפתרון, לבנות את הצד של המשתמש, את השרת ואת שילוב ה-AI, להעלות לאוויר וללמד את הצוות לעבוד עם זה. לפני ההייטק שירתתי כמעט ארבע שנים כקצין משאבי אנוש בצה"ל, הובלתי אנשים והעברתי הדרכות והרצאות לקבוצות של 5 עד 200 איש. ככה אני מנהל פרויקטים והדרכות גם היום.',
                 role0year: '11.2026 — היום',
                 role0title: 'AI Solutions Engineer',
                 role0desc: 'מתכנן ובונה פתרונות AI יישומיים לתהליכים עסקיים אמיתיים - מאוטומציה ועד מערכות עם AI משולב שרצות בפרודקשן.',
                 new: 'חדש'
             },
             scenes: {
-                avatarTitle: 'שוחח עם AI Omer',
+                avatarTitle: 'שוחחו עם AI Omer',
                 projectsTitle: 'פרויקטים',
                 aiTitle: 'AI',
                 hubTitle: 'מרכז ה-AI',
                 hubSub: 'סרטונים, הרצאות ומאמרים על AI יישומי.'
             },
             projects: { more: 'פרויקטים נוספים' },
+            skills: { title: 'הטכנולוגיות שלי' },
             contact: {
                 eyebrow: 'מה הלאה',
                 title: 'בואו נבנה משהו ביחד',
-                lead: 'מגייסים לתפקיד AI או פול-סטאק, או שיש לכם תהליך עסקי שצריך לרוץ מעצמו? אשמח לשמוע.',
+                lead: 'מגייסים, בונים משהו, או רוצים שהצוות שלכם יעבוד עם AI? אשמח לשמוע.',
                 cta: 'צרו קשר',
                 resume: 'הורדת קורות חיים',
                 call: 'קביעת שיחה',
@@ -93,7 +109,7 @@
                 privacy: 'מדיניות פרטיות',
                 accessibility: 'הצהרת נגישות',
                 copy: '© 2026 עומר מנדלאוי. כל הזכויות שמורות.',
-                built: 'נבנה בקפידה ובדיוק'
+                built: 'עוצב ונבנה על ידי עומר, כולל האווטאר.'
             }
         }
     };

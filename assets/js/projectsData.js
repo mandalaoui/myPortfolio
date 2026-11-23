@@ -16,7 +16,7 @@ export const projectsData = [
   {
     id: 1,
     featured: true,
-    title: "AIControlCenter",
+    title: "AI Control Center",
     type: "independent",
     ai: true,
     image: "images/AIControlCenter.webp",
@@ -70,17 +70,17 @@ export const projectsData = [
   {
     id: 4,
     featured: true,
-    title: "TeacherAssistantAI",
+    title: "Teacher Assistant AI",
     type: "academic",
     ai: true,
     image: "images/TeacherAssistantAI.webp",
     video: "https://res.cloudinary.com/dpwwlrcvz/video/upload/v1771521854/TeacherAssistantAI_nhtibi.mp4",
     summary:
-      "A research analytics platform that makes large-scale scholarly data explorable.",
+      "An academic project: an AI research assistant that answers questions from real scholarly data, using RAG over a relational database.",
     highlights: [
-      "ETL pipeline that ingests and organizes scholarly data from OpenAlex",
-      "SQL-based exploration and visualization",
-      "AI-assisted research guidance powered by Groq"
+      "ETL pipeline that loads scholarly data from OpenAlex into MySQL",
+      "RAG: relevant data is retrieved with SQL and passed to the model, so answers stay grounded",
+      "Answers and research guidance generated with Groq, plus SQL-based exploration and charts"
     ],
     tags: ["TypeScript", "MySQL", "ETL", "OpenAlex", "Groq"],
     github: "https://github.com/mandalaoui/TeacherAssistantAI"
@@ -92,9 +92,9 @@ export const projectsData = [
     type: "client",
     ai: true,
     image: "images/mortgAI.webp",
-    summary: "An AI-assisted mortgage platform built for a client.",
+    summary: "A mortgage platform for a client that turns financial data into clear, AI-written mortgage insights.",
     highlights: [
-      "Processes structured financial data",
+      "Live in production for the client",
       "Generates clear, natural-language mortgage insights with the OpenAI API",
       "CI/CD pipeline with GitHub Actions"
     ],
@@ -109,9 +109,9 @@ export const projectsData = [
     ai: true,
     image: "images/rannadlan.webp",
     summary:
-      "A production full-stack platform built for a real-estate business.",
+      "The platform a real-estate business runs on: listings, leads, valuations and content, managed from one private admin.",
     highlights: [
-      "Property and content management with lead workflows",
+      "Live and in daily use by the client",
       "Custom valuation tool and a private admin CMS",
       "LLM-powered content pipeline"
     ],
@@ -180,7 +180,7 @@ export const projectsData = [
     type: "client",
     image: "images/mika.webp",
     summary:
-      "A fast, accessible, responsive website built and deployed for a coffee business.",
+      "A fast, accessible, responsive website for a coffee business, live and in daily use by the client.",
     tags: ["React", "JavaScript", "WCAG Accessibility", "Netlify"],
     live: "https://mikacoffee.netlify.app/"
   },
@@ -191,7 +191,7 @@ export const projectsData = [
     short: "Conversion-focused landing page",
     type: "client",
     image: "images/Pilates.webp",
-    summary: "A conversion-focused landing page built and deployed for a Pilates studio.",
+    summary: "A conversion-focused landing page for a Pilates studio, live and in daily use by the client.",
     tags: ["Responsive Design", "Landing Page", "Netlify"],
     live: "https://lightfitstudio.netlify.app/"
   },

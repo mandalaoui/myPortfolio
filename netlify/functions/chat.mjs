@@ -42,8 +42,10 @@ const HOLD_BACK = 48;         // characters held back while streaming, for the o
 const search = createRetriever(chunks);
 const FEATURED_CHUNKS = chunks.filter((c) => c.featured);
 // Project names, so a question naming a project is never filed as "off topic"
-// (e.g. "TeacherAssistantAI" sounds like education to the classifier).
-const PROJECT_NAMES = chunks.filter((c) => c.id.startsWith("project-")).map((c) => c.title.toLowerCase());
+// (e.g. "Teacher Assistant AI" sounds like education to the classifier).
+// Both spellings count: "teacher assistant ai" and "teacherassistantai".
+const PROJECT_NAMES = chunks.filter((c) => c.id.startsWith("project-"))
+    .flatMap((c) => { const t = c.title.toLowerCase(); return [t, t.replace(/\s+/g, "")]; });
 function mentionsProject(text) {
     const t = text.toLowerCase();
     return PROJECT_NAMES.some((name) => t.includes(name));

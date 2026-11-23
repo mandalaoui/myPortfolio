@@ -1,4 +1,4 @@
-import { projectsData } from "./projectsData.js?v=p5";
+import { projectsData } from "./projectsData.js?v=p6";
 import { createProjectCard } from "./projectCard.js?v=p5";
 import { renderMoreProjects } from "./moreProjects.js?v=p5";
 

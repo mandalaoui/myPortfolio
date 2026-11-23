@@ -34,7 +34,7 @@ const profileChunks = [
     title: "About me",
     href: "#about",
     always: true,
-    text: "I'm Omer Mandalaoui, an AI Solutions Engineer and full-stack developer based in Petah Tikva, Israel. I build software and AI-powered systems that streamline how businesses work, and I train people and teams to use AI tools. I'm both employed and self-employed (freelance).",
+    text: "I'm Omer Mandalaoui, an AI and full-stack engineer based in Petah Tikva, Israel. I build software and AI-powered systems that streamline how businesses work, and I train people and teams to use AI tools. I'm both employed and self-employed (freelance).",
     keywords: "who are you about omer introduction background summary"
   },
   {
@@ -90,21 +90,21 @@ const profileChunks = [
     id: "military",
     title: "Military service and training experience",
     href: "#about",
-    text: "I served nearly four years (2019–2022) as an HR officer in the IDF. I led and mentored officers and soldiers, managed training cycles of up to 150 people, and handled HR for 100+ personnel. That's where my experience teaching and training groups comes from; today I also train people on AI tools.",
+    text: "I served nearly four years (2019–2022) as an HR officer in the IDF. I led and mentored officers and soldiers, managed training cycles of up to 150 people, delivered trainings and talks to groups of 5 to 200 people, and handled HR for 100+ personnel. That's where my experience teaching and training groups comes from; today I also train people on AI tools.",
     keywords: "military army idf service officer leadership training teaching instructor experience"
   },
   {
     id: "ai-experience",
     title: "Experience with AI",
     href: "#projects",
-    text: "I've used AI in many of my projects (LLM integrations, AI-generated insights, structured AI output, AI content pipelines) and worked with different business owners on applying AI to their work. Six of my featured projects are AI-powered: AIControlCenter, AI Automation Marketplace, WanderWise, TeacherAssistantAI, Mortgage AI and the Real Estate Platform.",
+    text: "I've used AI in many of my projects (LLM integrations, AI-generated insights, structured AI output, AI content pipelines) and worked with different business owners on applying AI to their work. Six of my featured projects are AI-powered: AI Control Center, AI Automation Marketplace, WanderWise, Teacher Assistant AI, Mortgage AI and the Real Estate Platform.",
     keywords: "ai artificial intelligence llm experience gpt openai groq automation"
   },
   {
     id: "featured",
     title: "My top projects",
     href: "#projects",
-    text: "The projects I'm proudest of are my six featured ones, all AI-powered: AIControlCenter, AI Automation Marketplace, WanderWise, TeacherAssistantAI, Mortgage AI and the Real Estate Platform. The others (Family Vehicle Manager, Netfilm, Coupon Marketplace, Argentina Travel Companion, Mika Coffee, Pilates Studio, Guess The Country, Brick-Breaker) are listed under More projects; most of those are not AI projects.",
+    text: "The projects I'm proudest of are my six featured ones, all AI-powered: AI Control Center, AI Automation Marketplace, WanderWise, Teacher Assistant AI, Mortgage AI and the Real Estate Platform. The others (Family Vehicle Manager, Netfilm, Coupon Marketplace, Argentina Travel Companion, Mika Coffee, Pilates Studio, Guess The Country, Brick-Breaker) are listed under More projects; most of those are not AI projects.",
     keywords: "best top favorite favourite proudest main featured highlight strongest recommended project projects portfolio"
   },
   {
