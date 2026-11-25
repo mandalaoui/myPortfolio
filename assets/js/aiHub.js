@@ -18,10 +18,10 @@
     const ITEMS = [
         {
             type: 'video',
-            meta: '0:48',
+            meta: '0:47',
             poster: 'images/hub/claude-vs-claude-code.webp',
             vertical: true,
-            video: 'videos/hub/claude-vs-claude-code.mp4',
+            video: 'videos/hub/claude-vs-claude-code.mp4?v=2',
             title: { en: 'Claude vs Claude Code', he: 'Claude מול Claude Code' },
             desc: {
                 en: 'Claude or Claude Code? A quick look at which one fits you.',
