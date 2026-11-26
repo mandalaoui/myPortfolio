@@ -1188,6 +1188,7 @@ a.hub-action:hover {
     aspect-ratio: 9 / 16;
 }
 
+.hub-thumb.hub-thumb-vertical .hub-play,
 .hub-feat .hub-thumb-vertical .hub-play {
     position: absolute;
     top: 76%;
@@ -1196,6 +1197,79 @@ a.hub-action:hover {
     height: 3.6rem;
     padding: 0.9rem;
     transform: translate(-50%, -50%);
+}
+
+.hub-card .hub-thumb-vertical .hub-play {
+    width: 3rem;
+    height: 3rem;
+    padding: 0.75rem;
+}
+
+/* Row cards for 9:16 videos: the whole cover, upright (not a cropped strip). */
+.hub-card.is-vertical {
+    flex: 0 0 11rem;
+}
+
+.hub-card.is-vertical .hub-thumb {
+    height: auto;
+    aspect-ratio: 9 / 16;
+}
+
+/* Stage = featured item + side column ("More" + row). */
+.hub-stage {
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+}
+
+.hub-side {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    min-width: 0;
+}
+
+.hub-side .hub-more-label {
+    margin: 0;
+}
+
+/* Wide screens: featured card and the row side by side, at matching heights. */
+@media (min-width: 901px) {
+    .hub-stage.has-side {
+        display: grid;
+        grid-template-columns: 32rem minmax(0, max-content);
+        justify-content: center;
+        align-items: stretch;
+        gap: 1.4rem;
+    }
+
+    .hub-stage.has-side > .hub-feat.is-vertical .hub-thumb-vertical {
+        width: 15rem;
+    }
+
+    .hub-stage.has-side .hub-card.is-vertical {
+        flex-basis: 12.5rem;
+    }
+
+    .hub-stage.has-side > .hub-feat:not(.is-vertical) {
+        flex-direction: column;
+    }
+
+    .hub-stage.has-side > .hub-feat:not(.is-vertical) .hub-thumb {
+        flex: none;
+    }
+
+    .hub-stage.has-side > .hub-feat .hub-feat-title {
+        font-size: clamp(1.5rem, 2.2vw, 1.9rem);
+    }
+
+    .hub-stage.has-side .hub-feat-desc {
+        font-size: 1.05rem;
+    }
+
+    .hub-stage.has-side .hub-side {
+        justify-content: flex-end;
+    }
 }
 
 .hub-thumb.is-playable {
@@ -1252,6 +1326,90 @@ button.hub-action:hover {
         min-height: 0;
         align-self: center;
         margin: 1rem auto 0.4rem;
+    }
+}
+
+/* Phones and tablets: one swipeable row of equal cards. The featured item is
+   just the first card ("Latest · Video"); the side column's wrappers step
+   aside so all cards share the stage as their scroller. */
+@media (max-width: 900px) {
+    .hub-stage.has-side {
+        flex-direction: row;
+        justify-content: safe center; /* centered when all cards fit, else start */
+        gap: 0.8rem;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        scrollbar-width: none;
+        padding: 0.2rem 0.1rem 0.6rem;
+    }
+
+    .hub-stage.has-side::-webkit-scrollbar {
+        display: none;
+    }
+
+    .hub-stage.has-side .hub-side,
+    .hub-stage.has-side .hub-row-wrap,
+    .hub-stage.has-side .hub-row {
+        display: contents;
+    }
+
+    .hub-stage.has-side .hub-more-label,
+    .hub-stage.has-side .hub-arrow {
+        display: none;
+    }
+
+    .hub-stage.has-side > .hub-feat,
+    .hub-stage.has-side .hub-card {
+        flex: 0 0 min(44%, 13rem);
+        flex-direction: column;
+        gap: 0;
+        scroll-snap-align: start;
+    }
+
+    .hub-stage.has-side > .hub-feat .hub-thumb,
+    .hub-stage.has-side > .hub-feat .hub-thumb-vertical {
+        width: auto;
+        align-self: stretch;
+        margin: 0.6rem 0.6rem 0;
+    }
+
+    .hub-stage.has-side > .hub-feat:not(.is-vertical) .hub-thumb {
+        flex: none;
+        min-height: 0;
+        height: 8rem;
+    }
+
+    .hub-stage.has-side > .hub-feat .hub-feat-body,
+    [dir="rtl"] .hub-stage.has-side > .hub-feat .hub-feat-body {
+        justify-content: flex-start;
+        gap: 0.35rem;
+        padding: 0.8rem 0.9rem 1rem;
+    }
+
+    .hub-stage.has-side .hub-feat-title,
+    .hub-stage.has-side .hub-card-title {
+        font-family: inherit;
+        font-size: 1rem;
+        font-weight: 600;
+        line-height: 1.35;
+    }
+
+    .hub-stage.has-side .hub-feat-desc {
+        display: none;
+    }
+
+    .hub-stage.has-side .hub-kind {
+        font-size: 0.85rem;
+    }
+
+    .hub-stage.has-side .hub-action {
+        font-size: 0.95rem;
+    }
+
+    .hub-stage.has-side .hub-thumb-vertical .hub-play {
+        width: 2.8rem;
+        height: 2.8rem;
+        padding: 0.7rem;
     }
 }
 

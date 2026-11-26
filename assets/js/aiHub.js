@@ -18,6 +18,30 @@
     const ITEMS = [
         {
             type: 'video',
+            meta: '0:36',
+            poster: 'images/hub/chatgpt-vs-gemini-vs-claude.webp',
+            vertical: true,
+            video: 'videos/hub/chatgpt-vs-gemini-vs-claude.mp4',
+            title: { en: 'ChatGPT vs Gemini vs Claude', he: 'ChatGPT מול Gemini מול Claude' },
+            desc: {
+                en: 'ChatGPT, Gemini or Claude? A quick guide to which one to use.',
+                he: 'ChatGPT, Gemini או Claude? מדריך קצר לבחירה ביניהם.'
+            }
+        },
+        {
+            type: 'video',
+            meta: '0:54',
+            poster: 'images/hub/what-is-an-llm.webp',
+            vertical: true,
+            video: 'videos/hub/what-is-an-llm.mp4',
+            title: { en: 'What is an LLM?', he: 'מה זה LLM?' },
+            desc: {
+                en: 'How a large language model writes your answer, one token at a time.',
+                he: 'איך מודל שפה גדול כותב לכם תשובה, טוקן אחרי טוקן.'
+            }
+        },
+        {
+            type: 'video',
             meta: '0:47',
             poster: 'images/hub/claude-vs-claude-code.webp',
             vertical: true,
@@ -122,7 +146,7 @@
 
     function card(item, s, l) {
         const src = item.type === 'video' && item.source ? esc(item.source) : '';
-        return '<article class="hub-card" data-type="' + item.type + '">' +
+        return '<article class="hub-card' + (item.vertical ? ' is-vertical' : '') + '" data-type="' + item.type + '">' +
             thumb(item, s) +
             '<div class="hub-card-body">' +
             kindLabel(item, s) +
@@ -134,7 +158,7 @@
 
     function featured(item, s, l) {
         const desc = item.desc[l];
-        return '<article class="hub-feat" data-type="' + item.type + '">' +
+        return '<article class="hub-feat' + (item.vertical ? ' is-vertical' : '') + '" data-type="' + item.type + '">' +
             thumb(item, s) +
             '<div class="hub-feat-body">' +
             kindLabel(item, s, s.latest) +
@@ -176,17 +200,23 @@
         ).join('');
 
         let html = '<div class="hub-chips" role="group" aria-label="' + esc(s.filters) + '">' + chips + '</div>';
+        // Stage: the featured item + a side column with the rest ("More").
+        // Wide screens: side by side. Medium: stacked. Phones: one swipeable
+        // row where the featured item is the first card (see styles.css).
         if (list.length) {
-            html += featured(list[0], s, l);
-            if (list.length > 1) {
+            const hasSide = list.length > 1;
+            html += '<div class="hub-stage' + (hasSide ? ' has-side' : '') + '">' + featured(list[0], s, l);
+            if (hasSide) {
                 const chevron = '<svg viewBox="0 0 24 24" width="100%" height="100%" aria-hidden="true"><path d="M15 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-                html += '<p class="hub-more-label">' + esc(s.more) + '</p>' +
+                html += '<div class="hub-side">' +
+                    '<p class="hub-more-label">' + esc(s.more) + '</p>' +
                     '<div class="hub-row-wrap">' +
                     '<button type="button" class="hub-arrow hub-arrow-prev" data-dir="-1" aria-label="' + esc(s.prev) + '" hidden>' + chevron + '</button>' +
                     '<div class="hub-row">' + list.slice(1).map((it) => card(it, s, l)).join('') + '</div>' +
                     '<button type="button" class="hub-arrow hub-arrow-next" data-dir="1" aria-label="' + esc(s.next) + '" hidden>' + chevron + '</button>' +
-                    '</div>';
+                    '</div></div>';
             }
+            html += '</div>';
         }
         root.innerHTML = html;
         setupRow();
